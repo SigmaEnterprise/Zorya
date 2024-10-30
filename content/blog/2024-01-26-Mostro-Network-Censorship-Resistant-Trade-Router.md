@@ -1,5 +1,4 @@
 +++
-title = "Mostro Network: Pioneering Censorship-Resistant Bitcoin Exchange"
 menu = "main"
 +++
 
