@@ -1,8 +1,9 @@
 +++
-menu = "main"
+title = "Cryptography Development Initiative"
+menu = "Blog"
 +++
 
-# Exploring a Cryptography Development Initiative in Trinidad
+# Exploring a Cryptography Development Initiative
 
 Globally, building a cryptography development ecosystem offers unique opportunities to foster decentralization, privacy, and security. Here’s a detailed guide on the essential tools, resources, and strategies to establish a secure, community-driven cryptography initiative.
 

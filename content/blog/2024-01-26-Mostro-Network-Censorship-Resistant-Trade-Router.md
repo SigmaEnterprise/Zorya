@@ -1,5 +1,6 @@
 +++
-menu = "main"
+title = "Censorship-Resistant Bitcoin Exchange"
+menu = "Blog"
 +++
 
 {{Censorship-Resistant Bitcoin Exchange}}
