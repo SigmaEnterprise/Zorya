@@ -31,9 +31,9 @@ We believe everyone has the right to privacy. Join our community and become part
 
 If you find our resources valuable, consider supporting our work with a donation via Bitcoin Lightning:
 
-[Your Lightning Address QR Code]
+![Lightning Address QR Code](https://pub-cfc01c1ff8fe4f98b57512f464580cf2.r2.dev/photo_2024-10-30_11-55-59.jpg)
 
-[Your Lightning Address]
+[zoryaprivacy@strike.me]
 
 **Connect with Us**
 
