@@ -1,6 +1,7 @@
 +++
 title = "Negentropy"
 menu = "Blog"
+dateFormat = "2024-10-30"
 +++
 
 
