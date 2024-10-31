@@ -60,7 +60,20 @@ With the design approved, it’s time to build the site. The development phase i
   
 During development, I test on various devices and browsers, ironing out any issues to ensure a cohesive and accessible user experience.
 
----
+Here's an updated table that includes software and OS environments for each phase, showing the difference between using emojis and plaintext vs. professional tools.
+
+| Phase               | Emojis & Plaintext                    | Professional Tools                                           | Software Environment                  | OS Environment                       |
+|---------------------|---------------------------------------|--------------------------------------------------------------|---------------------------------------|--------------------------------------|
+| **Ideation**        | ✏️📝 Basic text notes                 | Project management tools (e.g., Trello, Notion)               | Text Editor / Trello / Notion         | Windows, macOS, Linux                |
+| **Wireframing**     | 📐🔲 ASCII art diagrams, sketches     | Wireframing tools (e.g., Figma, Sketch)                       | MS Paint / Figma / Sketch             | Windows, macOS                       |
+| **Design**          | 🎨🖼️ Basic layout descriptions         | UI design software (e.g., Adobe XD, Figma)                    | Adobe XD / Figma                      | macOS, Windows                       |
+| **Development**     | 💻📄 Plain text editor                | Code editors/IDEs (e.g., VS Code, WebStorm)                   | VS Code / WebStorm                    | Windows, macOS, Linux                |
+| **Testing**         | ✅🛠️ Manual checks, notations         | Automated testing tools (e.g., Selenium, Jest)                | Jest / Selenium / BrowserStack        | macOS, Windows, Linux                |
+| **Deployment**      | 🚀 Simple command line scripts        | CI/CD tools (e.g., GitHub Actions, Jenkins)                   | GitHub Actions / Jenkins              | Server OS (Linux, Windows)           |
+| **Feedback**        | 💬 Feedback via email/text            | Review platforms (e.g., InVision, UserTesting)                | InVision / UserTesting                | macOS, Windows, Linux                |
+| **Documentation**   | 📚 Plain text files                   | Documentation tools (e.g., Confluence, Docusaurus)            | Confluence / Docusaurus               | macOS, Windows, Linux                |
+
+This table illustrates the difference in workflow, highlighting how using professional software and environments adds efficiency, scalability, and cross-platform functionality.
 
 ### Case in closing
 
