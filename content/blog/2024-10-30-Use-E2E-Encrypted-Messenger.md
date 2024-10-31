@@ -8,8 +8,8 @@ date = "2024-10-30"
 
 In an age where digital communication is the norm, ensuring the privacy of our conversations is more important than ever. Encrypted messaging apps provide a layer of security that keeps your messages safe from prying eyes. Here, we’ll explore the benefits of using encrypted messaging apps, with a focus on three popular options: **Simplex**, **Session**, and **Keet**.
 
-![Encrypted Messaging Apps](link-to-your-image1.jpg)  
-*Image Caption: The Importance of Encryption in Messaging*
+![Encrypted Messaging Apps](https://comodosslstore.com/blog/wp-content/uploads/2016/12/how-encryption-works.png)  
+*The Importance of Encryption in Messaging*
 
 ### Why Use Encrypted Messaging Apps?
 
@@ -39,7 +39,7 @@ In an age where digital communication is the norm, ensuring the privacy of our c
 Learn more about Simplex [here](https://simplex.chat).
 
 ![Simplex App Interface](https://simplex.chat/img/hero/light/2fps/0005.webp)  
-*Image Caption: Simplex - User-Friendly and Secure*
+*Simplex - User-Friendly and Secure*
 
 ---
 
@@ -53,7 +53,7 @@ Learn more about Simplex [here](https://simplex.chat).
 Discover more about Session [here](https://getsession.org).
 
 ![Session App Features](https://getsession.org/_next/image?url=%2Fassets%2Fimages%2Fui-showcase.png&w=3840&q=75)  
-*Image Caption: Session - Anonymity and Decentralization*
+*Session - Anonymity and Decentralization*
 
 ---
 
@@ -67,7 +67,7 @@ Discover more about Session [here](https://getsession.org).
 Find out more about Keet [here](https://keet.io).
 
 ![Keet App Interface](https://keet.io/static/media/feature-private.6a13cfc4b27575a25314.png)  
-*Image Caption: Keet - Secure and Decentralized Messaging*
+*Keet - Secure and Decentralized Messaging*
 
 ---
 
