@@ -5,8 +5,14 @@
 title = "Hugo ʕ•ᴥ•ʔ Bear"
 +++
 
-# Welcome to [Zorya.Theta.Privacy](https://zoryaprivacy.libretechsystems.xyz/) 
+ 
 **Your Gateway to Online Privacy**
+
+Add Me on Session Messenger
+
+Account ID:
+
+053dfa246ccdb2bceea77d50dfd441a75c28d247c220e08a3a837c9dbdcbc0ca72
 
 **Tired of being tracked, monitored, and exploited online?**
 
