@@ -6,7 +6,8 @@ date = "2024-10-30"
 
 **Crafting a Powerful Web Design: A Step-by-Step Process**
 
-```goat        [ Ideation ] 
+```goat
+        [ Ideation ] 
              |
              | ———————————— (Emojis & Plaintext) ———————————> ✏️📝 Basic text notes
              |                                          |
@@ -48,7 +49,8 @@ date = "2024-10-30"
         [ Documentation ]
              |
              | ———————————— (Emojis & Plaintext) ———————————> 📚 Plain text files
-             | ———————————— (Professional Tools) ——————————> Confluence / Docusaurus```
+             | ———————————— (Professional Tools) ——————————> Confluence / Docusaurus
+```
 
 
 **Title:** Crafting a Powerful Web Design: A Step-by-Step Process
