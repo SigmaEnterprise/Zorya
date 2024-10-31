@@ -6,53 +6,6 @@ date = "2024-10-30"
 
 **Crafting a Powerful Web Design: A Step-by-Step Process**
 
-```goat
-        [ Ideation ] 
-             |
-             | ———————————— (Emojis & Plaintext) ———————————> ✏️📝 Basic text notes
-             |                                          |
-             | ———————————— (Professional Tools) ——————————> Project management tools 
-             |                                         Trello / Notion
-             |
-        [ Wireframing ]
-             |
-             | ———————————— (Emojis & Plaintext) ———————————> 📐🔲 ASCII art diagrams 
-             |                                          sketches
-             | ———————————— (Professional Tools) ——————————> Wireframing tools
-             |                                         Figma / Sketch
-             |
-        [ Design ]
-             |
-             | ———————————— (Emojis & Plaintext) ———————————> 🎨🖼️ Basic layout descriptions
-             | ———————————— (Professional Tools) ——————————> Adobe XD / Figma
-             |
-        [ Development ]
-             |
-             | ———————————— (Emojis & Plaintext) ———————————> 💻📄 Plain text editor
-             | ———————————— (Professional Tools) ——————————> VS Code / WebStorm
-             |
-        [ Testing ]
-             |
-             | ———————————— (Emojis & Plaintext) ———————————> ✅🛠️ Manual checks, notations
-             | ———————————— (Professional Tools) ——————————> Jest / Selenium / BrowserStack
-             |
-        [ Deployment ]
-             |
-             | ———————————— (Emojis & Plaintext) ———————————> 🚀 Simple command line scripts
-             | ———————————— (Professional Tools) ——————————> CI/CD tools (GitHub Actions, Jenkins)
-             |
-        [ Feedback ]
-             |
-             | ———————————— (Emojis & Plaintext) ———————————> 💬 Feedback via email/text
-             | ———————————— (Professional Tools) ——————————> InVision / UserTesting
-             |
-        [ Documentation ]
-             |
-             | ———————————— (Emojis & Plaintext) ———————————> 📚 Plain text files
-             | ———————————— (Professional Tools) ——————————> Confluence / Docusaurus
-```
-
-
 **Title:** Crafting a Powerful Web Design: A Step-by-Step Process
 
 In today's digital landscape, creating a professional, functional, and visually appealing website requires a clear, methodical approach. Each step from understanding the client's needs to ensuring cross-device compatibility—forms the backbone of a site that not only looks good but also delivers a seamless experience. Here’s a closer look at the key phases in the web design process:
@@ -120,6 +73,52 @@ Here's an updated table that includes software and OS environments for each phas
 | **Documentation**   | 📚 Plain text files                   | Documentation tools (e.g., Confluence, Docusaurus)            | Confluence / Docusaurus               | macOS, Windows, Linux                |
 
 This table illustrates the difference in workflow, highlighting how using professional software and environments adds efficiency, scalability, and cross-platform functionality.
+
+```goat
+        [ Ideation ] 
+             |
+             | ———————————— (Emojis & Plaintext) ———————————> ✏️📝 Basic text notes
+             |                                          |
+             | ———————————— (Professional Tools) ——————————> Project management tools 
+             |                                         Trello / Notion
+             |
+        [ Wireframing ]
+             |
+             | ———————————— (Emojis & Plaintext) ———————————> 📐🔲 ASCII art diagrams 
+             |                                          sketches
+             | ———————————— (Professional Tools) ——————————> Wireframing tools
+             |                                         Figma / Sketch
+             |
+        [ Design ]
+             |
+             | ———————————— (Emojis & Plaintext) ———————————> 🎨🖼️ Basic layout descriptions
+             | ———————————— (Professional Tools) ——————————> Adobe XD / Figma
+             |
+        [ Development ]
+             |
+             | ———————————— (Emojis & Plaintext) ———————————> 💻📄 Plain text editor
+             | ———————————— (Professional Tools) ——————————> VS Code / WebStorm
+             |
+        [ Testing ]
+             |
+             | ———————————— (Emojis & Plaintext) ———————————> ✅🛠️ Manual checks, notations
+             | ———————————— (Professional Tools) ——————————> Jest / Selenium / BrowserStack
+             |
+        [ Deployment ]
+             |
+             | ———————————— (Emojis & Plaintext) ———————————> 🚀 Simple command line scripts
+             | ———————————— (Professional Tools) ——————————> CI/CD tools (GitHub Actions, Jenkins)
+             |
+        [ Feedback ]
+             |
+             | ———————————— (Emojis & Plaintext) ———————————> 💬 Feedback via email/text
+             | ———————————— (Professional Tools) ——————————> InVision / UserTesting
+             |
+        [ Documentation ]
+             |
+             | ———————————— (Emojis & Plaintext) ———————————> 📚 Plain text files
+             | ———————————— (Professional Tools) ——————————> Confluence / Docusaurus
+```
 
 ### Case in closing
 
