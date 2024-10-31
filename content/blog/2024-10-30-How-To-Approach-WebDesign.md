@@ -6,6 +6,50 @@ date = "2024-10-30"
 
 **Crafting a Powerful Web Design: A Step-by-Step Process**
 
+```goat        [ Ideation ] 
+             |
+             | ———————————— (Emojis & Plaintext) ———————————> ✏️📝 Basic text notes
+             |                                          |
+             | ———————————— (Professional Tools) ——————————> Project management tools 
+             |                                         Trello / Notion
+             |
+        [ Wireframing ]
+             |
+             | ———————————— (Emojis & Plaintext) ———————————> 📐🔲 ASCII art diagrams 
+             |                                          sketches
+             | ———————————— (Professional Tools) ——————————> Wireframing tools
+             |                                         Figma / Sketch
+             |
+        [ Design ]
+             |
+             | ———————————— (Emojis & Plaintext) ———————————> 🎨🖼️ Basic layout descriptions
+             | ———————————— (Professional Tools) ——————————> Adobe XD / Figma
+             |
+        [ Development ]
+             |
+             | ———————————— (Emojis & Plaintext) ———————————> 💻📄 Plain text editor
+             | ———————————— (Professional Tools) ——————————> VS Code / WebStorm
+             |
+        [ Testing ]
+             |
+             | ———————————— (Emojis & Plaintext) ———————————> ✅🛠️ Manual checks, notations
+             | ———————————— (Professional Tools) ——————————> Jest / Selenium / BrowserStack
+             |
+        [ Deployment ]
+             |
+             | ———————————— (Emojis & Plaintext) ———————————> 🚀 Simple command line scripts
+             | ———————————— (Professional Tools) ——————————> CI/CD tools (GitHub Actions, Jenkins)
+             |
+        [ Feedback ]
+             |
+             | ———————————— (Emojis & Plaintext) ———————————> 💬 Feedback via email/text
+             | ———————————— (Professional Tools) ——————————> InVision / UserTesting
+             |
+        [ Documentation ]
+             |
+             | ———————————— (Emojis & Plaintext) ———————————> 📚 Plain text files
+             | ———————————— (Professional Tools) ——————————> Confluence / Docusaurus```
+
 
 **Title:** Crafting a Powerful Web Design: A Step-by-Step Process
 
