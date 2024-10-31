@@ -1,9 +1,8 @@
 +++
 title = "Censorship-Resistant Bitcoin Exchange"
 menu = "Blog"
+date = "2024-10-30"
 +++
-
-dateFormat = "2024-10-30"
 
 {{Censorship-Resistant Bitcoin Exchange}}
 =========================================

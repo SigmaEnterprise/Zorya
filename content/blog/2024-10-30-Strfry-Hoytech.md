@@ -1,9 +1,9 @@
 +++
 title = "`strfry`: A Feature-Rich Nostr Relay for Efficient, Secure, and Scalable Connections"
 menu = "Blog"
+date = "2024-10-30"
 +++
 
-dateFormat = "2024-10-30"
 
 # Introducing `strfry`: A Feature-Rich Nostr Relay for Efficient, Secure, and Scalable Connections
 

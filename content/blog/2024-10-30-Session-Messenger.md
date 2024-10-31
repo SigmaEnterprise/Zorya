@@ -1,9 +1,9 @@
 +++
-title = "Cryptography Development Initiative"
+title = "Session: A Deep Dive into the Privacy-Preserving Messenger App"
 menu = "Blog"
+date = "2024-10-30"
 +++
 
-dateFormat = "2024-10-30"
 
 Session: A Deep Dive into the Privacy-Preserving Messenger App
 
