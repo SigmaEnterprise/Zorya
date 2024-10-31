@@ -4,7 +4,7 @@ menu = "Blog"
 date = "2024-10-30"
 +++
 
-## The Benefits of Using Encrypted Messaging Apps
+**The Benefits of Using Encrypted Messaging Apps**
 
 In an age where digital communication is the norm, ensuring the privacy of our conversations is more important than ever. Encrypted messaging apps provide a layer of security that keeps your messages safe from prying eyes. Here, we’ll explore the benefits of using encrypted messaging apps, with a focus on three popular options: **Simplex**, **Session**, and **Keet**.
 

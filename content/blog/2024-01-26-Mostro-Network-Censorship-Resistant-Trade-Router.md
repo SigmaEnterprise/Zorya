@@ -4,7 +4,7 @@ menu = "Blog"
 date = "2024-10-30"
 +++
 
-{{Censorship-Resistant Bitcoin Exchange}}
+**Censorship-Resistant Bitcoin Exchange**
 =========================================
 
 Published on {{Date}}

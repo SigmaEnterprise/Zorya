@@ -4,8 +4,7 @@ menu = "Blog"
 date = "2024-10-30"
 +++
 
-
-Session: A Deep Dive into the Privacy-Preserving Messenger App
+**Session: A Deep Dive into the Privacy-Preserving Messenger App**
 
 **Introduction**
 

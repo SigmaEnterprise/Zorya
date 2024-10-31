@@ -4,8 +4,7 @@ menu = "Blog"
 date = "2024-10-30"
 +++
 
-
-# Introducing `strfry`: A Feature-Rich Nostr Relay for Efficient, Secure, and Scalable Connections
+**Introducing `strfry`: A Feature-Rich Nostr Relay for Efficient, Secure, and Scalable Connections**
 
 <div style="text-align: center;">
   <img src="https://github.com/hoytech/strfry/raw/master/docs/strfry.svg" alt="strfry logo">
