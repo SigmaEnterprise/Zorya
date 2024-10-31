@@ -5,13 +5,6 @@
 title = "Hugo ʕ•ᴥ•ʔ Bear"
 +++
 
-
----
-title: "Welcome to Zorya.Theta.Privacy"
-date: 2024-10-30
-draft: false
----
-
 # Welcome to [Zorya.Theta.Privacy](https://zoryaprivacy.libretechsystems.xyz/) 
 **Your Gateway to Online Privacy**
 
