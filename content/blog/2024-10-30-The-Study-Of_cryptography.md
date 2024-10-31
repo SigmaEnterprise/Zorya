@@ -1,8 +1,9 @@
 +++
 title = "Cryptography Development Initiative"
 menu = "Blog"
-dateFormat = "2024-10-30"
 +++
+
+dateFormat = "2024-10-30"
 
 # Exploring a Cryptography Development Initiative
 

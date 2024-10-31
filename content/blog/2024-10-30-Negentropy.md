@@ -1,8 +1,9 @@
 +++
 title = "Negentropy"
 menu = "Blog"
-dateFormat = "2024-10-30"
 +++
+
+dateFormat = "2024-10-30"
 
 
 **The Quantum Threat**
