@@ -1,5 +1,3 @@
-#VoIP, #BitcoinExchange, #RoboSats, #Minipc, #Tox, #SilentLink, #Peer-to-Peer, #Privacy, #DecentralizedFinance, #LightningNetwork, #No-KYC
-
 ---
  
 VoIP-Enabled Bitcoin Exchanges: A New Way to Trade
@@ -111,3 +109,5 @@ Here's the flowchart with proper alignment and a summary of the positive use cas
 
 [Learn Robosats](https://learn.robosats.com/)
 [Silent.Link Portal](https://silent.link/rates)
+
+#VoIP, #BitcoinExchange, #RoboSats, #Minipc, #Tox, #SilentLink, #Peer-to-Peer, #Privacy, #DecentralizedFinance, #LightningNetwork, #No-KYC
