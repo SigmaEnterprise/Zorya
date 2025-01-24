@@ -1,8 +1,10 @@
----
- 
-VoIP-Enabled Bitcoin Exchanges: A New Way to Trade
++++
+title = "VoIP-Enabled Bitcoin Exchanges: A New Way to Trade"
+menu = "Blog"
+date = "2025-01-24"
++++
 
----
+
 
 **Main Motivation:**  
 Establinhing your own selfhosted VoIP-enabled Bitcoin exchanges, using secure communication platforms and decentralized technologies, could provide a unique approach to trading Bitcoin without relying on centralized services. Combining privacy-focused tools like Tox with Bitcoin exchanges such as RoboSats creates a seamless, secure, and decentralized way to transact with minimal personal information involved.
