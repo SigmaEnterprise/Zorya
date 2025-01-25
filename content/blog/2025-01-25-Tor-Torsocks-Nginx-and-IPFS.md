@@ -1,3 +1,10 @@
++++
+title = "**Tor**, **Torsocks**, **Nginx**, or **IPFS**"
+menu = "Blog"
+date = "2025-01-24"
++++
+
+
 Building a highly private and anonymous file server or communication platform with **Tor**, **Torsocks**, **Nginx**, or **IPFS** involves several steps to ensure that your activities are hidden and the server remains secure. Below is a comprehensive guide to achieve this:
 
 ---
