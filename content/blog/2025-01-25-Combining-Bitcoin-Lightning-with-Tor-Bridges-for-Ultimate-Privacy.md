@@ -1,7 +1,7 @@
 +++
 title = "Combining Bitcoin Lightning with Tor Bridges for Ultimate Privacy"
 menu = "Blog"
-date = "2025-01-24"
+date = "2025-01-25"
 +++
   
 
