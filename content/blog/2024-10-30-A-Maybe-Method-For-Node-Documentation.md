@@ -148,55 +148,84 @@ Here’s a template for a simple changelog that you can use to document changes 
 ```
 
 
+```goat
+      .                                                
+     / \    Review Current Documentation           
+    /   \                                               
+   +     +   Determine if Documentation is Outdated or Incomplete      
+  / \   / \      +------------------------------+                
+ /   \ /   \     |    Yes                     No  |              
+1   2 3  4      +------------------------------+                  
+    |             |                                     
+    v             v                             
++-------------------------------+       +----------------------------+
+| Gather Information from the    |       | End (Documentation is      |
+| Codebase                       |       | up to date)                |
++-------------------------------+       +----------------------------+
+                        |
+                        v
 +-------------------------------+
-| Start: Review Current Docs    |
+| Identify Missing or Incorrect |
+| Details                       |
 +-------------------------------+
-                |
-                v
-+-------------------------------+
-| Is the current documentation  |
-| outdated or incomplete?        |
-+-------------------------------+
-      | Yes                | No
-      v                    v
-+-------------------------------+      +-----------------------------+
-| Gather Information from Code  |      | Documentation is Up to Date |
-+-------------------------------+      +-----------------------------+
-                |                             |
-                v                             v
-+-------------------------------+      +-----------------------------+
-| Identify Missing or Incorrect |      | End                         |
-| Details in the Docs            |      +-----------------------------+
-+-------------------------------+
-                |
-                v
+                        |
+                        v
 +-------------------------------+
 | Write Necessary Updates       |
 +-------------------------------+
-                |
-                v
+                        |
+                        v
 +-------------------------------+
 | Review and Test Updates       |
 +-------------------------------+
-                |
-                v
+                        |
+                        v
 +-------------------------------+
 | Final Review and Approvals    |
 +-------------------------------+
-                |
-                v
+                        |
+                        v
 +-------------------------------+
 | Publish the Updated Docs      |
 +-------------------------------+
-                |
-                v
-+-------------------------------+
-| End                           |
-+-------------------------------+
+```
+
+### Proper Names of Each Step:
+
+1. **Review Current Documentation**  
+   - *Proper Name*: Initial Documentation Review
+
+2. **Determine if Documentation is Outdated or Incomplete**  
+   - *Proper Name*: Documentation Status Assessment
+
+   **If yes (documentation is outdated or incomplete)**:
+   1. **Gather Information from the Codebase**  
+      - *Proper Name*: Codebase Information Gathering
+   
+   2. **Identify Missing or Incorrect Details**  
+      - *Proper Name*: Documentation Gap Identification
+
+   3. **Write Necessary Updates**  
+      - *Proper Name*: Documentation Update Writing
+
+   4. **Review and Test Updates**  
+      - *Proper Name*: Documentation Review and Testing
+
+   5. **Final Review and Approvals**  
+      - *Proper Name*: Final Documentation Review and Approval
+
+   6. **Publish the Updated Docs**  
+      - *Proper Name*: Documentation Publishing
+
+**If no (documentation is up to date)**:
+3. **End (Documentation is up to date)**  
+   - *Proper Name*: Process Termination
+
+---
+
+This GoAT diagram shows a clear step-by-step breakdown of the process for updating node documentation using proper names in each step. 
 
 
-
-
-### Closinng Considerations
+### Closing Considerations
 
 Updating your documentation is a fundamental practice to maintain a well-organized and resilient Core Lightning node. This allows you to quickly reference changes, track node performance, and have a reliable history of configurations and troubleshooting steps. Proper documentation aids in efficient maintenance, security audits, and even collaborative work if you’re running the node in a shared environment.
