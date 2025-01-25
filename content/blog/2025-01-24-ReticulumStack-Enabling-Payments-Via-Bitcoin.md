@@ -1,5 +1,5 @@
 +++
-title = "Reticulum’s Role in Enabling Bitcoin Payments in Internet-Restricted Areas"
+title = "Reticulums Role in Enabling Bitcoin Payments in Internet-Restricted Areas"
 menu = "Blog"
 date = "2025-01-24"
 +++
