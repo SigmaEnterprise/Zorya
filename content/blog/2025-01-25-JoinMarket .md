@@ -1,5 +1,5 @@
 +++
-title = "**Tor**, **Torsocks**, **Nginx**, or **IPFS**"
+title = "Joinmarket"
 menu = "Blog"
 date = "2025-01-24"
 +++
