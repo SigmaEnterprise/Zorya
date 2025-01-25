@@ -1,184 +1,193 @@
-/* Base Reset and Global Styles */
-*,
-*::before,
-*::after {
+/* General reset and typography */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif; /* Clean, modern font */
+  background-color: #121212; /* Dark theme for cypherpunk look */
+  color: #d1d1d1; /* Light gray text for contrast */
   line-height: 1.6;
-  color: #eaeaea;
-  background-color: #1a1a1a;
-  background-image: url('/images/bitcoin-background.jpg');  /* Optional: Add a Bitcoin background image */
-  background-size: cover;
-  background-position: center;
-  font-size: 16px;
+  font-size: 18px;
+  word-wrap: break-word;
 }
 
+/* Headers */
 h1, h2, h3, h4, h5, h6 {
-  color: #f1c40f; /* Bitcoin Gold Accent */
-  font-family: 'Courier New', monospace; /* Typewriter for writer's feel */
-  letter-spacing: 1px;
-}
-
-a {
-  color: #2ecc71; /* Bitcoin Green */
-  text-decoration: none;
-}
-
-a:hover {
-  color: #f1c40f;
-  text-decoration: underline;
-}
-
-/* Navigation Bar Styles */
-nav {
-  background-color: #333;
-  padding: 20px;
-  font-family: 'Courier New', monospace;
-}
-
-nav a {
-  color: #fff;
-  padding: 10px;
+  color: #00FF00; /* Neon green for headers, inspired by the cypherpunk aesthetic */
+  font-family: 'Courier New', Courier, monospace; /* Monospaced font for a techy feel */
   text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-nav a:hover {
-  color: #2ecc71;
+h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
 }
 
-/* Header Styles */
-header {
-  text-align: center;
-  padding: 60px 20px;
-}
-
-header h1 {
-  font-size: 4rem;
-  color: #f1c40f; /* Bitcoin Gold */
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-}
-
-/* Bitcoin Logo or Icon */
-header .bitcoin-icon {
-  width: 60px;
-  margin-top: 20px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Post Layout Styles */
-article {
-  background-color: rgba(0, 0, 0, 0.7);
-  margin-bottom: 20px;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-article h2 {
-  color: #f1c40f;
-  margin-bottom: 15px;
+h2 {
   font-size: 2.5rem;
 }
 
-article p {
-  color: #ccc;
-  line-height: 1.8;
-  margin-bottom: 20px;
+h3 {
+  font-size: 2rem;
 }
 
-article a {
-  color: #2ecc71;
+h4, h5, h6 {
+  font-size: 1.5rem;
+}
+
+/* Links */
+a {
+  color: #00FF00;
+  text-decoration: none;
+  border-bottom: 2px solid #00FF00;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  color: #ffffff;
+  border-bottom: 2px solid #ffffff;
+}
+
+/* Navigation bar */
+nav {
+  background-color: #333333; /* Dark background for the navbar */
+  padding: 15px;
+}
+
+nav a {
+  margin-right: 20px;
   font-weight: bold;
 }
 
-/* Code Block Styles (Cypherpunk aesthetic) */
-code {
-  background-color: #333;
-  color: #f1c40f;
-  padding: 4px 8px;
-  border-radius: 4px;
+nav a:hover {
+  color: #00FF00; /* Highlight on hover */
 }
 
-pre {
-  background-color: #222;
-  color: #ccc;
-  padding: 20px;
-  border-radius: 8px;
-  overflow-x: auto;
-  white-space: pre-wrap;
-}
-
-/* Footer Styles */
+/* Footer */
 footer {
-  background-color: #222;
-  color: #ddd;
+  background-color: #222222;
+  color: #888888;
   text-align: center;
-  padding: 40px;
+  padding: 20px;
+  font-size: 1rem;
 }
 
 footer a {
-  color: #2ecc71;
-  font-weight: bold;
+  color: #00FF00;
 }
 
 footer a:hover {
-  color: #f1c40f;
+  color: #ffffff;
 }
 
-/* Typography for Writer's Feel */
-blockquote {
-  font-style: italic;
-  margin: 20px 0;
-  padding-left: 20px;
-  border-left: 5px solid #2ecc71;
-  color: #ccc;
-}
-
-blockquote p {
-  font-size: 1.2rem;
-}
-
-ul, ol {
-  margin-left: 30px;
-  margin-bottom: 20px;
-}
-
-ul li {
-  color: #ccc;
-}
-
-ol li {
-  color: #ccc;
-}
-
-/* Bitcoin / Crypto-Themed Footer */
-footer .bitcoin {
-  color: #f1c40f;
-  font-weight: bold;
-}
-
-/* Buttons */
+/* Button styles */
 button {
-  background-color: #2ecc71;
-  color: #fff;
+  background-color: #00FF00;
+  color: #121212;
   border: none;
   padding: 10px 20px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   cursor: pointer;
   border-radius: 5px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #1e9e5d;
+  background-color: #ffffff;
+  color: #121212;
 }
 
-button:focus {
-  outline: none;
+/* Main content area */
+main {
+  margin: 30px auto;
+  max-width: 1100px;
+  padding: 20px;
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+/* Code block styling */
+code, pre {
+  background-color: #333333;
+  color: #e0e0e0;
+  font-family: 'Courier New', Courier, monospace;
+  padding: 10px;
+  border-radius: 5px;
+  word-wrap: break-word;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+pre code {
+  display: block;
+  padding: 20px;
+}
+
+/* Blockquotes */
+blockquote {
+  border-left: 4px solid #00FF00;
+  padding-left: 20px;
+  font-style: italic;
+  color: #d1d1d1;
+}
+
+/* Bitcoin and privacy centered icons or branding */
+img.bitcoin-logo {
+  max-width: 100px;
+  display: block;
+  margin: 20px auto;
+}
+
+img.bitcoin-logo:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+/* Privacy, encryption, and cyberpunk graphics */
+.crypto-icon {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  margin-right: 10px;
+  filter: invert(1) sepia(1) saturate(5) hue-rotate(90deg);
+  transition: transform 0.3s ease;
+}
+
+.crypto-icon:hover {
+  transform: rotate(360deg);
+}
+
+/* Add a background video (optional) */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/images/background-video.mp4') no-repeat center center/cover;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+/* Custom scrollbars for a sleek look */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #00FF00;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #ffffff;
 }
