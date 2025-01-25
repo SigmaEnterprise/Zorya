@@ -52,4 +52,5 @@ ignoreErrors = ["error-disable-taxonomy"]
   # dateFormat = "2006-01-02"
 
   [params]
-  customCSS = ["css/custom.css"]
+   customCSS = ["\static\css\custom.css"]
+
