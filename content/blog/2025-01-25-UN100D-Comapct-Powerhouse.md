@@ -57,8 +57,8 @@ To complement the **MINISFORUM UN100D Mini PC** for blogging, VoIP, and marketpl
    [Link to Bitcoin Core](https://bitcoincore.org)
 
 2. **Phoenix Wallet**  
-   A mobile wallet for managing Bitcoin and Lightning payments, easy to use with a focus on privacy.  
-   [Link to Phoenix Wallet](https://phoenix.acinq.co)
+   phoenixd is the server equivalent of the popular phoenix wallet for mobile. It is written in Kotlin Multiplatform and runs natively on Linux, MacOS (x86 and ARM), and Windows (WSL).  
+   [Link to Phoenix Wallet](https://phoenix.acinq.co/server)
 
 3. **Wasabi Wallet**  
    Privacy-focused Bitcoin wallet with CoinJoin support for enhanced anonymity.  
