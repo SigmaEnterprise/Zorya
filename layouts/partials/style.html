@@ -1,6 +1,8 @@
+
+<style>
+
 /* Import IBM Plex Mono Font */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
-<style>
 /* General Reset */
 body, h1, h2, h3, p, ul, ol, a, nav, footer {
   margin: 0;
@@ -188,5 +190,40 @@ footer a:hover {
   color: #121212;
   transform: scale(1.05); /* Slight zoom for hover */
 }
+
+
+
+.blog-posts,
+.home-grid,
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.blog-posts a,
+.home-grid a,
+.services-grid a {
+  display: block;
+  padding: 20px;
+  background: #1a1a1a;
+  border: 1px solid #00ffcc;
+  border-radius: 8px;
+  transition: background 0.3s ease, border 0.3s ease, transform 0.2s ease;
+}
+
+.blog-posts a:hover,
+.home-grid a:hover,
+.services-grid a:hover {
+  background: #ff9900;
+  border-color: #ff9900;
+  transform: scale(1.05);
+}
+
+
+
+
+
 
 </style>
