@@ -35,11 +35,12 @@ We believe privacy is a right. Be part of a growing community reclaiming their d
 ---
 
 ### **Support Our Work**
+[If you like what we do, consider supporting us with a small donation]
+[Contact me on A Nostr App, Primal Damus if you need further assistance - By searching my public key below]
 
-If you value what we do, consider supporting us with Bitcoin Lightning:
-
-![Nostr Public Key - Scan In Primal , Nostromo Etc](https://pub-cfc01c1ff8fe4f98b57512f464580cf2.r2.dev/photo_2025-01-26_10-16-52.jpg)  
-**Lightning Address:** zoryaprivacy@strike.me
+**Nostr Public Key :** npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv 
+**Lightning Address:** zoryaprivacy@strike.me 
+**Lightning Address:** zerosumfreeparity@getalby.com
 
 ---
 
