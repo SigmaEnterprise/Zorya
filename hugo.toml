@@ -53,4 +53,8 @@ ignoreErrors = ["error-disable-taxonomy"]
 
    customCSS = ["css/custom.css"]
 
+[[menu.main]]
+  name = "Services"
+  url = "/services/"
+  weight = 1
 
