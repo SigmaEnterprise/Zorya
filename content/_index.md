@@ -38,7 +38,7 @@ We believe privacy is a right. Be part of a growing community reclaiming their d
 
 If you value what we do, consider supporting us with Bitcoin Lightning:
 
-![Lightning Address QR Code](https://pub-cfc01c1ff8fe4f98b57512f464580cf2.r2.dev/photo_2024-10-30_11-55-59.jpg)  
+![Nostr Public Key - Scan In Primal , Nostromo Etc](https://pub-cfc01c1ff8fe4f98b57512f464580cf2.r2.dev/photo_2025-01-26_10-16-52.jpg)  
 **Lightning Address:** zoryaprivacy@strike.me
 
 ---
