@@ -1,160 +1,149 @@
-<style>
-/* Import IBM Plex Mono Font */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home | Services</title>
+  <style>
+    /* Import IBM Plex Mono Font */
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
 
-/* General Reset */
-body, h1, h2, h3, p, ul, ol, a, nav, footer {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    /* General Reset */
+    body, h1, h2, h3, p, ul, ol, a, nav, footer {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-body {
-  font-family: 'IBM Plex Mono', monospace; /* Use IBM Plex Mono for all text */
-  background-color: #121212; /* Dark futuristic background */
-  color: #e5e5e5; /* Soft white text */
-  line-height: 1.6;
-}
+    body {
+      font-family: 'IBM Plex Mono', monospace;
+      background-color: #121212;
+      color: #e5e5e5;
+      line-height: 1.6;
+    }
 
-a {
-  color: #00ffcc; /* Neon green-blue for links */
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
+    a {
+      color: #00ffcc;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
 
-a:hover {
-  color: #ff9900; /* Bitcoin orange accent for hover */
-}
+    a:hover {
+      color: #ff9900;
+    }
 
-/* Navigation Bar */
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #1a1a1a; /* Slightly lighter dark background */
-  padding: 10px 20px;
-  border-bottom: 2px solid #00ffcc; /* Neon line separator */
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
+    /* Navigation Bar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1a1a1a;
+      padding: 10px 20px;
+      border-bottom: 2px solid #00ffcc;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
 
-nav a {
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #e5e5e5;
-}
+    nav a {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #e5e5e5;
+    }
 
-nav a:hover {
-  color: #ff9900;
-}
+    nav a:hover {
+      color: #ff9900;
+    }
 
-/* Homepage */
-.home {
-  text-align: center;
-  padding: 50px 20px;
-}
+    /* Flexbox Container for Home and Services */
+    .flex-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: calc(100vh - 60px); /* Subtract nav height for proper centering */
+      padding: 20px;
+    }
 
-.home h1 {
-  font-size: 3em;
-  color: #ff9900; /* Bitcoin orange for emphasis */
-  text-shadow: 0px 0px 20px #ff9900;
-}
+    .flex-container h1 {
+      font-size: 3em;
+      color: #ff9900;
+      text-shadow: 0px 0px 20px #ff9900;
+      margin-bottom: 20px;
+    }
 
-.home p {
-  font-size: 1.2em;
-  color: #e5e5e5;
-  max-width: 600px;
-  margin: 20px auto;
-}
+    .flex-container p {
+      font-size: 1.2em;
+      max-width: 600px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
 
-/* Blog Post List */
-.blog-posts, .home-grid, .services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Flexible grid layout */
-  gap: 20px;
-  padding: 20px;
-}
+    .button-container {
+      display: flex;
+      gap: 20px;
+    }
 
-.blog-posts a, .home-grid a, .services-grid a {
-  display: block;
-  padding: 20px;
-  background: #1a1a1a;
-  border: 1px solid #00ffcc;
-  border-radius: 8px;
-  transition: background 0.3s ease, border 0.3s ease, transform 0.2s ease;
-}
+    .button-container a {
+      padding: 15px 30px;
+      background: #1a1a1a;
+      border: 2px solid #00ffcc;
+      border-radius: 8px;
+      color: #e5e5e5;
+      text-transform: uppercase;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
 
-.blog-posts a:hover, .home-grid a:hover, .services-grid a:hover {
-  background: #ff9900;
-  border-color: #ff9900;
-  color: #121212;
-  transform: scale(1.05); /* Slight zoom for hover */
-}
+    .button-container a:hover {
+      background: #ff9900;
+      border-color: #ff9900;
+      color: #121212;
+    }
 
-/* Individual Post */
-.post {
-  max-width: 800px;
-  margin: 50px auto;
-  padding: 20px;
-  background: #1a1a1a;
-  border-radius: 8px;
-  border: 1px solid #00ffcc;
-  box-shadow: 0px 0px 15px rgba(0, 255, 204, 0.5);
-}
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #1a1a1a;
+      border-top: 2px solid #00ffcc;
+      font-size: 0.9em;
+      color: #e5e5e5;
+    }
 
-.post h1 {
-  font-size: 2.5em;
-  margin-bottom: 20px;
-  color: #ff9900;
-  text-shadow: 0px 0px 10px #ff9900;
-}
+    footer a {
+      color: #00ffcc;
+    }
 
-.post p {
-  font-size: 1.1em;
-  color: #e5e5e5;
-}
+    footer a:hover {
+      color: #ff9900;
+    }
+  </style>
+</head>
+<body>
 
-.post code {
-  display: block;
-  background: #333333;
-  color: #00ffcc;
-  padding: 10px;
-  border-radius: 4px;
-  margin: 20px 0;
-}
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="#">Home</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
-/* Footer */
-footer {
-  text-align: center;
-  padding: 20px;
-  background: #1a1a1a;
-  border-top: 2px solid #00ffcc;
-  font-size: 0.9em;
-  color: #e5e5e5;
-}
+  <!-- Main Content -->
+  <div class="flex-container">
+    <h1>Welcome to Our Website</h1>
+    <p>Your gateway to modern, secure, and innovative digital solutions.</p>
+    <div class="button-container">
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+    </div>
+  </div>
 
-footer a {
-  color: #00ffcc;
-}
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Your Company. Built with ❤️ for the future.</p>
+  </footer>
 
-footer a:hover {
-  color: #ff9900;
-}
-
-/* Dark Mode Specific */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #0d0d0d; /* Even darker background for full immersion */
-  }
-
-  nav {
-    border-bottom-color: #ff9900;
-  }
-
-  footer {
-    border-top-color: #ff9900;
-  }
-}
-</style>
+</body>
+</html>
