@@ -13,7 +13,9 @@ Add Me on Session Messenger
 
 ## **Tired of being tracked, monitored, and exploited online?**
 
-You're in the right place. At **[Zorya.Theta.Privacy](https://zoryaprivacy.libretechsystems.xyz/)**, we're dedicated to empowering you with the knowledge and tools to take back control of your digital life.
+You're in the right place. 
+At **[Zorya.Theta.Privacy](https://zoryaprivacy.libretechsystems.xyz/)**
+We're dedicated to empowering you with the knowledge and tools to take back control of your digital life.
 
 ### Here's What You'll Find:
 

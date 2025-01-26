@@ -1,149 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home | Services</title>
-  <style>
-    /* Import IBM Plex Mono Font */
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
+/* Flexbox Container for Home and Services */
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 120px); /* Adjust based on header/footer height */
+  padding: 20px;
+  text-align: center;
+}
 
-    /* General Reset */
-    body, h1, h2, h3, p, ul, ol, a, nav, footer {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+.flex-container h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: #ff9900;
+  text-shadow: 0px 0px 20px #ff9900;
+}
 
-    body {
-      font-family: 'IBM Plex Mono', monospace;
-      background-color: #121212;
-      color: #e5e5e5;
-      line-height: 1.6;
-    }
+.content-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #e5e5e5;
+}
 
-    a {
-      color: #00ffcc;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
+.content-wrapper p {
+  margin-bottom: 20px;
+}
 
-    a:hover {
-      color: #ff9900;
-    }
+.content-wrapper a {
+  color: #00ffcc;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
 
-    /* Navigation Bar */
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #1a1a1a;
-      padding: 10px 20px;
-      border-bottom: 2px solid #00ffcc;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    nav a {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #e5e5e5;
-    }
-
-    nav a:hover {
-      color: #ff9900;
-    }
-
-    /* Flexbox Container for Home and Services */
-    .flex-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: calc(100vh - 60px); /* Subtract nav height for proper centering */
-      padding: 20px;
-    }
-
-    .flex-container h1 {
-      font-size: 3em;
-      color: #ff9900;
-      text-shadow: 0px 0px 20px #ff9900;
-      margin-bottom: 20px;
-    }
-
-    .flex-container p {
-      font-size: 1.2em;
-      max-width: 600px;
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    .button-container {
-      display: flex;
-      gap: 20px;
-    }
-
-    .button-container a {
-      padding: 15px 30px;
-      background: #1a1a1a;
-      border: 2px solid #00ffcc;
-      border-radius: 8px;
-      color: #e5e5e5;
-      text-transform: uppercase;
-      font-weight: bold;
-      transition: all 0.3s ease;
-    }
-
-    .button-container a:hover {
-      background: #ff9900;
-      border-color: #ff9900;
-      color: #121212;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #1a1a1a;
-      border-top: 2px solid #00ffcc;
-      font-size: 0.9em;
-      color: #e5e5e5;
-    }
-
-    footer a {
-      color: #00ffcc;
-    }
-
-    footer a:hover {
-      color: #ff9900;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Navigation Bar -->
-  <nav>
-    <a href="#">Home</a>
-    <a href="#services">Services</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
-  <!-- Main Content -->
-  <div class="flex-container">
-    <h1>Welcome to Our Website</h1>
-    <p>Your gateway to modern, secure, and innovative digital solutions.</p>
-    <div class="button-container">
-      <a href="#home">Home</a>
-      <a href="#services">Services</a>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Your Company. Built with ❤️ for the future.</p>
-  </footer>
-
-</body>
-</html>
+.content-wrapper a:hover {
+  color: #ff9900;
+}
