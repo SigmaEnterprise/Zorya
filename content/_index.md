@@ -1,50 +1,52 @@
 +++
-# This title is used as the og:title on Hugo's internal
-# opengraph structured data template on the home page.
-# See https://ogp.me/ and https://gohugo.io/templates/internal#open-graph.
 title = "Hugo ʕ•ᴥ•ʔ Bear"
+class_name = "home-grid"
 +++
 
- 
-**Your Gateway to Online Privacy**
+# **Your Gateway to Online Privacy**
 
-Add Me on Session Messenger
-
-Account ID:
-
+Add Me on Session Messenger  
+**Account ID:**  
 053dfa246ccdb2bceea77d50dfd441a75c28d247c220e08a3a837c9dbdcbc0ca72
 
-**Tired of being tracked, monitored, and exploited online?**
+---
 
-You're in the right place. At [Zorya.Theta.Privacy](https://zoryaprivacy.libretechsystems.xyz/), we're dedicated to empowering you with the knowledge and tools to take back control of your digital life. 
+## **Tired of being tracked, monitored, and exploited online?**
 
-## Here's what you'll find:
+You're in the right place. At **[Zorya.Theta.Privacy](https://zoryaprivacy.libretechsystems.xyz/)**, we're dedicated to empowering you with the knowledge and tools to take back control of your digital life.
 
-- **In-depth Guides:** Practical guides and tutorials on a wide range of privacy topics:
-    - Secure your online accounts
-    - Protect your data from trackers
-    - Browse the web anonymously
-    - Encrypt your communications
-    - Use privacy-enhancing technologies
-- **Cutting-Edge Tools:** Discover and learn to use the latest privacy-enhancing software and services.
-- **Community Forum:** Connect with like-minded individuals, share tips, and get support on your privacy journey.
+### Here's What You'll Find:
 
-## Join the Movement
+- **In-depth Guides**  
+  Secure your online accounts, protect your data from trackers, browse anonymously, and more.
+  
+- **Cutting-Edge Tools**  
+  Learn and implement the latest privacy-enhancing software.
 
-We believe everyone has the right to privacy. Join our community and become part of a growing movement of people who are taking back control of their digital lives.
+- **Community Forum**  
+  Connect with others, share tips, and grow on your privacy journey.
 
-## Support Our Work
+---
 
-If you find our resources valuable, consider supporting our work with a donation via Bitcoin Lightning:
+### **Join the Movement**
 
-![Lightning Address QR Code](https://pub-cfc01c1ff8fe4f98b57512f464580cf2.r2.dev/photo_2024-10-30_11-55-59.jpg)
+We believe privacy is a right. Be part of a growing community reclaiming their digital independence.
 
-**zoryaprivacy@strike.me**
+---
 
-## Connect with Us
+### **Support Our Work**
 
-- **[Mastodon Link](https://mastodon.social/@libretechsystems)**
-- **[Nostr Link](wss://libretechsystems.nostr1.com)**
-- **[Matrix Link](https://matrix.to/#/@libretech-systems:matrix.org)**
+If you value what we do, consider supporting us with Bitcoin Lightning:
 
-Let's build a more private and secure internet together!
+![Lightning Address QR Code](https://pub-cfc01c1ff8fe4f98b57512f464580cf2.r2.dev/photo_2024-10-30_11-55-59.jpg)  
+**Lightning Address:** zoryaprivacy@strike.me
+
+---
+
+### **Connect with Us**
+
+- **[Mastodon](https://mastodon.social/@libretechsystems)**  
+- **[Nostr](wss://libretechsystems.nostr1.com)**  
+- **[Matrix](https://matrix.to/#/@libretech-systems:matrix.org)**  
+
+Let’s build a private, secure internet together!

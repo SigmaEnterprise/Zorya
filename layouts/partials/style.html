@@ -155,4 +155,38 @@ footer a:hover {
     border-top-color: #ff9900;
   }
 }
+
+
+
+
+/* Shared Grid Styling for Blog, Home, and Services */
+.blog-posts,
+.home-grid,
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Flexible grid layout */
+  gap: 20px;
+  padding: 20px;
+}
+
+.blog-posts a,
+.home-grid a,
+.services-grid a {
+  display: block;
+  padding: 20px;
+  background: #1a1a1a; /* Same background as blog */
+  border: 1px solid #00ffcc; /* Consistent border color */
+  border-radius: 8px; /* Rounded corners */
+  transition: background 0.3s ease, border 0.3s ease, transform 0.2s ease;
+}
+
+.blog-posts a:hover,
+.home-grid a:hover,
+.services-grid a:hover {
+  background: #ff9900; /* Hover effect */
+  border-color: #ff9900;
+  color: #121212;
+  transform: scale(1.05); /* Slight zoom for hover */
+}
+
 </style>
