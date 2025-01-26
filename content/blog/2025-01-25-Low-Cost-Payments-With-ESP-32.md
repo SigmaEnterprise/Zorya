@@ -4,12 +4,7 @@ menu = "Blog"
 date = "2025-01-25"
 +++
 
-![Nerdminer_V2](https://github.com/BitMaker-hub/NerdMiner_v2/blob/dev/images/bgNerdMinerV2.png)
-
-RobGroove Explains How this is Good For testing and Learning
-
-<iframe width="1280" height="720" src="https://www.youtube.com/embed/UbbHBNUT1p4" title="NerdMiner 2 Tutorial and features" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
+![Nerdminer_V2](https://pub-cfc01c1ff8fe4f98b57512f464580cf2.r2.dev/bgNerdMinerV2.png)
 
 ### **Using ESP32 Boards for Low-Cost Bitcoin Payment Terminals**
 
