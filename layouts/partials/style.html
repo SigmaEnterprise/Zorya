@@ -16,6 +16,7 @@ body {
   line-height: 1.8;
 }
 
+/* Link Styling */
 a {
   color: #00ffcc; /* Neon green-blue for links */
   text-decoration: none;
@@ -50,53 +51,49 @@ nav a:hover {
   color: #ff9900;
 }
 
-/* Flexbox for Home and Services Pages */
-.flex-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 80px); /* Adjust for header/footer */
+/* Home & Post Page Styling */
+.home, .post {
+  max-width: 1200px; /* Limit max width for better readability */
+  margin: 0 auto; /* Center the content */
   padding: 20px;
-  text-align: center;
 }
 
-.flex-container h1 {
-  font-size: 3rem;
+.home h1, .post h1 {
+  font-size: 2.5rem;
   margin-bottom: 20px;
   color: #ff9900;
-  text-shadow: 0px 0px 20px #ff9900;
 }
 
-.flex-container p {
+.home p, .post p {
   font-size: 1.2rem;
-  max-width: 800px;
+  margin-bottom: 20px;
+  max-width: 1000px; /* Maximum width for paragraphs */
   margin: 10px auto;
 }
 
-.flex-container ul {
+.home ul, .post ul {
   list-style: none;
   padding: 0;
 }
 
-.flex-container ul li {
+.home ul li, .post ul li {
   margin: 10px 0;
 }
 
-.flex-container a {
+.home a, .post a {
   color: #00ffcc;
   text-decoration: underline;
   font-weight: bold;
 }
 
-.flex-container a:hover {
+.home a:hover, .post a:hover {
   color: #ff9900;
 }
 
 /* Blog Post List, Home Grid, and Services Grid */
 .blog-posts, .home-grid, .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Flexible grid layout */
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Flexible grid layout */
   gap: 20px;
   padding: 20px;
 }
