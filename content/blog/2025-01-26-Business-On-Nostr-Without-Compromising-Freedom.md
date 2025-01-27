@@ -12,6 +12,13 @@ date = "2025-01-26"
 *Original Idea Inspired By fiatjaf: (npub180cvv07tjdrrgpa0j7j7tmnyl2yr6yr7l8j4s3evf6u64th6gkwsyjh6w6)*
 [How to do curation and businesses on Nostr](https://njump.me/naddr1qqyrze35vscrzvfcqy28wumn8ghj7un9d3shjtnyv9kh2uewd9hszrthwden5te0dehhxtnvdakqygpm7rrrljungc6q0tuh5hj7ue863q73qlheu4vywtzwhx42a7j9n5psgqqqw4rstzyes6)
 
+__html
+<figure>
+  <figcaption>Anime World Order Show # 3 - Mecha Anime aka Anime Everyone Else Hates:</figcaption>
+  <audio controls src="https://pub-24311d4718754134bc79df2083256440.r2.dev/Pod-10-Decentralized-Blogging.mp3"></audio>
+  <a href="https://pub-24311d4718754134bc79df2083256440.r2.dev/Pod-10-Decentralized-Blogging.mp3"> Download audio </a>
+</figure>
+
 
 Starting a business on Nostr can be enticing—especially if you see the potential for monetizing unique niches. However, the temptation to centralize your platform while leveraging the decentralized nature of Nostr could undermine the very freedoms that make Nostr appealing. Here’s a more sustainable approach to integrating business ideas with Nostr without sacrificing its core values.
 
