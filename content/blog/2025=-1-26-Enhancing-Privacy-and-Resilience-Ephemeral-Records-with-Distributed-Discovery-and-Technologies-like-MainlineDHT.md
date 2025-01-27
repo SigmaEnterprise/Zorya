@@ -1,7 +1,7 @@
 +++
 title = "Enhancing Privacy and Resilience Ephemeral Records with Distributed Discovery and Technologies like Mainline_DHT"
 menu = "Blog"
-date = "2025-01-25"
+date = "2025-01-26"
 +++
 
 ---
