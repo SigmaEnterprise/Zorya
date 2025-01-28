@@ -84,3 +84,12 @@ Further-Reading:
 - [myNode series - Lightning Network - Theory & Context](https://fountain.fm/episode/Np2k6sinVAyy1hJy8IPw)
 - [Stable Channels with Tony Klausing (SLP591)](https://fountain.fm/episode/JN2sGeCNu7bbhHfEAzhh)
 - [Read_644 - A Look at the Lightning Network - Part 1 [Lyn Alden]](https://fountain.fm/episode/B3Q6aa7ajewbbwVPX08d)
+
+<button
+        data-npub="npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv"
+        data-relays="wss://relay.damus.io,wss://relay.snort.social,wss://nostr.wine,wss://relay.nostr.band,wss://nos.lol"
+    >
+        Zap Me ⚡️
+    </button>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/nostr-zap@0.22.0"></script>
