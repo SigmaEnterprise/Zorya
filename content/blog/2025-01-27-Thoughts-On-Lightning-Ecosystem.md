@@ -91,13 +91,13 @@ Addressing these risks involves creating sustainable incentive mechanisms, such 
 
 Content Delivery Networks (CDNs) can be an effective tool for reducing the burden on full node operators while serving light clients. Here’s how they provide value:
 
-1. **Reduced Server Load**: CDNs distribute data across multiple servers located in different geographic regions. By offloading the delivery of blockchain data, such as block headers or filters, to a CDN, full node operators can significantly lower the bandwidth and computational demands on their infrastructure [1][2]. 
+[1]. **Reduced Server Load**: CDNs distribute data across multiple servers located in different geographic regions. By offloading the delivery of blockchain data, such as block headers or filters, to a CDN, full node operators can significantly lower the bandwidth and computational demands on their infrastructure [1][2]. 
 
-2. **Improved Accessibility**: Light clients accessing data via CDNs can benefit from faster response times and lower latency due to the proximity of CDN servers. This enhances the user experience and makes the network more appealing for widespread use [3]. 
+[2]. **Improved Accessibility**: Light clients accessing data via CDNs can benefit from faster response times and lower latency due to the proximity of CDN servers. This enhances the user experience and makes the network more appealing for widespread use [3]. 
 
-3. **Cost Optimization**: Utilizing a CDN reduces the direct costs for full node operators, as they no longer need to manage high data transfer volumes themselves. This cost reduction can make running a full node more attractive and sustainable, especially for smaller operators [4]. 
+[3]. **Cost Optimization**: Utilizing a CDN reduces the direct costs for full node operators, as they no longer need to manage high data transfer volumes themselves. This cost reduction can make running a full node more attractive and sustainable, especially for smaller operators [4]. 
 
-4. **Scalability**: As the Lightning Network grows, CDNs offer a scalable solution to handle increasing traffic. Full node operators can focus on maintaining network health and security while relying on CDNs to serve light clients efficiently [0][4]. 
+[4]. **Scalability**: As the Lightning Network grows, CDNs offer a scalable solution to handle increasing traffic. Full node operators can focus on maintaining network health and security while relying on CDNs to serve light clients efficiently [0][4]. 
 
 By integrating CDNs into the network’s architecture, full node operators can better support light clients without compromising performance, scalability, or decentralization.
 
