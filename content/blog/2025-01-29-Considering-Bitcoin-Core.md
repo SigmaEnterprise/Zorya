@@ -64,21 +64,22 @@ Getting involved with Bitcoin Core doesn’t just mean writing code. Here are so
 ---
 ### Sources and Further Reading:
 
-[0]: https://gnusha.org/pi/bitcoindev/CAMHHROw9mZJRnTbUo76PdqwJU==YJMvd9Qrst+nmyypaedYZgg@mail.gmail.com/T/#mf21debb5be815a846099958fcf9562b533c2a08a  
-[1]: https://gnusha.org/pi/bitcoindev/7754f1e7-c4b0-4472-a357-4926da542363@achow101.com/T/#u#m3cd672eee98a2d3ba1b7a0c5b385399d75ca64fe  
-[2]: https://achow101.com/2016/07/Bitcoin-Core-Troubleshooting  
-[3]: https://gnusha.org/url/https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2018-March/015829.html  
-[4]: https://bitcoin.stackexchange.com/questions/119054#119170  
-[5]: https://bitcoin.stackexchange.com/questions/102705#102718  
-[6]: https://bitcoin.stackexchange.com/questions/58906#58919  
-[7]: https://bitcoin.stackexchange.com/questions/100200#100201  
-[8]: https://gnusha.org/url/https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2017-March/013771.html  
-[9]: https://bitcoin.stackexchange.com/questions/88237#88244  
-[10]: https://bitcoin.stackexchange.com/questions/54583#54591  
-[11]: https://achow101.com/2016/07/Bitcoin-Core-Troubleshooting  
-[12]: https://github.com/bitcoin/bips/blob/master/bip-0380.mediawiki  
-[13]: https://gnusha.org/pi/bitcoindev/CAMHHROw9mZJRnTbUo76PdqwJU==YJMvd9Qrst+nmyypaedYZgg@mail.gmail.com/T/#m10b97e9401be8149c43dd4bcfcb2b8719737f0d3  
-[14]: https://gnusha.org/pi/bitcoindev/CAMHHROw9mZJRnTbUo76PdqwJU==YJMvd9Qrst+nmyypaedYZgg@mail.gmail.com/T/#m197aad4ed9f12d1427a11709656b7a9bc893b1aa  
-[15]: https://gnusha.org/pi/bitcoindev/CAMHHROw9mZJRnTbUo76PdqwJU==YJMvd9Qrst+nmyypaedYZgg@mail.gmail.com/T/#mf303fac285f286dbd31448a70424044865b9d426  
-[16]: https://gnusha.org/pi/bitcoindev/CAMHHROw9mZJRnTbUo76PdqwJU==YJMvd9Qrst+nmyypaedYZgg@mail.gmail.com/T/#ma5a4a5abe9f0978c7307fafd74b8f7395b1645bc  
+- [Bitcoin Dev Email #1](https://gnusha.org/pi/bitcoindev/CAMHHROw9mZJRnTbUo76PdqwJU==YJMvd9Qrst+nmyypaedYZgg@mail.gmail.com/T/#mf21debb5be815a846099958fcf9562b533c2a08a)
+- [Bitcoin Dev Email #2](https://gnusha.org/pi/bitcoindev/7754f1e7-c4b0-4472-a357-4926da542363@achow101.com/T/#u#m3cd672eee98a2d3ba1b7a0c5b385399d75ca64fe)
+- [Bitcoin Core Troubleshooting](https://achow101.com/2016/07/Bitcoin-Core-Troubleshooting)
+- [Bitcoin Dev Mailing List (2018)](https://gnusha.org/url/https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2018-March/015829.html)
+- [Bitcoin StackExchange: Question #119054](https://bitcoin.stackexchange.com/questions/119054#119170)
+- [Bitcoin StackExchange: Question #102705](https://bitcoin.stackexchange.com/questions/102705#102718)
+- [Bitcoin StackExchange: Question #58906](https://bitcoin.stackexchange.com/questions/58906#58919)
+- [Bitcoin StackExchange: Question #100200](https://bitcoin.stackexchange.com/questions/100200#100201)
+- [Bitcoin Dev Mailing List (2017)](https://gnusha.org/url/https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2017-March/013771.html)
+- [Bitcoin StackExchange: Question #88237](https://bitcoin.stackexchange.com/questions/88237#88244)
+- [Bitcoin StackExchange: Question #54583](https://bitcoin.stackexchange.com/questions/54583#54591)
+- [Bitcoin Core Troubleshooting (Duplicate)](https://achow101.com/2016/07/Bitcoin-Core-Troubleshooting)
+- [BIP-0380 Specification](https://github.com/bitcoin/bips/blob/master/bip-0380.mediawiki)
+- [Bitcoin Dev Email #3](https://gnusha.org/pi/bitcoindev/CAMHHROw9mZJRnTbUo76PdqwJU==YJMvd9Qrst+nmyypaedYZgg@mail.gmail.com/T/#m10b97e9401be8149c43dd4bcfcb2b8719737f0d3)
+- [Bitcoin Dev Email #4](https://gnusha.org/pi/bitcoindev/CAMHHROw9mZJRnTbUo76PdqwJU==YJMvd9Qrst+nmyypaedYZgg@mail.gmail.com/T/#m197aad4ed9f12d1427a11709656b7a9bc893b1aa)
+- [Bitcoin Dev Email #5](https://gnusha.org/pi/bitcoindev/CAMHHROw9mZJRnTbUo76PdqwJU==YJMvd9Qrst+nmyypaedYZgg@mail.gmail.com/T/#mf303fac285f286dbd31448a70424044865b9d426)
+- [Bitcoin Dev Email #6](https://gnusha.org/pi/bitcoindev/CAMHHROw9mZJRnTbUo76PdqwJU==YJMvd9Qrst+nmyypaedYZgg@mail.gmail.com/T/#ma5a4a5abe9f0978c7307fafd74b8f7395b1645bc)
+  
 😊
