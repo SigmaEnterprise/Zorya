@@ -88,18 +88,16 @@ nav a:hover {
 .content-wrapper {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  justify-content: flex-start;
   gap: 20px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 /* Article Container */
 .article-container {
   flex: 2;
+  width: 65%; /* Adjusted width */
   background-color: var(--card-bg);
   padding: 20px;
   border-radius: 10px;
@@ -115,17 +113,11 @@ nav a:hover {
 /* Sidebar */
 .sidebar {
   flex: 1;
+  width: 30%; /* Adjusted width */
   background-color: var(--card-bg);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 15px var(--shadow-color);
-}
-
-.sidebar h2 {
-  font-size: 1.8rem;
-  color: var(--accent-color);
-  margin-bottom: 15px;
-  text-shadow: var(--glow-effect);
 }
 
 /* Footer */
@@ -142,7 +134,8 @@ footer {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-title);
   font-weight: 700;
-  text-align: left;
+  text-align: center; /* Aligning H1 to center */
+  margin-bottom: 20px; /* Adds spacing below the title */
   line-height: 1.3;
 }
 
