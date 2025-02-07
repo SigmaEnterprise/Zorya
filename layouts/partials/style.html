@@ -1,11 +1,14 @@
 <style>
-root {
+/* Light Futurism Theme */
+:root {
     --font-title: 'Exo2-VariableFont_wght', sans-serif;
     --font-body: 'Exo2-VariableFont_wght', sans-serif;
-    --tx-color: #00FF00;
-    --bg-color: #0D0D0D;
-    --link-color: #FFA500;
-    --accent-color: #FF4500;
+    --tx-color: #222; /* Darker text for contrast */
+    --bg-color: #F4F8FF; /* Soft sky-like blue */
+    --link-color: #007BFF; /* Bright futuristic blue */
+    --accent-color: #FFC107; /* Golden enlightenment */
+    --card-bg: rgba(255, 255, 255, 0.9); /* Soft transparency */
+    --shadow-color: rgba(0, 0, 0, 0.2);
 }
 
 body {
@@ -13,12 +16,21 @@ body {
     color: var(--tx-color);
     background-color: var(--bg-color);
     line-height: 1.6;
+    margin: 0;
+    padding: 0;
 }
 
-h1 {
+h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-title);
     color: var(--link-color);
 }
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
 
 /* Blog Page Styling */
 .blog-page {
@@ -52,16 +64,11 @@ h1 {
     flex: 2;
     display: flex;
     flex-direction: column;
-    background-color: #111;
+    background-color: var(--card-bg);
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    box-shadow: 0 0 10px var(--shadow-color);
     width: 100%;
-}
-
-.article-container h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
 }
 
 .article-container p {
@@ -73,10 +80,10 @@ h1 {
 /* Sidebar */
 .sidebar {
     flex: 1;
-    background-color: #1a1a1a;
+    background-color: var(--card-bg);
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    box-shadow: 0 0 10px var(--shadow-color);
 }
 
 .sidebar h2 {
@@ -90,9 +97,9 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #1a1a1a;
-    padding: 10px 20px;
-    border-bottom: 2px solid #00ffcc;
+    background: var(--card-bg);
+    padding: 15px 20px;
+    border-bottom: 3px solid var(--accent-color);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -102,7 +109,7 @@ nav a {
     font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #e5e5e5;
+    color: var(--tx-color);
 }
 
 /* Blog, Home, and Services Grid */
@@ -116,34 +123,34 @@ nav a {
 
 .blog-post, .home-grid-item, .services-grid-item {
     flex: 1 1 300px;
-    background-color: #111;
+    background-color: var(--card-bg);
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    box-shadow: 0 0 10px var(--shadow-color);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .blog-post:hover, .home-grid-item:hover, .services-grid-item:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 165, 0, 0.8);
+    box-shadow: 0 0 15px var(--accent-color);
 }
 
 /* Buttons */
 .button-container a {
     padding: 10px 20px;
-    background: #1a1a1a;
-    border: 2px solid #00ffcc;
+    background: var(--card-bg);
+    border: 2px solid var(--link-color);
     border-radius: 8px;
-    color: #e5e5e5;
+    color: var(--tx-color);
     text-transform: uppercase;
     font-weight: bold;
     transition: all 0.3s ease;
 }
 
 .button-container a:hover {
-    background: #ff9900;
-    border-color: #ff9900;
+    background: var(--accent-color);
+    border-color: var(--accent-color);
     color: #121212;
 }
 
@@ -151,10 +158,9 @@ nav a {
 footer {
     text-align: center;
     padding: 20px;
-    background: #1a1a1a;
-    border-top: 2px solid #00ffcc;
+    background: var(--card-bg);
+    border-top: 3px solid var(--accent-color);
     font-size: 0.9em;
-    color: #e5e5e5;
+    color: var(--tx-color);
 }
-
 </style>
