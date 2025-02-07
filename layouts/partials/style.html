@@ -3,11 +3,11 @@
 :root {
     --font-title: 'Exo2-VariableFont_wght', sans-serif;
     --font-body: 'Exo2-VariableFont_wght', sans-serif;
-    --tx-color: #222; /* Darker text for contrast */
-    --bg-color: #F4F8FF; /* Soft sky-like blue */
-    --link-color: #007BFF; /* Bright futuristic blue */
-    --accent-color: #FFC107; /* Golden enlightenment */
-    --card-bg: rgba(255, 255, 255, 0.9); /* Soft transparency */
+    --tx-color: #222;
+    --bg-color: #F4F8FF;
+    --link-color: #007BFF;
+    --accent-color: #FFC107;
+    --card-bg: rgba(255, 255, 255, 0.9);
     --shadow-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -15,7 +15,7 @@ body {
     font-family: var(--font-body);
     color: var(--tx-color);
     background-color: var(--bg-color);
-    line-height: 1.8; /* Improved readability */
+    line-height: 1.8;
     margin: 0;
     padding: 0;
 }
@@ -23,30 +23,10 @@ body {
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-title);
     color: var(--link-color);
-    margin-top: 20px;
-    margin-bottom: 10px;
+    margin: 20px 0 10px;
 }
 
-/* Proper spacing after headings */
-h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
-    margin-top: 10px;
-}
-
-.blog-page {
-    text-align: left;
-}
-
-.blog-page h1, 
-.blog-page h2, 
-.blog-page h3, 
-.blog-page p, 
-.blog-page ul, 
-.blog-page ol, 
-.blog-page a {
-    text-align: left;
-}
-
-/* Main container */
+/* Main Layout */
 .content-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -61,8 +41,6 @@ h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
 
 .article-container {
     flex: 2;
-    display: flex;
-    flex-direction: column;
     background-color: var(--card-bg);
     padding: 20px;
     border-radius: 10px;
@@ -70,13 +48,6 @@ h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
     width: 100%;
 }
 
-.article-container p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    max-width: 1000px;
-}
-
-/* Sidebar */
 .sidebar {
     flex: 1;
     background-color: var(--card-bg);
@@ -102,6 +73,7 @@ nav {
     position: sticky;
     top: 0;
     z-index: 1000;
+    width: 100%;
 }
 
 nav a {
@@ -109,9 +81,10 @@ nav a {
     text-transform: uppercase;
     letter-spacing: 2px;
     color: var(--tx-color);
+    text-decoration: none;
 }
 
-/* Blog, Home, and Services Grid */
+/* Blog Layout */
 .blog-posts, .home-grid, .services-grid {
     display: flex;
     flex-wrap: wrap;
@@ -135,7 +108,6 @@ nav a {
     box-shadow: 0 0 15px var(--accent-color);
 }
 
-/* Professional Button for Blog List Articles */
 .blog-post .read-more {
     display: inline-block;
     margin-top: 15px;
@@ -182,5 +154,19 @@ footer {
     border-top: 3px solid var(--accent-color);
     font-size: 0.9em;
     color: var(--tx-color);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+    .content-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+    .article-container, .sidebar {
+        width: 100%;
+    }
+    .blog-posts, .home-grid, .services-grid {
+        flex-direction: column;
+    }
 }
 </style>
