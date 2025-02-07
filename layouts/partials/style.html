@@ -1,66 +1,24 @@
 
 
 <style>
-/* Import Exo 2 Font */
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap');
-
-/* Global Variables */
 :root {
-  --font-title: 'Exo 2', sans-serif;
-  --font-body: 'Exo 2', sans-serif;
-  
-  /* Neon Cyberpunk Colors */
-  --tx-color: #00FFCC;
-  --bg-color: #0D0D0D;
-  --link-color: #FFA500;
-  --accent-color: #FF007F;
-  --card-bg: rgba(20, 20, 20, 0.9);
-  --shadow-color: rgba(0, 255, 255, 0.5);
-  
-  /* Button and Border Effects */
-  --glow-effect: 0 0 15px rgba(255, 165, 0, 0.8);
-  --neon-glow: 0 0 30px rgba(255, 165, 0, 1);
-}
-
-/* Dark Mode */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --tx-color: #00FFCC;
-    --bg-color: #080808;
+    --font-title: 'Exo2-VariableFont_wght', sans-serif;
+    --font-body: 'Exo2-VariableFont_wght', sans-serif;
+    --tx-color: #00FF00;
+    --bg-color: #0D0D0D;
     --link-color: #FFA500;
-    --accent-color: #FF007F;
-    --card-bg: rgba(34, 34, 34, 0.9);
-    --shadow-color: rgba(0, 255, 255, 0.5);
-  }
+    --accent-color: #FF4500;
 }
 
-/* Light Mode */
-@media (prefers-color-scheme: light) {
-  :root {
-    --tx-color: #222;
-    --bg-color: #F4F8FF;
-    --link-color: #007BFF;
-    --accent-color: #FF007F;
-    --card-bg: rgba(255, 255, 255, 0.9);
-    --shadow-color: rgba(0, 0, 0, 0.2);
-  }
-}
-
-/* Global Reset */
-body, h1, h2, h3, p, ul, ol, a, nav, footer {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Body */
 body {
-  font-family: var(--font-body);
-  color: var(--tx-color);
-  background-color: var(--bg-color);
-  line-height: 1.8;
-  padding: 20px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: var(--font-body);
+    color: var(--tx-color);
+    background-color: var(--bg-color);
+}
+
+h1 {
+    font-family: var(--font-title);
+    color: var(--link-color);
 }
 
 /* Navigation Bar */
@@ -68,133 +26,134 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--card-bg);
-  padding: 15px 20px;
-  border-bottom: 3px solid var(--accent-color);
+  background: #1a1a1a;
+  padding: 10px 20px;
+  border-bottom: 2px solid var(--accent-color);
   position: sticky;
   top: 0;
   z-index: 1000;
-  width: 100%;
-  box-shadow: var(--shadow-color) 0px 0px 10px;
 }
 
 nav a {
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: var(--tx-color);
-  transition: all 0.3s ease;
+  color: #e5e5e5;
 }
 
 nav a:hover {
-  color: var(--accent-color);
-  text-shadow: var(--glow-effect);
-  transform: scale(1.05);
+  color: var(--link-color);
 }
 
-/* Main Content Styling */
-.content-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 90%;
+/* Home & Post Page Styling */
+.home, .post {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  gap: 20px;
 }
 
-/* Article Container */
-.article-container {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--card-bg);
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px var(--shadow-color);
-  width: 100%;
-  transition: all 0.3s ease;
+.home h1, .post h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: var(--link-color);
 }
 
-.article-container:hover {
-  box-shadow: 0 0 25px var(--neon-glow);
-  transform: scale(1.02);
-}
-
-.article-container p {
+.home p, .post p {
   font-size: 1.2rem;
   margin-bottom: 20px;
-  text-align: justify;
-  line-height: 1.8;
+  max-width: 1000px;
+  margin: 10px auto;
 }
 
-/* Sidebar */
-.sidebar {
-  flex: 1;
-  background-color: var(--card-bg);
+.home ul, .post ul {
+  list-style: none;
+  padding: 0;
+}
+
+.home ul li, .post ul li {
+  margin: 10px 0;
+}
+
+.home a, .post a {
+  color: var(--tx-color);
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.home a:hover, .post a:hover {
+  color: var(--link-color);
+}
+
+/* Blog Post List, Home Grid, and Services Grid */
+.blog-posts, .home-grid, .services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px var(--shadow-color);
 }
 
-.sidebar h2 {
-  font-size: 1.8rem;
-  color: var(--accent-color);
-  margin-bottom: 15px;
-  text-shadow: var(--glow-effect);
-}
-
-/* Footer */
-footer {
-  text-align: center;
+.blog-posts a, .home-grid a, .services-grid a {
+  display: block;
   padding: 20px;
-  background: var(--card-bg);
-  border-top: 3px solid var(--accent-color);
-  font-size: 0.9em;
+  background: #1a1a1a;
+  border: 1px solid var(--tx-color);
+  border-radius: 8px;
+  transition: background 0.3s ease, border 0.3s ease, transform 0.2s ease;
+}
+
+.blog-posts a:hover, .home-grid a:hover, .services-grid a:hover {
+  background: var(--link-color);
+  border-color: var(--link-color);
+  color: #121212;
+  transform: scale(1.05);
+}
+
+.blog-post {
+  display: block;
+  background-color: #111;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-align: left;
+  margin-top: 20px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.blog-intro h2 {
+  font-size: 1.5em;
+  margin: 10px 0;
   color: var(--tx-color);
 }
 
-footer a {
-  color: var(--link-color);
+.blog-intro p {
+  font-size: 1em;
+  color: #666;
+  margin-bottom: 10px;
 }
 
-footer a:hover {
-  color: var(--accent-color);
-  text-shadow: var(--glow-effect);
+.blog-intro-second {
+  display: block;
+  margin-top: 2rem;
+  padding: 1rem;
 }
 
-/* Link Styling */
-a {
-  color: var(--link-color);
-  text-decoration: none;
-  transition: color 0.3s ease;
+/* Blog Page Specific Styling */
+.blog-page {
+    text-align: left;
+    font-family: sans-serif;
 }
 
-a:hover {
-  color: var(--accent-color);
-  text-shadow: var(--glow-effect);
-}
-
-/* Header Styling */
-h1, h2, h3 {
-  font-family: var(--font-title);
-  color: var(--accent-color);
-  text-shadow: var(--glow-effect);
-  margin-bottom: 15px;
-}
-
-h1 {
-  font-size: 2.5rem;
-}
-
-h2 {
-  font-size: 2rem;
-}
-
-h3 {
-  font-size: 1.75rem;
+.blog-page h1, 
+.blog-page h2, 
+.blog-page h3, 
+.blog-page p, 
+.blog-page ul, 
+.blog-page ol, 
+.blog-page a {
+    text-align: left;
+    font-family: sans-serif;
 }
 
 /* Button Styling */
@@ -206,46 +165,100 @@ h3 {
 
 .button-container a {
   padding: 10px 20px;
-  background: var(--card-bg);
-  border: 2px solid var(--link-color);
+  background: #1a1a1a;
+  border: 2px solid var(--tx-color);
   border-radius: 8px;
-  color: var(--tx-color);
+  color: #e5e5e5;
   text-transform: uppercase;
   font-weight: bold;
   transition: all 0.3s ease;
-  box-shadow: 0 0 10px var(--shadow-color);
 }
 
 .button-container a:hover {
-  background: var(--accent-color);
-  border-color: var(--accent-color);
-  color: var(--bg-color);
-  transform: scale(1.05);
-  box-shadow: var(--glow-effect);
+  background: var(--link-color);
+  border-color: var(--link-color);
+  color: #121212;
 }
 
-/* Blog Posts Grid */
-.blog-posts, .home-grid, .services-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 20px;
-  padding: 20px;
-}
-
-.blog-post, .home-grid-item, .services-grid-item {
-  flex: 1 1 300px;
-  background-color: var(--card-bg);
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px var(--shadow-color);
+/* Footer */
+footer {
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 20px;
+  background: #1a1a1a;
+  border-top: 2px solid var(--tx-color);
+  font-size: 0.9em;
+  color: #e5e5e5;
 }
 
-.blog-post:hover, .home-grid-item:hover, .services-grid-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px var(--neon-glow);
+footer a {
+  color: var(--tx-color);
+}
+
+footer a:hover {
+  color: var(--link-color);
+}
+
+/* Flexbox for Home and Services Pages */
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  padding: 20px;
+  text-align: center;
+}
+
+.flex-container h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: var(--link-color);
+  text-shadow: 0px 0px 20px var(--link-color);
+}
+
+.flex-container p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 10px auto;
+}
+
+/* Dark Mode Specific */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--bg-color);
+  }
+
+  nav {
+    border-bottom-color: var(--link-color);
+  }
+
+  footer {
+    border-top-color: var(--link-color);
+  }
+}
+
+/* Media & Code Blocks */
+code, pre {
+    font-family: monospace;
+}
+
+img, video {
+    display: block;
+    margin: 20px auto;
+    border: 3px solid var(--accent-color);
+    border-radius: 10px;
+    max-width: 90%;
+    height: auto;
+}
+
+.audio-container {
+    display: block;
+    margin: 20px auto;
+    border: 3px solid var(--accent-color);
+    border-radius: 10px;
+    max-width: 90%;
+    padding: 10px;
+    background-color: #1a1a1a;
 }
 </style>
 
