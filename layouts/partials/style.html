@@ -3,11 +3,11 @@
 :root {
     --font-title: 'Exo2-VariableFont_wght', sans-serif;
     --font-body: 'Exo2-VariableFont_wght', sans-serif;
-    --tx-color: #222;
-    --bg-color: #F4F8FF;
-    --link-color: #007BFF;
-    --accent-color: #FFC107;
-    --card-bg: rgba(255, 255, 255, 0.9);
+    --tx-color: #222; /* Darker text for contrast */
+    --bg-color: #F4F8FF; /* Soft sky-like blue */
+    --link-color: #007BFF; /* Bright futuristic blue */
+    --accent-color: #FFC107; /* Golden enlightenment */
+    --card-bg: rgba(255, 255, 255, 0.9); /* Soft transparency */
     --shadow-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -15,18 +15,40 @@ body {
     font-family: var(--font-body);
     color: var(--tx-color);
     background-color: var(--bg-color);
-    line-height: 1.8;
+    line-height: 1.8; /* Improved readability */
     margin: 0;
     padding: 0;
 }
 
+/* Ensure proper margin for headings */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-title);
     color: var(--link-color);
-    margin: 20px 0 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
-/* Main Layout */
+/* Proper spacing after headings */
+h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
+    margin-top: 10px;
+}
+
+/* Main Blog Page Layout */
+.blog-page {
+    text-align: left;
+}
+
+.blog-page h1, 
+.blog-page h2, 
+.blog-page h3, 
+.blog-page p, 
+.blog-page ul, 
+.blog-page ol, 
+.blog-page a {
+    text-align: left;
+}
+
+/* Main container */
 .content-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -39,8 +61,11 @@ h1, h2, h3, h4, h5, h6 {
     gap: 20px;
 }
 
+/* Article Section */
 .article-container {
     flex: 2;
+    display: flex;
+    flex-direction: column;
     background-color: var(--card-bg);
     padding: 20px;
     border-radius: 10px;
@@ -48,6 +73,13 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
 }
 
+.article-container p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    max-width: 1000px;
+}
+
+/* Sidebar Section */
 .sidebar {
     flex: 1;
     background-color: var(--card-bg);
@@ -73,7 +105,6 @@ nav {
     position: sticky;
     top: 0;
     z-index: 1000;
-    width: 100%;
 }
 
 nav a {
@@ -81,10 +112,9 @@ nav a {
     text-transform: uppercase;
     letter-spacing: 2px;
     color: var(--tx-color);
-    text-decoration: none;
 }
 
-/* Blog Layout */
+/* Grid for Blog, Home, Services */
 .blog-posts, .home-grid, .services-grid {
     display: flex;
     flex-wrap: wrap;
@@ -108,65 +138,58 @@ nav a {
     box-shadow: 0 0 15px var(--accent-color);
 }
 
-.blog-post .read-more {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 12px 18px;
+/* Button Styling for Blog Articles */
+.blog-post button {
     background-color: var(--link-color);
-    color: #fff;
-    font-weight: bold;
-    text-transform: uppercase;
-    border-radius: 5px;
-    transition: background 0.3s ease, transform 0.2s ease;
-    text-decoration: none;
-    font-size: 1rem;
-}
-
-.blog-post .read-more:hover {
-    background-color: var(--accent-color);
-    color: #222;
-    transform: translateY(-2px);
-}
-
-/* Buttons */
-.button-container a {
+    color: white;
     padding: 10px 20px;
-    background: var(--card-bg);
-    border: 2px solid var(--link-color);
-    border-radius: 8px;
-    color: var(--tx-color);
-    text-transform: uppercase;
-    font-weight: bold;
-    transition: all 0.3s ease;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.button-container a:hover {
-    background: var(--accent-color);
-    border-color: var(--accent-color);
-    color: #121212;
+.blog-post button:hover {
+    background-color: var(--accent-color);
 }
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 20px;
-    background: var(--card-bg);
-    border-top: 3px solid var(--accent-color);
-    font-size: 0.9em;
-    color: var(--tx-color);
-}
-
-/* Responsive Design */
-@media screen and (max-width: 1024px) {
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    /* Stack the sidebar and article container */
     .content-wrapper {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
     }
+
+    /* Sidebar and article containers should take full width */
     .article-container, .sidebar {
         width: 100%;
+        margin-bottom: 20px;
     }
-    .blog-posts, .home-grid, .services-grid {
-        flex-direction: column;
+
+    /* Adjust font sizes and spacing for readability on smaller screens */
+    .article-container p {
+        font-size: 1rem;
+    }
+
+    nav {
+        padding: 10px 15px;
+    }
+
+    nav a {
+        font-size: 0.9rem;
+    }
+}
+
+/* Tablet Responsiveness */
+@media screen and (max-width: 1024px) {
+    .content-wrapper {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .article-container, .sidebar {
+        width: 45%;
     }
 }
 </style>
