@@ -1,54 +1,61 @@
 
+
 <style>
-/* Import Exo 2 Font */
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap');
+/* Import IBM Plex Mono Font */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
 
-/* Global Variables */
-:root {
-  --font-title: 'Exo 2', sans-serif;
-  --font-body: 'Exo 2', sans-serif;
-  
-  /* Neon Cyberpunk Colors */
-  --tx-color: #00FFCC;
-  --bg-color: #0D0D0D;
-  --link-color: #FFA500;
-  --accent-color: #FF007F;
-  --card-bg: rgba(20, 20, 20, 0.9);
-  --shadow-color: rgba(0, 255, 255, 0.5);
-  
-  /* Button and Border Effects */
-  --glow-effect: 0 0 15px rgba(255, 165, 0, 0.8);
-}
-
-/* Dark Mode */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --tx-color: #00FFCC;
-    --bg-color: #080808;
-    --link-color: #FFA500;
-    --accent-color: #FF007F;
-    --card-bg: rgba(34, 34, 34, 0.9);
-    --shadow-color: rgba(0, 255, 255, 0.5);
-  }
-}
-
-/* Light Mode */
-@media (prefers-color-scheme: light) {
-  :root {
-    --tx-color: #222;
-    --bg-color: #F4F8FF;
-    --link-color: #007BFF;
-    --accent-color: #FF007F;
-    --card-bg: rgba(255, 255, 255, 0.9);
-    --shadow-color: rgba(0, 0, 0, 0.2);
-  }
-}
-
-/* Global Reset */
+/* General Reset */
 body, h1, h2, h3, p, ul, ol, a, nav, footer {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --tx-color: #EAEAEA;
+    --bg-color: #121212;
+    --link-color: #50A7F2;
+    --accent-color: #FFC107;
+    --card-bg: rgba(34, 34, 34, 0.9);
+    --shadow-color: rgba(0, 0, 0, 0.5);
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--tx-color);
+  }
+
+  footer {
+    background: var(--card-bg);
+    border-top: 3px solid var(--accent-color);
+  }
+
+  nav {
+    background: var(--card-bg);
+    border-bottom: 3px solid var(--accent-color);
+  }
+
+  a {
+    color: var(--link-color);
+  }
+
+  a:hover {
+    color: var(--accent-color);
+  }
+}
+
+/* Light Mode Support */
+:root {
+  --font-title: 'IBM Plex Mono', monospace;
+  --font-body: 'IBM Plex Mono', monospace;
+  --tx-color: #222;
+  --bg-color: #F4F8FF;
+  --link-color: #007BFF;
+  --accent-color: #FFC107;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --shadow-color: rgba(0, 0, 0, 0.2);
 }
 
 /* Body */
@@ -57,8 +64,6 @@ body {
   color: var(--tx-color);
   background-color: var(--bg-color);
   line-height: 1.8;
-  padding-top: 50px; /* To prevent nav overlap */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 /* Navigation Bar */
@@ -73,7 +78,6 @@ nav {
   top: 0;
   z-index: 1000;
   width: 100%;
-  box-shadow: var(--shadow-color) 0px 0px 10px;
 }
 
 nav a {
@@ -81,15 +85,13 @@ nav a {
   text-transform: uppercase;
   letter-spacing: 2px;
   color: var(--tx-color);
-  transition: all 0.3s ease;
 }
 
 nav a:hover {
   color: var(--accent-color);
-  text-shadow: var(--glow-effect);
 }
 
-/* Main Content Wrapper */
+/* Main Content Styling */
 .content-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -110,14 +112,8 @@ nav a:hover {
   background-color: var(--card-bg);
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 15px var(--shadow-color);
+  box-shadow: 0 0 10px var(--shadow-color);
   width: 100%;
-  transition: all 0.3s ease;
-}
-
-.article-container:hover {
-  box-shadow: 0 0 25px var(--glow-effect);
-  transform: scale(1.02);
 }
 
 .article-container p {
@@ -132,14 +128,13 @@ nav a:hover {
   background-color: var(--card-bg);
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 15px var(--shadow-color);
+  box-shadow: 0 0 10px var(--shadow-color);
 }
 
 .sidebar h2 {
   font-size: 1.8rem;
   color: var(--accent-color);
   margin-bottom: 15px;
-  text-shadow: var(--glow-effect);
 }
 
 /* Footer */
@@ -158,35 +153,36 @@ footer a {
 
 footer a:hover {
   color: var(--accent-color);
-  text-shadow: var(--glow-effect);
 }
 
 /* Link Styling */
 a {
-  color: var(--link-color);
+  color: #00ffcc; /* Neon green-blue for links */
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 a:hover {
-  color: var(--accent-color);
-  text-shadow: var(--glow-effect);
+  color: #ff9900; /* Bitcoin orange accent for hover */
 }
 
 /* Header Styling */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-title);
-  color: var(--accent-color);
-  text-shadow: var(--glow-effect);
-  margin-bottom: 15px;
+h1, h2, h3 {
+  font-family: 'IBM Plex Mono', monospace;
+  color: #ff9900; /* Bitcoin orange for headers */
 }
 
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
-h3 { font-size: 1.75rem; }
-h4 { font-size: 1.5rem; }
-h5 { font-size: 1.25rem; }
-h6 { font-size: 1.1rem; }
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
 
 /* Button Styling */
 .button-container {
@@ -204,77 +200,15 @@ h6 { font-size: 1.1rem; }
   text-transform: uppercase;
   font-weight: bold;
   transition: all 0.3s ease;
-  box-shadow: 0 0 10px var(--shadow-color);
 }
 
 .button-container a:hover {
   background: var(--accent-color);
   border-color: var(--accent-color);
   color: var(--bg-color);
-  transform: scale(1.05);
-  box-shadow: var(--glow-effect);
-}
-
-/* Grid Layout for Blog, Home, and Services */
-.home-grid, .services-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 20px;
-}
-
-.home-grid-item, .services-grid-item {
-  flex: 1 1 300px;
-  background-color: var(--card-bg);
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px var(--shadow-color);
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.home-grid-item:hover, .services-grid-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px var(--glow-effect);
-}
-
-/* Responsive Design Adjustments */
-@media (min-width: 1024px) {
-  .content-wrapper {
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-  .article-container, .sidebar {
-    flex: 1 1 48%; /* Two columns on larger screens */
-  }
-}
-
-@media (max-width: 768px) {
-  .home-grid, .services-grid {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .home-grid-item, .services-grid-item {
-    width: 100%; /* Stack items vertically on smaller screens */
-    margin-bottom: 20px;
-  }
-
-  /* Adjust Button and Layout for Small Screens */
-  .button-container a {
-    width: 100%;
-    margin: 10px 0;
-  }
-}
-
-/* Footer on Small Screens */
-@media (max-width: 600px) {
-  footer {
-    padding: 15px;
-  }
+  transform: scale(1.05); /* Slight zoom effect */
 }
 </style>
+
 
 
