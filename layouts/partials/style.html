@@ -1,6 +1,6 @@
 <style>
 /* ==========================================================================
-   Bear Hugo Blog - Cyberpunk Theme (Revised)
+   Bear Hugo Blog - Cyberpunk Theme
    Author: Your Name
    ========================================================================== */
 
@@ -50,7 +50,7 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    --tx-color: #222;          /* Dark Text for Light Background */
+    --tx-color: #222;
     --bg-color: #F4F8FF;
     --link-color: #007BFF;
     --accent-color: #FF007F;
@@ -185,7 +185,6 @@ nav a:hover {
   margin-bottom: 20px;
   text-align: justify;
   line-height: 1.8;
-  color: var(--tx-color); /* Explicitly set text color */
 }
 
 /* Article Container - Specific Elements (Example) */
@@ -293,28 +292,6 @@ nav a:hover {
 .blog-post:hover, .home-grid-item:hover, .services-grid-item:hover {
   transform: scale(1.05);
   box-shadow: 0 0 15px var(--neon-glow);
-}
-
-/* ==========================================================================
-   Services Grid Specific Fixes (if needed)
-   ========================================================================== */
-.services-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center; /* Center items horizontally */
-  align-items: stretch;    /* Ensure items stretch to fill height */
-  gap: 20px;
-  padding: 20px;
-}
-
-.services-grid-item {
-  flex: 1 1 300px;
-  background-color: var(--card-bg);
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px var(--shadow-color);
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* ==========================================================================
