@@ -9,22 +9,130 @@
 }
 
 /* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: var(--font-body);
     color: var(--tx-color);
     background-color: var(--bg-color);
+    line-height: 1.6;
 }
 
-/* Titles */
-h1 {
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 40px 0;
+    background-color: #222;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.site-title {
     font-family: var(--font-title);
     color: var(--link-color);
+    font-size: 2.5rem;
+}
+
+/* Main Content */
+.main-content {
+    margin: 30px 0;
+}
+
+.post {
+    background-color: #1a1a1a;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.post-title {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: var(--link-color);
+}
+
+.post-meta {
+    font-size: 1rem;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+}
+
+.post-content {
+    font-size: 1.1rem;
+    color: var(--tx-color);
+}
+
+.post-content a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.post-content a:hover {
+    text-decoration: underline;
+}
+
+.audio-container {
+    display: block;
+    margin: 20px auto;
+    border: 3px solid var(--accent-color);
+    border-radius: 10px;
+    max-width: 90%;
+    padding: 10px;
+    background-color: #1a1a1a;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--tx-color);
+    margin-top: 15px;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Footer */
+.footer {
+    background-color: #222;
+    color: var(--tx-color);
+    padding: 15px 0;
+    text-align: center;
+    margin-top: 40px;
+    border-top: 2px solid var(--accent-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .site-title {
+        font-size: 1.8rem;
+    }
+
+    .post-title {
+        font-size: 1.6rem;
+    }
+
+    .post-meta {
+        font-size: 0.9rem;
+    }
+
+    .post-content {
+        font-size: 1rem;
+    }
 }
 
 /* Blog Page Specific Styling */
 .blog-page {
-    text-align: left;  /* Aligns text to the left */
-    font-family: sans-serif; /* Uses sans-serif font only for blog pages */
+    text-align: left;
+    font-family: sans-serif;
 }
 
 .blog-page h1, 
@@ -34,8 +142,8 @@ h1 {
 .blog-page ul, 
 .blog-page ol, 
 .blog-page a {
-    text-align: left; /* Ensures all text elements use left alignment */
-    font-family: sans-serif; /* Ensures all text elements use sans-serif */
+    text-align: left;
+    font-family: sans-serif;
 }
 
 /* Blog Post Styling */
