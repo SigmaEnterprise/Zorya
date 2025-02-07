@@ -8,7 +8,7 @@ date = "2025-01-29"
 
 ### **Getting Started with Bitcoin Core Development**  
 
-If you're looking to contribute to Bitcoin Core, having a solid foundation in development is key—especially for technical tasks like reviewing new proposals. This requires an in-depth understanding of [Bitcoin Improvement Proposals (BIPs)](https://gnusha.org/pi/bitcoindev/CAMHHROw9mZJRnTbUo76PdqwJU==YJMvd9Qrst+nmyypaedYZgg@mail.gmail.com/T/#mf21debb5be815a846099958fcf9562b533c2a08a) and how they shape Bitcoin's future. Hands-on experience with coding, debugging, and tools like the Bitcoin Core debug console can significantly enhance your ability to troubleshoot and contribute effectively ([source](https://achow101.com/2016/07/Bitcoin-Core-Troubleshooting)).  
+If you're looking to contribute to Bitcoin Core, having a solid foundation in development is key—especially for technical tasks like reviewing new proposals. This requires an in-depth understanding of [Bitcoin Improvement Proposals (BIPs)](https://gnusha.org/pi/bitcoindev/CAMHHROw9mZJRnTbUo76PdqwJU==YJMvd9Qrst+nmyypaedYZgg@mail.gmail.com/T/#mf21debb5be815a846099958fcf9562b533c2a08a) and how they shape Bitcoin's future. Hands-on experience with coding, debugging, and tools like the Bitcoin Core debug console can significantly enhance your ability to troubleshoot and contribute effectively ([source](https://achow101.com/2016/07/Bitcoin-Core-Troubleshooting)).
 
 ---
 
@@ -16,15 +16,15 @@ If you're looking to contribute to Bitcoin Core, having a solid foundation in de
 
 As a Bitcoin Core developer, you’ll often encounter and help resolve common user issues such as:  
 
-1. **Stuck Transactions** – Transactions may get stuck if they include low fees. Users can resolve this by using the `abandontransaction` command or starting Bitcoin Core with the `zapwallettxes` option to remove the unconfirmed transaction and resend it with a higher fee ([source](https://achow101.com/2016/07/Bitcoin-Core-Troubleshooting)).  
+1. **Stuck Transactions** – Transactions may get stuck if they include low fees. Users can resolve this by using the `abandontransaction` command or starting Bitcoin Core with the `zapwallettxes` option to remove the unconfirmed transaction and resend it with a higher fee ([source](https://achow101.com/2016/07/Bitcoin-Core-Troubleshooting)).
 
-2. **Incorrect Wallet Balance** – A wallet might display an incorrect balance if it hasn't fully synchronized with the network. Ensuring full sync and verifying the receiving addresses can help. If the issue persists, restarting Bitcoin Core with the `rescan` option can correct balance discrepancies ([source](https://achow101.com/2016/07/Bitcoin-Core-Troubleshooting)).  
+2. **Incorrect Wallet Balance** – A wallet might display an incorrect balance if it hasn't fully synchronized with the network. Ensuring full sync and verifying the receiving addresses can help. If the issue persists, restarting Bitcoin Core with the `rescan` option can correct balance discrepancies ([source](https://achow101.com/2016/07/Bitcoin-Core-Troubleshooting)).
 
-3. **Empty Wallets** – Sometimes, a wallet may appear empty due to an incorrect data directory setting. This often happens when Bitcoin Core reverts to default settings. Manually selecting the correct data directory should restore access to funds ([source](https://achow101.com/2016/07/Bitcoin-Core-Troubleshooting)).  
+3. **Empty Wallets** – Sometimes, a wallet may appear empty due to an incorrect data directory setting. This often happens when Bitcoin Core reverts to default settings. Manually selecting the correct data directory should restore access to funds ([source](https://achow101.com/2016/07/Bitcoin-Core-Troubleshooting)).
 
-4. **Compatibility Issues with Older Nodes** – Older Bitcoin Core nodes (e.g., version 0.12.x) may struggle to propagate blocks to newer nodes, potentially causing chain splits and reorganizations, particularly on Testnet ([source](https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2017-March/013771.html)).  
+4. **Compatibility Issues with Older Nodes** – Older Bitcoin Core nodes (e.g., version 0.12.x) may struggle to propagate blocks to newer nodes, potentially causing chain splits and reorganizations, particularly on Testnet ([source](https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2017-March/013771.html)).
 
-💡 **Want to dive deeper into Bitcoin Core troubleshooting?** Check out the [detailed guide here](https://achow101.com/2016/07/Bitcoin-Core-Troubleshooting).  
+💡 **Want to dive deeper into Bitcoin Core troubleshooting?** Check out the [detailed guide here](https://achow101.com/2016/07/Bitcoin-Core-Troubleshooting).
 
 ---
 
@@ -37,7 +37,7 @@ BIP editors play a crucial role in the Bitcoin Improvement Proposal (BIP) proces
 - **Checking Formal Criteria** – While editors ensure proposals meet submission standards, the broader Bitcoin community evaluates their technical soundness.  
 - **Maintaining the Repository** – Keeping the BIP repository organized and up-to-date.  
 
-Expanding the team of BIP editors is vital to reducing bottlenecks, improving efficiency, and maintaining a transparent and community-driven proposal system. Learn more about the role of BIP editors [here](https://gnusha.org/pi/bitcoindev/CAMHHROw9mZJRnTbUo76PdqwJU==YJMvd9Qrst+nmyypaedYZgg@mail.gmail.com/T/#m10b97e9401be8149c43dd4bcfcb2b8719737f0d3).  
+Expanding the team of BIP editors is vital to reducing bottlenecks, improving efficiency, and maintaining a transparent and community-driven proposal system. Learn more about the role of BIP editors [here](https://gnusha.org/pi/bitcoindev/CAMHHROw9mZJRnTbUo76PdqwJU==YJMvd9Qrst+nmyypaedYZgg@mail.gmail.com/T/#m10b97e9401be8149c43dd4bcfcb2b8719737f0d3).
 
 ---
 
@@ -45,23 +45,24 @@ Expanding the team of BIP editors is vital to reducing bottlenecks, improving ef
 
 Getting involved with Bitcoin Core doesn’t just mean writing code. Here are some innovative ways to contribute and grow in the ecosystem:  
 
-1. **Join Open Issues & Discussions** – Participate in [Bitcoin Core’s GitHub discussions](https://github.com/bitcoin/bitcoin/issues) and help review or test open pull requests.  
+1. **Join Open Issues & Discussions** – Participate in [Bitcoin Core’s GitHub discussions](https://github.com/bitcoin/bitcoin/issues) and help review or test open pull requests.
 
-2. **Contribute to BIP Documentation** – Writing clear and concise BIP summaries or helping maintain the repository can provide valuable experience.  
+2. **Contribute to BIP Documentation** – Writing clear and concise BIP summaries or helping maintain the repository can provide valuable experience.
 
-3. **Develop Tools for the Bitcoin Ecosystem** – Create debugging, monitoring, or analytics tools that help node operators and developers optimize performance.  
+3. **Develop Tools for the Bitcoin Ecosystem** – Create debugging, monitoring, or analytics tools that help node operators and developers optimize performance.
 
-4. **Run a Full Node & Experiment Locally** – Set up your own Bitcoin Core node, test features, and simulate real-world issues. This will deepen your understanding of the protocol.  
+4. **Run a Full Node & Experiment Locally** – Set up your own Bitcoin Core node, test features, and simulate real-world issues. This will deepen your understanding of the protocol.
 
-5. **Attend or Host Bitcoin Core Workshops** – Engage with developer communities through hackathons, online forums, or in-person meetups.  
+5. **Attend or Host Bitcoin Core Workshops** – Engage with developer communities through hackathons, online forums, or in-person meetups.
 
-6. **Write Educational Content** – Share your learning journey by blogging about Bitcoin Core development, troubleshooting, or privacy best practices.  
+6. **Write Educational Content** – Share your learning journey by blogging about Bitcoin Core development, troubleshooting, or privacy best practices.
 
-7. **Network with Maintainers & Contributors** – Follow key developers, join Bitcoin IRC channels, and participate in technical discussions.  
+7. **Network with Maintainers & Contributors** – Follow key developers, join Bitcoin IRC channels, and participate in technical discussions.
 
-🚀 Ready to get started? Check out this [Bitcoin Core development guide](https://github.com/bitcoin/bitcoin/blob/master/CONTRIBUTING.md).  
+🚀 Ready to get started? Check out this [Bitcoin Core development guide](https://github.com/bitcoin/bitcoin/blob/master/CONTRIBUTING.md).
 
 ---
+
 ### Sources and Further Reading:
 
 - [Bitcoin Dev Email #1](https://gnusha.org/pi/bitcoindev/CAMHHROw9mZJRnTbUo76PdqwJU==YJMvd9Qrst+nmyypaedYZgg@mail.gmail.com/T/#mf21debb5be815a846099958fcf9562b533c2a08a)
