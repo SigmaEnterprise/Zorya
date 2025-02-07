@@ -21,55 +21,10 @@ h1 {
     color: var(--link-color);
 }
 
-/* Navigation Bar */
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #1a1a1a;
-    padding: 10px 20px;
-    border-bottom: 2px solid #00ffcc;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-nav a {
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #e5e5e5;
-}
-
-nav a:hover {
-    color: var(--link-color);
-}
-
-/* Home & Post Page Styling */
-.home, .post {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.home h1, .post h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: var(--link-color);
-}
-
-.home p, .post p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    max-width: 1000px;
-    margin: 10px auto;
-    text-align: left;
-}
-
 /* Blog Page Specific Styling */
 .blog-page {
-    text-align: left;
-    font-family: sans-serif;
+    text-align: left;  /* Aligns text to the left */
+    font-family: sans-serif; /* Uses sans-serif font only for blog pages */
 }
 
 .blog-page h1, 
@@ -80,7 +35,33 @@ nav a:hover {
 .blog-page ol, 
 .blog-page a {
     text-align: left;
-    font-family: sans-serif;
+    font-family: sans-serif; /* Ensures all text elements use sans-serif */
+}
+
+/* Blog Post Styling */
+.blog-post {
+    display: block;
+    background-color: #111;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: left;
+    margin-top: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.blog-intro h2 {
+    font-size: 1.5em;
+    margin: 10px 0;
+    color: #0f0;
+}
+
+.blog-intro p {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 10px;
 }
 
 /* Blog Post List, Home Grid, and Services Grid */
@@ -105,31 +86,6 @@ nav a:hover {
     border-color: var(--link-color);
     color: #121212;
     transform: scale(1.05);
-}
-
-.blog-post {
-    display: block;
-    background-color: #111;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    text-align: left;
-    margin-top: 20px;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-.blog-intro h2 {
-    font-size: 1.5em;
-    margin: 10px 0;
-    color: #0f0;
-}
-
-.blog-intro p {
-    font-size: 1em;
-    color: #666;
-    margin-bottom: 10px;
 }
 
 /* Button Styling */
