@@ -15,7 +15,7 @@ body {
     font-family: var(--font-body);
     color: var(--tx-color);
     background-color: var(--bg-color);
-    line-height: 1.6;
+    line-height: 1.8; /* Improved readability */
     margin: 0;
     padding: 0;
 }
@@ -27,12 +27,11 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 10px;
 }
 
-/* Ensuring proper spacing after headings */
+/* Proper spacing after headings */
 h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
     margin-top: 10px;
 }
 
-/* Blog Page Styling */
 .blog-page {
     text-align: left;
 }
@@ -47,7 +46,7 @@ h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
     text-align: left;
 }
 
-/* Container */
+/* Main container */
 .content-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -140,7 +139,7 @@ nav a {
 .blog-post .read-more {
     display: inline-block;
     margin-top: 15px;
-    padding: 10px 15px;
+    padding: 12px 18px;
     background-color: var(--link-color);
     color: #fff;
     font-weight: bold;
@@ -148,6 +147,7 @@ nav a {
     border-radius: 5px;
     transition: background 0.3s ease, transform 0.2s ease;
     text-decoration: none;
+    font-size: 1rem;
 }
 
 .blog-post .read-more:hover {
@@ -183,5 +183,4 @@ footer {
     font-size: 0.9em;
     color: var(--tx-color);
 }
-
 </style>
