@@ -19,6 +19,7 @@
   
   /* Button and Border Effects */
   --glow-effect: 0 0 15px rgba(255, 165, 0, 0.8);
+  --neon-glow: 0 0 30px rgba(255, 165, 0, 1);
 }
 
 /* Dark Mode */
@@ -58,6 +59,8 @@ body {
   color: var(--tx-color);
   background-color: var(--bg-color);
   line-height: 1.8;
+  padding: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Navigation Bar */
@@ -86,6 +89,7 @@ nav a {
 nav a:hover {
   color: var(--accent-color);
   text-shadow: var(--glow-effect);
+  transform: scale(1.05);
 }
 
 /* Main Content Styling */
@@ -115,14 +119,15 @@ nav a:hover {
 }
 
 .article-container:hover {
-  box-shadow: 0 0 25px var(--glow-effect);
+  box-shadow: 0 0 25px var(--neon-glow);
   transform: scale(1.02);
 }
 
 .article-container p {
   font-size: 1.2rem;
   margin-bottom: 20px;
-  max-width: 1000px;
+  text-align: justify;
+  line-height: 1.8;
 }
 
 /* Sidebar */
@@ -177,6 +182,7 @@ h1, h2, h3 {
   font-family: var(--font-title);
   color: var(--accent-color);
   text-shadow: var(--glow-effect);
+  margin-bottom: 15px;
 }
 
 h1 {
@@ -239,50 +245,7 @@ h3 {
 
 .blog-post:hover, .home-grid-item:hover, .services-grid-item:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 15px var(--glow-effect);
-}
-
-/* Flexbox for Home and Services Pages */
-.flex-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 80px); /* Adjust for header/footer */
-  padding: 20px;
-  text-align: center;
-}
-
-.flex-container h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  color: #ff9900;
-  text-shadow: 0px 0px 20px #ff9900;
-}
-
-.flex-container p {
-  font-size: 1.2rem;
-  max-width: 800px;
-  margin: 10px auto;
-}
-
-.flex-container ul {
-  list-style: none;
-  padding: 0;
-}
-
-.flex-container ul li {
-  margin: 10px 0;
-}
-
-.flex-container a {
-  color: #00ffcc;
-  text-decoration: underline;
-  font-weight: bold;
-}
-
-.flex-container a:hover {
-  color: #ff9900;
+  box-shadow: 0 0 15px var(--neon-glow);
 }
 </style>
 
