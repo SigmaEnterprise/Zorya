@@ -1,5 +1,5 @@
 <style>
-:root {
+root {
     --font-title: 'Exo2-VariableFont_wght', sans-serif;
     --font-body: 'Exo2-VariableFont_wght', sans-serif;
     --tx-color: #00FF00;
@@ -20,9 +20,9 @@ h1 {
     color: var(--link-color);
 }
 
-/* Blog Page Specific Styling */
+/* Blog Page Styling */
 .blog-page {
-    text-align: left;  /* Aligns text to the left */
+    text-align: left;
 }
 
 .blog-page h1, 
@@ -105,21 +105,28 @@ nav a {
     color: #e5e5e5;
 }
 
-/* Blog Posts Grid */
-.blog-posts {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+/* Blog, Home, and Services Grid */
+.blog-posts, .home-grid, .services-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
     gap: 20px;
     padding: 20px;
 }
 
-.blog-post {
+.blog-post, .home-grid-item, .services-grid-item {
+    flex: 1 1 300px;
     background-color: #111;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    text-align: left;
-    margin-top: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-post:hover, .home-grid-item:hover, .services-grid-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 165, 0, 0.8);
 }
 
 /* Buttons */
@@ -149,4 +156,5 @@ footer {
     font-size: 0.9em;
     color: #e5e5e5;
 }
+
 </style>
