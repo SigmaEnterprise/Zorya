@@ -245,3 +245,5 @@ The **NerdSoloMiner v2** combines learning, creativity, and Bitcoin mining into 
 
 **Ready to start mining?**  
 
+
+
