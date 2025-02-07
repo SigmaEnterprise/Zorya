@@ -22,11 +22,28 @@ body {
     line-height: 1.6;
 }
 
-.container {
-    width: 90%;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
+/* Navigation Bar */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1a1a1a; /* Slightly lighter dark background */
+  padding: 10px 20px;
+  border-bottom: 2px solid #00ffcc; /* Neon line separator */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+nav a {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #e5e5e5;
+}
+
+nav a:hover {
+  color: #ff9900;
 }
 
 /* Header */
@@ -44,6 +61,13 @@ body {
 }
 
 /* Main Content */
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
 .main-content {
     margin: 30px 0;
 }
@@ -82,22 +106,39 @@ body {
     text-decoration: underline;
 }
 
-.audio-container {
-    display: block;
-    margin: 20px auto;
-    border: 3px solid var(--accent-color);
-    border-radius: 10px;
-    max-width: 90%;
-    padding: 10px;
-    background-color: #1a1a1a;
+/* Blog Page Specific Styling */
+.blog-page {
+    text-align: left;  /* Aligns text to the left */
+    font-family: sans-serif; /* Uses sans-serif font only for blog pages */
 }
 
-.subtitle {
-    font-size: 1.2rem;
-    color: var(--tx-color);
-    margin-top: 15px;
-    font-style: italic;
-    text-align: center;
+.blog-page h1, 
+.blog-page h2, 
+.blog-page h3, 
+.blog-page p, 
+.blog-page ul, 
+.blog-page ol, 
+.blog-page a {
+    text-align: left;
+    font-family: sans-serif; /* Ensures all text elements use sans-serif */
+}
+
+.blog-intro h2 {
+  font-size: 1.5em;
+  margin: 10px 0;
+  color: #0f0;
+}
+
+.blog-intro p {
+  font-size: 1em;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.blog-intro-second {
+  display: block; /* Changed from flex to block for natural alignment */
+  margin-top: 2rem;
+  padding: 1rem;
 }
 
 /* Footer */
@@ -110,90 +151,12 @@ body {
     border-top: 2px solid var(--accent-color);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .site-title {
-        font-size: 1.8rem;
-    }
-
-    .post-title {
-        font-size: 1.6rem;
-    }
-
-    .post-meta {
-        font-size: 0.9rem;
-    }
-
-    .post-content {
-        font-size: 1rem;
-    }
+footer a {
+    color: var(--link-color);
 }
 
-/* Blog Page Specific Styling */
-.blog-page {
-    text-align: left;
-    font-family: sans-serif;
-}
-
-.blog-page h1, 
-.blog-page h2, 
-.blog-page h3, 
-.blog-page p, 
-.blog-page ul, 
-.blog-page ol, 
-.blog-page a {
-    text-align: left;
-    font-family: sans-serif;
-}
-
-/* Blog Post Styling */
-.blog-post {
-    display: block;
-    background-color: #111;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    text-align: left;
-    margin-top: 20px;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-.blog-intro h2 {
-    font-size: 1.5em;
-    margin: 10px 0;
-    color: #0f0;
-}
-
-.blog-intro p {
-    font-size: 1em;
-    color: #666;
-    margin-bottom: 10px;
-}
-
-/* Blog Post List, Home Grid, and Services Grid */
-.blog-posts, .home-grid, .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
-    padding: 20px;
-}
-
-.blog-posts a, .home-grid a, .services-grid a {
-    display: block;
-    padding: 20px;
-    background: #1a1a1a;
-    border: 1px solid #00ffcc;
-    border-radius: 8px;
-    transition: background 0.3s ease, border 0.3s ease, transform 0.2s ease;
-}
-
-.blog-posts a:hover, .home-grid a:hover, .services-grid a:hover {
-    background: var(--link-color);
-    border-color: var(--link-color);
-    color: #121212;
-    transform: scale(1.05);
+footer a:hover {
+    color: #ff9900;
 }
 
 /* Button Styling */
@@ -215,27 +178,9 @@ body {
 }
 
 .button-container a:hover {
-    background: var(--link-color);
-    border-color: var(--link-color);
+    background: #ff9900;
+    border-color: #ff9900;
     color: #121212;
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    padding: 20px;
-    background: #1a1a1a;
-    border-top: 2px solid #00ffcc;
-    font-size: 0.9em;
-    color: #e5e5e5;
-}
-
-footer a {
-    color: #00ffcc;
-}
-
-footer a:hover {
-    color: var(--link-color);
 }
 
 /* Flexbox for Home and Services Pages */
@@ -244,7 +189,7 @@ footer a:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 80px); /* Adjust for header/footer */
     padding: 20px;
     text-align: center;
 }
@@ -252,8 +197,8 @@ footer a:hover {
 .flex-container h1 {
     font-size: 3rem;
     margin-bottom: 20px;
-    color: var(--link-color);
-    text-shadow: 0px 0px 20px var(--link-color);
+    color: #ff9900;
+    text-shadow: 0px 0px 20px #ff9900;
 }
 
 .flex-container p {
@@ -278,46 +223,65 @@ footer a:hover {
 }
 
 .flex-container a:hover {
-    color: var(--link-color);
+    color: #ff9900;
 }
 
-/* Code Styling */
-code, pre {
-    font-family: monospace;
+/* Blog Post List, Home Grid, and Services Grid */
+.blog-posts, .home-grid, .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Flexible grid layout */
+    gap: 20px;
+    padding: 20px;
 }
 
-/* Media Styling */
-img, video {
+.blog-posts a, .home-grid a, .services-grid a {
     display: block;
-    margin: 20px auto;
-    border: 3px solid var(--accent-color);
-    border-radius: 10px;
-    max-width: 90%;
-    height: auto;
+    padding: 20px;
+    background: #1a1a1a;
+    border: 1px solid #00ffcc;
+    border-radius: 8px;
+    transition: background 0.3s ease, border 0.3s ease, transform 0.2s ease;
 }
 
-.audio-container {
-    display: block;
-    margin: 20px auto;
-    border: 3px solid var(--accent-color);
-    border-radius: 10px;
-    max-width: 90%;
-    padding: 10px;
-    background-color: #1a1a1a;
+.blog-posts a:hover, .home-grid a:hover, .services-grid a:hover {
+    background: #ff9900;
+    border-color: #ff9900;
+    color: #121212;
+    transform: scale(1.05); /* Slight zoom for hover */
 }
 
-/* Dark Mode */
+/* Dark Mode Specific */
 @media (prefers-color-scheme: dark) {
     body {
-        background-color: var(--bg-color);
+        background-color: #0d0d0d; /* Even darker background for full immersion */
     }
 
     nav {
-        border-bottom-color: var(--link-color);
+        border-bottom-color: #ff9900;
     }
 
     footer {
-        border-top-color: var(--link-color);
+        border-top-color: #ff9900;
     }
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .site-title {
+        font-size: 1.8rem;
+    }
+
+    .post-title {
+        font-size: 1.6rem;
+    }
+
+    .post-meta {
+        font-size: 0.9rem;
+    }
+
+    .post-content {
+        font-size: 1rem;
+    }
+}
+
 </style>
