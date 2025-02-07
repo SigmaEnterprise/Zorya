@@ -15,12 +15,11 @@ body {
     font-family: var(--font-body);
     color: var(--tx-color);
     background-color: var(--bg-color);
-    line-height: 1.8; /* Improved readability */
+    line-height: 1.8;
     margin: 0;
     padding: 0;
 }
 
-/* Ensure proper margin for headings */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-title);
     color: var(--link-color);
@@ -28,12 +27,6 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 10px;
 }
 
-/* Proper spacing after headings */
-h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
-    margin-top: 10px;
-}
-
-/* Main Blog Page Layout */
 .blog-page {
     text-align: left;
 }
@@ -61,7 +54,6 @@ h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
     gap: 20px;
 }
 
-/* Article Section */
 .article-container {
     flex: 2;
     display: flex;
@@ -79,7 +71,7 @@ h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
     max-width: 1000px;
 }
 
-/* Sidebar Section */
+/* Sidebar */
 .sidebar {
     flex: 1;
     background-color: var(--card-bg);
@@ -105,6 +97,7 @@ nav {
     position: sticky;
     top: 0;
     z-index: 1000;
+    width: 100%;
 }
 
 nav a {
@@ -114,7 +107,34 @@ nav a {
     color: var(--tx-color);
 }
 
-/* Grid for Blog, Home, Services */
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    nav a {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+
+    .content-wrapper {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .article-container {
+        width: 100%;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+}
+
 .blog-posts, .home-grid, .services-grid {
     display: flex;
     flex-wrap: wrap;
@@ -138,58 +158,52 @@ nav a {
     box-shadow: 0 0 15px var(--accent-color);
 }
 
-/* Button Styling for Blog Articles */
-.blog-post button {
+/* Professional Button for Blog List Articles */
+.blog-post .read-more {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 18px;
     background-color: var(--link-color);
-    color: white;
-    padding: 10px 20px;
-    border: none;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
     border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    font-size: 1rem;
 }
 
-.blog-post button:hover {
+.blog-post .read-more:hover {
     background-color: var(--accent-color);
+    color: #222;
+    transform: translateY(-2px);
 }
 
-/* Mobile Responsiveness */
-@media screen and (max-width: 768px) {
-    /* Stack the sidebar and article container */
-    .content-wrapper {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    /* Sidebar and article containers should take full width */
-    .article-container, .sidebar {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    /* Adjust font sizes and spacing for readability on smaller screens */
-    .article-container p {
-        font-size: 1rem;
-    }
-
-    nav {
-        padding: 10px 15px;
-    }
-
-    nav a {
-        font-size: 0.9rem;
-    }
+/* Buttons */
+.button-container a {
+    padding: 10px 20px;
+    background: var(--card-bg);
+    border: 2px solid var(--link-color);
+    border-radius: 8px;
+    color: var(--tx-color);
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: all 0.3s ease;
 }
 
-/* Tablet Responsiveness */
-@media screen and (max-width: 1024px) {
-    .content-wrapper {
-        flex-direction: row;
-        justify-content: center;
-    }
+.button-container a:hover {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #121212;
+}
 
-    .article-container, .sidebar {
-        width: 45%;
-    }
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: var(--card-bg);
+    border-top: 3px solid var(--accent-color);
+    font-size: 0.9em;
+    color: var(--tx-color);
 }
 </style>
