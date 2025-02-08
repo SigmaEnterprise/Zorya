@@ -106,6 +106,7 @@ The use of scrypt and XChaCha20-Poly1305 in NIP-49 offers several advantages for
 The combination of scrypt and XChaCha20-Poly1305 in NIP-49 provides a secure and robust method for private key encryption. **Scrypt's memory hardness and slow derivation process protect against brute-force password attacks**, while **XChaCha20-Poly1305 ensures strong encryption of the private key itself**. These choices contribute to a high level of security for private keys when used with the Nostr protocol and implemented in tools like `nak`.
 
 [Full Details and Overview of NAK Here](https://github.com/fiatjaf/nak)
+[NIP-49 - Private Key Encryption](https://nips.nostr.com/49)
 
 
 
