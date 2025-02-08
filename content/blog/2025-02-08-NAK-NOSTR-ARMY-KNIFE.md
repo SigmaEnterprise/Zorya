@@ -6,7 +6,7 @@ date = "2025-02-08"
 
 `nak` is a command-line tool designed for various interactions with the Nostr protocol. It is described as a "Nostr army knife" because of its versatility.
 
-Here are some of the functionalities it offers:
+Some of the functionalities 'NAK' offers:
 
 *   **Creating and Signing Events**: `nak` can create Nostr events with custom content and tags, and sign them using specified keys. It can also create events with a Proof-of-Work target. The tool supports keys in hex, nsec or ncryptsec formats.
 *   **Publishing Events:** It allows publishing events to one or more relays.
@@ -61,6 +61,49 @@ The `nak` tool incorporates several security features, including:
 *  **Environment Variable for Keys**: `nak` can use a private key given as an environment variable. This allows for flexibility in how private keys are managed and accessed.
 
 These features aim to ensure the security of private keys and the overall integrity of nostr events created and managed using the `nak` tool.
+
+The primary purpose of **NIP-49 is to define a method for clients to encrypt and decrypt a user's private key using a password**. This enhances the security of private keys by ensuring they are not stored in plain text.
+
+A synopsis of the key aspects of NIP-49:
+
+*   **Private Key Encryption:** NIP-49 specifies how to encrypt a user's private key with a password. This is crucial because passwords themselves are not suitable as cryptographic keys and need to undergo a key derivation process.
+*   **Key Derivation:** The specification uses the **scrypt** key derivation function to generate a symmetric key from the user's password. Scrypt is memory-hard, making it resistant to brute-force attacks.
+    *   Before using the password in scrypt, it must be unicode normalised to NFKC format.
+    *   Scrypt uses a salt and a `log_n` parameter, which controls the computational cost (memory and time) of key derivation. A larger `log_n` offers better protection but takes longer.
+*   **Symmetric Encryption:** The derived symmetric key is used with the **XChaCha20-Poly1305** algorithm to encrypt the private key. This algorithm is favored by cryptographers and is widely available.
+*   **Encryption Process:** The encryption process involves several steps:
+    *   A **key security byte** indicates if the key has been handled securely.
+    *   A 24-byte random **nonce** is generated.
+    *   The private key, the key security byte, and the nonce are used as input to the **XChaCha20-Poly1305** algorithm with the derived symmetric key.
+    *   The encrypted private key is then bech32 encoded using the prefix 'ncryptsec'.
+*   **Decryption Process:** The decryption process reverses the encryption, using the password to derive the symmetric key, and then using this key to decrypt the private key.
+*   **Non-Deterministic Encryption:** The encryption process is non-deterministic due to the use of a random nonce, meaning the same private key and password can produce a different encrypted key each time.
+*   **Security Recommendations:** NIP-49 advises against publishing encrypted private keys to Nostr, as amassing many encrypted keys could make cracking easier. It also recommends zeroing out memory of passwords and private keys to ensure security.
+
+NIP-49 provides a method for safeguarding private keys through encryption using a password, a key derivation function, and a strong encryption algorithm. This is designed to enhance the security of private keys used with the Nostr protocol. The `nak` tool implements this specification, allowing users to encrypt and decrypt private keys.
+
+The `nak` command-line tool offers a variety of functionalities for interacting with the Nostr protocol. Here are the three key functionalities:
+
+*   **Event Creation and Signing:** `nak` can create Nostr events with custom content and tags, and sign them using specified keys. It supports keys in various formats such as hex, nsec, or ncryptsec. The tool allows for publishing events to multiple relays, customising content, adding tags, and setting timestamps. Additionally, `nak` can generate events with a Proof-of-Work target and create NIP-70 protected events.
+*  **Key Management:** `nak` can generate private keys and encrypt or decrypt keys using NIP-49. This allows users to securely store their private keys by encrypting them with a password. It can also derive public keys from private keys. The tool also supports signing events using keys encrypted with NIP-49.
+*  **Querying and Fetching Events**: `nak` can query multiple relays for events based on criteria like kind, tag, and limit, and can fetch events using relay and author hints from `nevent1` codes. It can also download large amounts of data from a relay by paginating requests. Furthermore, `nak` can fetch all quoted events by a given pubkey within a specific time frame.
+
+The use of scrypt and XChaCha20-Poly1305 in NIP-49 offers several advantages for private key encryption:
+
+*   **Scrypt for Key Derivation:**
+    *   **Memory Hardness:** Scrypt is a password-based key derivation function that is designed to be **maximally memory hard**. This means that it requires a large amount of memory to compute, making it significantly more resistant to brute-force attacks compared to other key derivation functions that are less memory intensive. This is important because it makes it much harder for an attacker to try a large number of passwords to decrypt the private key.
+    *  **Slow Irreversible Algorithm:** Scrypt is a slow, irreversible algorithm. The slowness is designed to hinder brute-force attempts to decrypt keys by trying many passwords. The irreversibility means that it's computationally infeasible to reverse the process and obtain the original password from the derived key.
+    *   **Customisable Security:** The `log_n` parameter in scrypt allows users to adjust the computational cost (memory and time) of the key derivation process. A higher `log_n` value increases the number of rounds, thus requiring more memory and time, but also offering better protection against attacks. This allows for balancing security and performance depending on the user's needs.
+    *   **Strong Key Derivation:** It ensures that the encryption key derived from the password has a uniform distribution of bits making it suitable for use in symmetric encryption algorithms. It also ensures that the key has a suitable level of randomness.
+    *  **Cryptographer Approved:** Scrypt has been indicated by several cryptographers to be better than Argon2, which won a password hashing competition in 2015.
+
+*   **XChaCha20-Poly1305 for Encryption:**
+    *   **Strong Symmetric Encryption:** XChaCha20-Poly1305 is a robust symmetric encryption algorithm that is favoured by cryptographers for its security and performance.
+    *  **Alternative to AES:** It's typically favored over AES (Advanced Encryption Standard) and is considered less associated with the U.S. government, which is an advantage for those who have concerns over the US government’s influence on cryptographic standards.
+    *  **Widespread Usage:** XChaCha20-Poly1305, and it's earlier variant without the 'X', is widely used in applications like TLS and OpenSSH, indicating its reliability and security.
+    *   **Availability:** The algorithm is available in most modern cryptography libraries, making it easy to implement across different platforms and software.
+
+The combination of scrypt and XChaCha20-Poly1305 in NIP-49 provides a secure and robust method for private key encryption. **Scrypt's memory hardness and slow derivation process protect against brute-force password attacks**, while **XChaCha20-Poly1305 ensures strong encryption of the private key itself**. These choices contribute to a high level of security for private keys when used with the Nostr protocol and implemented in tools like `nak`.
 
 [Full Details and Overview of NAK Here](https://github.com/fiatjaf/nak)
 
