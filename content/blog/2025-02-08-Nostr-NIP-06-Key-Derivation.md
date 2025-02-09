@@ -167,10 +167,10 @@ The use of BIP39 and BIP32 standards in the context of generating and managing N
       
 
 *   **BIP39:** 
-    *   [Schema For BIP39](https://rya-sge.github.io/access-denied/2024/10/28/bitcoin-keys-101/).
+    *   [Schema For BIP39](https://rya-sge.github.io/access-denied/2024/10/28/bitcoin-keys-101/)
 
 *   **BIP32:** 
-    *   [Derivation Paths](https://thebitcoinmanual.com/articles/btc-derivation-path/).
+    *   [Derivation Paths](https://thebitcoinmanual.com/articles/btc-derivation-path/)
 
 *   **SLIP44:**  
      *   [Coin Types](https://github.com/satoshilabs/slips/blob/master/slip-0044.md)
