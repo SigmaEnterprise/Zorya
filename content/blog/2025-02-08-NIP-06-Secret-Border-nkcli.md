@@ -235,7 +235,6 @@ NIP-46 is a Nostr Improvement Proposal that relates to delegated key management,
 **NIP-46 support is a key feature of `nkcli`** that enables it to manage delegated key authorizations, while **`Secret Border` focuses solely on secure key generation and backup** without supporting such delegation.
 
 # Code Available At
-
 ['NIP-06'](https://github.com/jaonoctus/nip06-cli?tab=readme-ov-file)
 [Secret Border](https://github.com/guilhermegps/secret-border)
 ['nk-cli'](https://github.com/mdzz-club/nkcli)
