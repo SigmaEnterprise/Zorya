@@ -10,7 +10,7 @@ Explore our range of decentralized and privacy-focused services:
 - **Lightning Network Setup**  
 - **Monero Integration**  
 
-### Web3 & Decentralized Solutions
+### Web5 & Decentralized Solutions
 - Nostr-based social networks  
 - Mesh communication setups  
 
