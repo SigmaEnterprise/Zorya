@@ -3,7 +3,6 @@
     <h3>Nostr Feed</h3>
 </div>
 
-
 <script>
     async function fetchNostrFeed(pubkey, relay) {
         console.log("Connecting to relay:", relay);
@@ -37,7 +36,21 @@
             const postContainer = document.getElementById("nostr-feed");
 
             const postElement = document.createElement("div");
-            postElement.innerHTML = `<p>${eventContent.content}</p><hr>`;
+
+            // Check for image URLs within the content
+            let contentHTML = `<p>${eventContent.content}</p><hr>`;
+
+            // This regular expression checks for image URLs (basic check for img tags)
+            const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
+            const imageMatches = eventContent.content.match(imageRegex);
+
+            if (imageMatches) {
+                imageMatches.forEach(imgUrl => {
+                    contentHTML += `<img src="${imgUrl}" alt="Nostr Image" style="max-width: 100%; border-radius: 10px; margin-top: 10px;">`;
+                });
+            }
+
+            postElement.innerHTML = contentHTML;
             postContainer.appendChild(postElement);
         };
     }
@@ -47,15 +60,11 @@
     });
 </script>
 
-
-
-
-
 <button
-        data-npub="npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv"
-        data-relays="wss://relay.damus.io,wss://relay.snort.social,wss://nostr.wine,wss://relay.nostr.band,wss://nos.lol"
-    >
-        Zap Me ⚡️
-    </button>
-	</div>
-	<script src="https://cdn.jsdelivr.net/npm/nostr-zap@0.22.0"></script>
+    data-npub="npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv"
+    data-relays="wss://relay.damus.io,wss://relay.snort.social,wss://nostr.wine,wss://relay.nostr.band,wss://nos.lol"
+>
+    Zap Me ⚡️
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/nostr-zap@0.22.0"></script>
