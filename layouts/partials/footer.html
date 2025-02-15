@@ -1,11 +1,16 @@
 {{ if ne .Site.Params.hideMadeWithLine true }}Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>{{ end }}
 
+
 <h2>Nostr Feed</h2>
 <div id="nostr-feed"></div>
-<script>
-    fetchNostrFeed("npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv");
-</script>
+
 <script src="/js/nostr.js"></script>
+<script>
+    fetchNostrFeed("npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv", "wss://relay.nostr.band");
+</script>
+
+
+
 
 <button
         data-npub="npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv"
