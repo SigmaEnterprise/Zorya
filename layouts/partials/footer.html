@@ -2,7 +2,7 @@
 <div id="nostr-feed">
     <h3>Nostr Feed</h3>
 </div>
-<script>
+
 let oldestTimestamp = null;
 let socket = null;
 const profileCache = {};
@@ -29,7 +29,7 @@ async function fetchNostrFeed(pubkey, relay) {
         `;
         feed.insertAdjacentHTML("afterbegin", profileHTML);
 
-        const filter = { kinds: [1, 66, 13194], authors: [pubkey], limit: 50 };
+        const filter = { kinds: [1, 66, 13194], authors: [d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0], limit: 10 };
         if (oldestTimestamp) filter.until = oldestTimestamp;
 
         socket.send(JSON.stringify(["REQ", "nostr-feed", filter]));
@@ -147,7 +147,8 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
     createLoadMoreButton();
 });
-</script>
+
+
 
 <button
     data-npub="npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv"
