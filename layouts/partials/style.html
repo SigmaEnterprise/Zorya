@@ -111,23 +111,27 @@ img {
 }
 
 .video-container {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 20px auto;
     border: 3px solid var(--accent-color);
     border-radius: 10px;
     max-width: 90%;
-    width: 400px;  /* Define a square width */
-    height: 400px; /* Match height to width for a square */
+    width: 400px;  /* Set width */
+    height: 400px; /* Set equal height for a square */
     background-color: #1a1a1a;
-    position: relative; /* Needed for aspect-ratio trick */
-    overflow: hidden; /* Ensures proper cropping */
+    position: relative;
+    overflow: hidden;
 }
 
 .video-container iframe, 
 .video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100%; /* Makes sure it fills the container */
-    object-fit: cover; /* Crops video to fit the square */
-    border-radius: 10px;
+    height: 100%;
 }
+
 </style>
