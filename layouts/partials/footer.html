@@ -2,287 +2,163 @@
     <h3>Nostr Feed</h3>
 </div>
 <script>
-(function() {
-    // Helper function to determine the global object
-    function getGlobalObject() {
-        try {
-            return (typeof window !== 'undefined') ? window : global;
-        } catch (e) {
-            return {};
-        }
-    }
+async function fetchNostrFeed(pubkey, relay) {
+    console.log("Connecting to relay:", relay);
+    const socket = new WebSocket(relay);
 
-    // Polyfills
-    function polyfill() {
-        if (typeof Symbol === 'undefined') {
-            (function() {
-                const Symbol = function(description) {
-                    return `@@${description}`;
-                };
-                Symbol.iterator = Symbol('iterator');
-                globalThis.Symbol = Symbol;
-            })();
-        }
-        
-        if (typeof Promise === 'undefined') {
-            (function() {
-                class MyPromise {
-                    constructor(executor) {
-                        this.callbacks = [];
-                        this.state = 'pending';
-                        this.result = null;
+    socket.onopen = () => {
+        console.log("WebSocket connected!");
 
-                        const resolve = (value) => {
-                            this.state = 'fulfilled';
-                            this.result = value;
-                            this.callbacks.forEach(callback => callback(value));
-                        };
-
-                        const reject = (reason) => {
-                            this.state = 'rejected';
-                            this.result = reason;
-                            this.callbacks.forEach(callback => callback(reason));
-                        };
-
-                        executor(resolve, reject);
-                    }
-
-                    then(callback) {
-                        if (this.state === 'fulfilled') {
-                            callback(this.result);
-                        } else {
-                            this.callbacks.push(callback);
-                        }
-                        return this;
-                    }
-
-                    catch(callback) {
-                        if (this.state === 'rejected') {
-                            callback(this.result);
-                        } else {
-                            this.callbacks.push(callback);
-                        }
-                        return this;
-                    }
-
-                    static resolve(value) {
-                        return new MyPromise((resolve) => resolve(value));
-                    }
-
-                    static reject(reason) {
-                        return new MyPromise((_, reject) => reject(reason));
-                    }
-                }
-                globalThis.Promise = MyPromise;
-            })();
-        }
-
-        if (typeof WeakMap === 'undefined') {
-            (function() {
-                class WeakMapPolyfill {
-                    constructor() {
-                        this.items = [];
-                    }
-
-                    set(key, value) {
-                        const index = this.items.findIndex(item => item[0] === key);
-                        if (index === -1) {
-                            this.items.push([key, value]);
-                        } else {
-                            this.items[index][1] = value;
-                        }
-                    }
-
-                    get(key) {
-                        const index = this.items.findIndex(item => item[0] === key);
-                        return index !== -1 ? this.items[index][1] : undefined;
-                    }
-
-                    has(key) {
-                        return this.items.some(item => item[0] === key);
-                    }
-
-                    delete(key) {
-                        const index = this.items.findIndex(item => item[0] === key);
-                        if (index !== -1) {
-                            this.items.splice(index, 1);
-                        }
-                    }
-                }
-                globalThis.WeakMap = WeakMapPolyfill;
-            })();
-        }
-    }
-
-    // WebSocket connection
-    function connectWebSocket() {
-        const socket = new WebSocket("wss://example.com/socket");
-        
-        socket.onopen = () => {
-            console.log("WebSocket connection established.");
+        const filter = {
+            kinds: [1, 66, 13194, 0], // Filter for kinds of posts
+            authors: [pubkey],
+            limit: 10
         };
 
-        socket.onmessage = (event) => {
-            handleMessage(event.data);
-        };
+        socket.send(JSON.stringify(["REQ", "nostr-feed", filter]));
+        console.log("Sent request:", filter);
+    };
 
-        socket.onerror = (error) => {
-            console.error("WebSocket error:", error);
-        };
+    socket.onerror = (error) => {
+        console.error("WebSocket error:", error);
+    };
 
-        socket.onclose = () => {
-            console.log("WebSocket closed.");
-        };
-    }
+    socket.onmessage = (event) => {
+        console.log("Received data:", event.data);
+        const data = JSON.parse(event.data);
+        if (data[0] !== "EVENT") return;
 
-    // Handle WebSocket messages
-    function handleMessage(data) {
-        try {
-            const parsedData = JSON.parse(data);
-            if (parsedData[0] !== "EVENT") {
-                console.error("Invalid message format:", parsedData);
-                return;
-            }
+        const eventContent = data[2];
+        const postContainer = document.getElementById("nostr-feed");
 
-            const eventContent = parsedData[2];
-            if (!eventContent || !eventContent.content) {
-                console.error("Invalid event content:", eventContent);
-                return;
-            }
-
-            const postContainer = document.getElementById("nostr-feed");
-            if (!postContainer) throw new Error("Feed container is missing.");
-
-            const postElement = createPostElement(eventContent);
-            postContainer.appendChild(postElement);
-
-            initializeAudioPlayers();
-
-        } catch (error) {
-            console.error("Error parsing event data:", error);
-        }
-    }
-
-    // Create the post element
-    function createPostElement(eventContent) {
         const postElement = document.createElement("div");
         postElement.classList.add("feed-item");
-        postElement.innerHTML = createContentHTML(eventContent);
-        return postElement;
-    }
 
-    // Create HTML content for the post
-    function createContentHTML(eventContent) {
         let contentHTML = `<p>${eventContent.content}</p><hr>`;
-        contentHTML += insertMedia(eventContent.content);
-        return contentHTML;
-    }
 
-    // Insert media content (images, videos, etc.)
-    function insertMedia(content) {
-        let mediaHTML = '';
+        // Detect and insert images
         const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
-        const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
-        const audioRegex = /(https?:\/\/.*\.(?:wav|mp3|ogg))/g;
-        const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g);
-
-        // Detect images
-        const imageMatches = content.match(imageRegex);
+        const imageMatches = eventContent.content.match(imageRegex);
         if (imageMatches) {
             imageMatches.forEach(imgUrl => {
-                mediaHTML += `<img src="${imgUrl}" alt="Nostr Image">`;
+                contentHTML += `<img src="${imgUrl}" alt="Nostr Image">`;
             });
         }
 
-        // Detect video
-        const videoMatches = content.match(videoRegex);
+        // Handle video embeds (.mp4, .ogv)
+        const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
+        const videoMatches = eventContent.content.match(videoRegex);
         if (videoMatches) {
             videoMatches.forEach(videoUrl => {
-                mediaHTML += `<div class="video-container"><video controls><source src="${videoUrl}" type="video/mp4"></video></div>`;
+                contentHTML += 
+                    `<div class="video-container">
+                        <video controls>
+                            <source src="${videoUrl}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>`;
             });
         }
 
-        // Detect audio
-        const audioMatches = content.match(audioRegex);
-        if (audioMatches) {
-            audioMatches.forEach(audioUrl => {
-                mediaHTML += `<div class="audio-container"><audio src="${audioUrl}"></audio></div>`;
-            });
-        }
-
-        // YouTube video links
-        const youtubeVideoMatches = [...content.matchAll(youtubeVideoRegex)];
+        // Handle YouTube video links (from previous code)
+        const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
+        const youtubeVideoMatches = [...eventContent.content.matchAll(youtubeVideoRegex)];
         if (youtubeVideoMatches) {
             youtubeVideoMatches.forEach(match => {
                 const videoId = match[2] || match[3];
-                mediaHTML += `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`;
+                contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 1/1; border: none;"></iframe>`;
             });
         }
-        return mediaHTML;
-    }
 
-    // Initialize audio players
-    function initializeAudioPlayers() {
-        document.querySelectorAll(".audio-container").forEach(container => {
-            const audio = container.querySelector("audio");
-            if (audio) {
-                setupAudioPlayer(audio);
+        // Handle audio links (MP3, OGG, WAV)
+        const audioRegex = /(https?:\/\/.*\.(?:wav|mp3|ogg))/g;
+        const audioMatches = eventContent.content.match(audioRegex);
+        if (audioMatches) {
+            audioMatches.forEach(audioUrl => {
+                contentHTML += 
+                    `<div class="audio-container">
+                        <audio id="audio-player" src="${audioUrl}"></audio>
+                        <div class="audio-controls">
+                            <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
+                            <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
+                            <span class="time-display">0:00 / 0:00</span>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        // Handle M3U playlist embedding
+        const m3uRegex = /(https?:\/\/.*\.m3u)/g;
+        const m3uMatches = eventContent.content.match(m3uRegex);
+        if (m3uMatches) {
+            m3uMatches.forEach(m3uUrl => {
+                contentHTML += 
+                    `<div class="m3u-container">
+                        <iframe src="https://archive.org/embed/${m3uUrl.split('/').pop().replace('.m3u', '')}" width="500" height="60" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen></iframe>
+                    </div>`;
+            });
+        }
+
+        postElement.innerHTML = contentHTML;
+        postContainer.appendChild(postElement);
+
+        // Initialize new audio players
+        setTimeout(initializeAudioPlayers, 500);
+    };
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
+});
+
+// Audio Player Functions
+function togglePlay(button) {
+    const audio = button.parentElement.parentElement.querySelector("audio");
+    if (audio.paused) {
+        audio.play();
+        button.textContent = "⏸ Pause";
+    } else {
+        audio.pause();
+        button.textContent = "▶ Play";
+    }
+}
+
+function seekAudio(seekBar) {
+    const audio = seekBar.parentElement.parentElement.querySelector("audio");
+    audio.currentTime = (seekBar.value / 100) * audio.duration;
+}
+
+function initializeAudioPlayers() {
+    document.querySelectorAll(".audio-container").forEach(container => {
+        const audio = container.querySelector("audio");
+        const playButton = container.querySelector(".play-button");
+        const seekBar = container.querySelector(".seek-bar");
+        const timeDisplay = container.querySelector(".time-display");
+
+        if (!audio) return;
+
+        // Update Seek Bar and Time Display
+        audio.addEventListener("timeupdate", () => {
+            if (!isNaN(audio.duration)) {
+                seekBar.value = (audio.currentTime / audio.duration) * 100;
+                timeDisplay.textContent = formatTime(audio.currentTime) + " / " + formatTime(audio.duration);
             }
         });
-    }
 
-    // Set up the audio player with controls
-    function setupAudioPlayer(audio) {
-        const seekBar = audio.parentElement.querySelector(".seek-bar");
-        const timeDisplay = audio.parentElement.querySelector(".time-display");
-        const playButton = audio.parentElement.querySelector(".play-button");
+        // Seek Audio
+        seekBar.addEventListener("input", () => {
+            audio.currentTime = (seekBar.value / 100) * audio.duration;
+        });
+    });
+}
 
-        audio.addEventListener("timeupdate", () => updateSeekBar(audio, seekBar, timeDisplay));
-        seekBar.addEventListener("input", () => updateAudioTime(audio, seekBar));
-
-        playButton.addEventListener("click", () => togglePlayPause(audio, playButton));
-    }
-
-    // Update seek bar based on current audio time
-    function updateSeekBar(audio, seekBar, timeDisplay) {
-        if (!isNaN(audio.duration)) {
-            seekBar.value = (audio.currentTime / audio.duration) * 100;
-            timeDisplay.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
-        }
-    }
-
-    // Update audio time when the seek bar is moved
-    function updateAudioTime(audio, seekBar) {
-        audio.currentTime = (seekBar.value / 100) * audio.duration;
-    }
-
-    // Toggle play/pause on the audio player
-    function togglePlayPause(audio, playButton) {
-        if (audio.paused) {
-            audio.play();
-            playButton.textContent = "Pause";
-        } else {
-            audio.pause();
-            playButton.textContent = "Play";
-        }
-    }
-
-    // Format time in mm:ss format
-    function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = Math.floor(seconds % 60);
-        return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
-    }
-
-    // Initialize the polyfills and WebSocket connection
-    polyfill();
-    connectWebSocket();
-
-})();
+// Format Time (Seconds to MM:SS)
+function formatTime(seconds) {
+    const min = Math.floor(seconds / 60);
+    const sec = Math.floor(seconds % 60);
+    return min + ":" + (sec < 10 ? "0" + sec : sec);
+}
 </script>
-
-
-
 
 <button
     data-npub="npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv"
