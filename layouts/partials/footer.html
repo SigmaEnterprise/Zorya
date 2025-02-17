@@ -51,7 +51,7 @@ async function fetchNostrFeed(pubkey, relay) {
         if (videoMatches) {
             videoMatches.forEach(match => {
                 const videoId = match[2] || match[3];
-                contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`;
+                contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 1/1; border: none;"></iframe>`;
             });
         }
 
@@ -60,8 +60,8 @@ async function fetchNostrFeed(pubkey, relay) {
         const audioMatches = eventContent.content.match(audioRegex);
         if (audioMatches) {
             audioMatches.forEach(audioUrl => {
-                contentHTML += `
-                    <div class="audio-container">
+                contentHTML += 
+                    `<div class="audio-container">
                         <audio id="audio-player" src="${audioUrl}"></audio>
                         <div class="audio-controls">
                             <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
@@ -132,6 +132,7 @@ function formatTime(seconds) {
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 </script>
+
 <button
     data-npub="npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv"
     data-relays="wss://relay.damus.io,wss://relay.snort.social,wss://nostr.wine,wss://relay.nostr.band,wss://nos.lol"
