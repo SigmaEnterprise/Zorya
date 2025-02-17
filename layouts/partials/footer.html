@@ -2,6 +2,21 @@
 <div id="nostr-feed">
     <h3>Nostr Feed</h3>
 </div>
+
+
+    <label for="relay">Relay URL:</label>
+    <input type="text" id="relay" value="wss://your-relay-url.com">
+    
+    <label for="pubkey">Public Key:</label>
+    <input type="text" id="pubkey" value="your-public-key-here">
+
+    <div id="feed"></div>
+
+    <!-- Load more button will be added dynamically -->
+
+
+
+
 let socket = null;
 let oldestTimestamp = null;
 const profileCache = {};
