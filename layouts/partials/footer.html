@@ -1,12 +1,63 @@
 <div id="nostr-feed">
     <h3>Nostr Feed</h3>
 </div>
-
 <script>
- let oldestTimestamp = null;
+let oldestTimestamp = null;
 let socket = null;
 const profileCache = {};
 
+async function fetchNostrFeed(pubkey, relay) {
+    console.log("Connecting to relay:", relay);
+    
+    const feed = document.getElementById('feed');
+
+    // Create WebSocket connection
+    socket = new WebSocket(relay);
+
+    socket.onopen = async () => {
+        console.log("WebSocket connected!");
+
+        const profile = await fetchProfile(pubkey, relay);
+
+        // Display profile at the top of the feed
+        const profileHTML = `
+            <div class="profile-header">
+                <img src="${profile.picture}" alt="Avatar" class="avatar">
+                <p class="profile-name">${profile.name}</p>
+            </div>
+        `;
+        feed.insertAdjacentHTML("afterbegin", profileHTML);
+
+        const filter = { kinds: [1, 66, 13194], authors: [pubkey], limit: 50 };
+        if (oldestTimestamp) filter.until = oldestTimestamp;
+
+        socket.send(JSON.stringify(["REQ", "nostr-feed", filter]));
+    };
+
+    socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data[0] !== "EVENT") return;
+
+        const postContent = data[2];
+        if (!postContent || !postContent.content) return;
+
+        if (!oldestTimestamp || postContent.created_at < oldestTimestamp) {
+            oldestTimestamp = postContent.created_at;
+        }
+
+        // Process content for media
+        const formattedContent = formatContent(postContent.content);
+
+        const postDiv = document.createElement("div");
+        postDiv.classList.add("feed-item");
+        postDiv.innerHTML = formattedContent;
+        feed.appendChild(postDiv);
+    };
+
+    socket.onerror = () => console.error("WebSocket error!");
+}
+
+// Function to fetch profile for a given pubkey
 async function fetchProfile(pubkey, relay) {
     return new Promise((resolve) => {
         if (profileCache[pubkey]) {
@@ -47,65 +98,6 @@ async function fetchProfile(pubkey, relay) {
     });
 }
 
-async function fetchPosts(initial = true) {
-    const relay = document.getElementById('relay').value;
-    const pubkey = document.getElementById('pubkey').value;
-    const feed = document.getElementById('feed');
-
-    if (initial) {
-        feed.innerHTML = ""; // Clear feed on first load
-        oldestTimestamp = null;
-    }
-
-    if (socket) {
-        socket.close();
-    }
-
-    socket = new WebSocket(relay);
-
-    socket.onopen = async () => {
-        console.log("WebSocket connected!");
-
-        const profile = await fetchProfile(pubkey, relay);
-
-        // Display profile at the top
-        const profileHTML = `
-            <div class="profile-header">
-                <img src="${profile.picture}" alt="Avatar" class="avatar">
-                <p class="profile-name">${profile.name}</p>
-            </div>
-        `;
-        feed.insertAdjacentHTML("afterbegin", profileHTML);
-
-        const filter = { kinds: [1, 66, 13194], authors: [pubkey], limit: 50 };
-        if (oldestTimestamp) filter.until = oldestTimestamp;
-
-        socket.send(JSON.stringify(["REQ", "nostr-feed", filter]));
-    };
-
-    socket.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        if (data[0] !== "EVENT") return;
-
-        const postContent = data[2];
-        if (!postContent || !postContent.content) return;
-
-        if (!oldestTimestamp || postContent.created_at < oldestTimestamp) {
-            oldestTimestamp = postContent.created_at;
-        }
-
-        // Process content for media
-        const formattedContent = formatContent(postContent.content);
-
-        const postDiv = document.createElement("div");
-        postDiv.classList.add("feed-item");
-        postDiv.innerHTML = formattedContent;
-        feed.appendChild(postDiv);
-    };
-
-    socket.onerror = () => console.error("WebSocket error!");
-}
-
 // Function to format content with media previews
 function formatContent(text) {
     let formattedText = text;
@@ -134,7 +126,7 @@ function formatContent(text) {
 
 // Load more button
 function loadMorePosts() {
-    fetchPosts(false);
+    fetchNostrFeed();
 }
 
 // Create "Load More" button
@@ -150,9 +142,10 @@ function createLoadMoreButton() {
 }
 
 // Run initial fetch and setup pagination
-fetchPosts();
-createLoadMoreButton();
-
+document.addEventListener("DOMContentLoaded", function () {
+    fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
+    createLoadMoreButton();
+});
 </script>
 
 <button
