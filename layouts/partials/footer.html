@@ -87,36 +87,21 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        // Handle M3U playlist embedding with error handling
-const m3uRegex = /(https?:\/\/.*\.m3u)/g;
-const m3uMatches = eventContent.content.match(m3uRegex);
-if (m3uMatches) {
-    m3uMatches.forEach(m3uUrl => {
-        contentHTML += `<div class="m3u-container">`;
-
-        // Attempt embedding using iframe
-        try {
-            const iframe = document.createElement("iframe");
-            iframe.src = `https://archive.org/embed/${m3uUrl.split('/').pop().replace('.m3u', '')}`;
-            iframe.width = 500;
-            iframe.height = 60;
-            iframe.frameBorder = 0;
-            iframe.allowFullscreen = true;
-            iframe.onerror = function () {
-                // If embedding fails, show the link as fallback
-                console.error("Failed to embed M3U playlist, falling back to link.");
-                iframe.replaceWith(`<a href="${m3uUrl}" target="_blank">View M3U Playlist</a>`);
-            };
-            contentHTML += iframe.outerHTML;
-        } catch (err) {
-            console.error("Error embedding M3U playlist:", err);
-            contentHTML += `<a href="${m3uUrl}" target="_blank">View M3U Playlist</a>`;
+        // Handle M3U playlist embedding in specified format
+        const m3uRegex = /(https?:\/\/.*\.m3u)/g;
+        const m3uMatches = eventContent.content.match(m3uRegex);
+        if (m3uMatches) {
+            m3uMatches.forEach(m3uUrl => {
+                const playlistId = m3uUrl.split('/').pop().replace('.m3u', '');
+                contentHTML += 
+                    `<div class="m3u-container">
+                        [archiveorg ${playlistId} width="640" height="60" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true"]
+                    </div>`;
+            });
         }
 
-        contentHTML += `</div>`;
-    });
-}
-
+        postElement.innerHTML = contentHTML;
+        postContainer.appendChild(postElement);
 
         // Initialize new audio players
         setTimeout(initializeAudioPlayers, 500);
@@ -175,6 +160,7 @@ function formatTime(seconds) {
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 </script>
+
 
 <button
     data-npub="npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv"
