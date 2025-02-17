@@ -64,21 +64,20 @@ img {
 }
 /* Audio Container */
 .audio-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: block; /* Changed from flex to block */
     margin: 20px auto;
     border: 3px solid var(--accent-color);
     border-radius: 10px;
-    max-width: 90%;
+    max-width: 90%; /* Matches images & videos */
     padding: 15px;
     background-color: #1a1a1a;
     color: white;
     font-family: Arial, sans-serif;
 }
 
+
 .audio-controls {
-    display: flex;
+    display: block;
     align-items: center;
     justify-content: space-between;
     width: 100%;
