@@ -87,23 +87,6 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        // Handle M3U playlist links
-        const m3uRegex = /(https?:\/\/.*\.m3u)/g;
-        const m3uMatches = eventContent.content.match(m3uRegex);
-        if (m3uMatches) {
-            m3uMatches.forEach(m3uUrl => {
-                contentHTML += 
-                    `<div class="audio-container">
-                        <audio id="audio-player" src="${m3uUrl}" controls></audio>
-                        <div class="audio-controls">
-                            <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
-                            <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
-                            <span class="time-display">0:00 / 0:00</span>
-                        </div>
-                    </div>`;
-            });
-        }
-
         postElement.innerHTML = contentHTML;
         postContainer.appendChild(postElement);
 
@@ -164,6 +147,7 @@ function formatTime(seconds) {
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 </script>
+
 
 
 
