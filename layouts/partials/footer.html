@@ -60,7 +60,7 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        // Handle YouTube video links (from previous code)
+        // Handle YouTube video links
         const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
         const youtubeVideoMatches = [...eventContent.content.matchAll(youtubeVideoRegex)];
         if (youtubeVideoMatches) {
@@ -88,31 +88,29 @@ async function fetchNostrFeed(pubkey, relay) {
         }
 
         // Handle M3U playlist embedding
-const m3uRegex = /(https?:\/\/.*\.m3u)/g;
-const m3uMatches = eventContent.content.match(m3uRegex);
-if (m3uMatches) {
-    m3uMatches.forEach(m3uUrl => {
-        // Try to get a valid Embed URL for Archive.org
-        const playlistId = m3uUrl.split('/').pop().replace('.m3u', '');
-        
-        // Check if URL is valid before embedding
-        if (playlistId) {
-            contentHTML += `
-                <div class="m3u-container">
-                    <iframe src="https://archive.org/embed/${playlistId}" width="500" height="60" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen></iframe>
-                </div>`;
-        } else {
-            console.error("Invalid M3U playlist URL:", m3uUrl);
+        const m3uRegex = /(https?:\/\/.*\.m3u)/g;
+        const m3uMatches = eventContent.content.match(m3uRegex);
+        if (m3uMatches) {
+            m3uMatches.forEach(m3uUrl => {
+                const playlistId = m3uUrl.split('/').pop().replace('.m3u', '');
+                contentHTML += 
+                    `<div class="m3u-container">
+                        <iframe src="https://archive.org/embed/${playlistId}" width="500" height="60" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen></iframe>
+                    </div>`;
+            });
         }
-    });
+
+        postElement.innerHTML = contentHTML;
+        postContainer.appendChild(postElement);
+
+        // Initialize new audio players
+        setTimeout(initializeAudioPlayers, 500);
+    };
 }
 
-postElement.innerHTML = contentHTML;
-postContainer.appendChild(postElement);
-
-// Initialize new audio players
-setTimeout(initializeAudioPlayers, 500);
-
+document.addEventListener("DOMContentLoaded", function () {
+    fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
+});
 
 // Audio Player Functions
 function togglePlay(button) {
