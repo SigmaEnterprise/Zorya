@@ -3,60 +3,155 @@
 </div>
 
 <script>
- async function fetchNostrFeed(pubkey, relay) {
-    console.log("Connecting to relay:", relay);
+ let oldestTimestamp = null;
+let socket = null;
+const profileCache = {};
 
-    const socket = new WebSocket(relay);
+async function fetchProfile(pubkey, relay) {
+    return new Promise((resolve) => {
+        if (profileCache[pubkey]) {
+            resolve(profileCache[pubkey]);
+            return;
+        }
 
-    socket.onopen = () => {
-        console.log("WebSocket connected!");
+        const profileSocket = new WebSocket(relay);
 
-        const filter = {
-            kinds: [1, 66, 13194, 0],
-            authors: [pubkey],
-            limit: 5
+        profileSocket.onopen = () => {
+            console.log(`Fetching profile for ${pubkey}`);
+            profileSocket.send(JSON.stringify(["REQ", "profile-fetch", { kinds: [0], authors: [pubkey], limit: 1 }]));
         };
 
-        socket.send(JSON.stringify(["REQ", "nostr-feed", filter]));
-        console.log("Sent request:", filter);
-    };
+        profileSocket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            if (data[0] !== "EVENT") return;
 
-    socket.onerror = (error) => {
-        console.error("WebSocket error:", error);
+            try {
+                const profileData = JSON.parse(data[2].content);
+                profileCache[pubkey] = {
+                    name: profileData.name || "Unknown",
+                    picture: profileData.picture || "default-avatar.png",
+                };
+            } catch (error) {
+                console.error("Error parsing profile metadata:", error);
+                profileCache[pubkey] = { name: "Unknown", picture: "default-avatar.png" };
+            }
+
+            profileSocket.close();
+            resolve(profileCache[pubkey]);
+        };
+
+        profileSocket.onerror = () => {
+            console.error("Profile WebSocket error!");
+            resolve({ name: "Unknown", picture: "default-avatar.png" });
+        };
+    });
+}
+
+async function fetchPosts(initial = true) {
+    const relay = document.getElementById('relay').value;
+    const pubkey = document.getElementById('pubkey').value;
+    const feed = document.getElementById('feed');
+
+    if (initial) {
+        feed.innerHTML = ""; // Clear feed on first load
+        oldestTimestamp = null;
+    }
+
+    if (socket) {
+        socket.close();
+    }
+
+    socket = new WebSocket(relay);
+
+    socket.onopen = async () => {
+        console.log("WebSocket connected!");
+
+        const profile = await fetchProfile(pubkey, relay);
+
+        // Display profile at the top
+        const profileHTML = `
+            <div class="profile-header">
+                <img src="${profile.picture}" alt="Avatar" class="avatar">
+                <p class="profile-name">${profile.name}</p>
+            </div>
+        `;
+        feed.insertAdjacentHTML("afterbegin", profileHTML);
+
+        const filter = { kinds: [1, 66, 13194], authors: [pubkey], limit: 50 };
+        if (oldestTimestamp) filter.until = oldestTimestamp;
+
+        socket.send(JSON.stringify(["REQ", "nostr-feed", filter]));
     };
 
     socket.onmessage = (event) => {
-        console.log("Received data:", event.data);
-
         const data = JSON.parse(event.data);
         if (data[0] !== "EVENT") return;
 
-        const eventContent = data[2];
-        const postContainer = document.getElementById("nostr-feed");
+        const postContent = data[2];
+        if (!postContent || !postContent.content) return;
 
-        const postElement = document.createElement("div");
-        postElement.classList.add("feed-item");
-
-        let contentHTML = `<p>${eventContent.content}</p><hr>`;
-
-        // Detect and insert images
-        const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
-        const imageMatches = eventContent.content.match(imageRegex);
-
-        if (imageMatches) {
-            imageMatches.forEach(imgUrl => {
-                contentHTML += `<img src="${imgUrl}" alt="Nostr Image">`;
-            });
+        if (!oldestTimestamp || postContent.created_at < oldestTimestamp) {
+            oldestTimestamp = postContent.created_at;
         }
 
-        postElement.innerHTML = contentHTML;
-        postContainer.appendChild(postElement);
+        // Process content for media
+        const formattedContent = formatContent(postContent.content);
+
+        const postDiv = document.createElement("div");
+        postDiv.classList.add("feed-item");
+        postDiv.innerHTML = formattedContent;
+        feed.appendChild(postDiv);
     };
+
+    socket.onerror = () => console.error("WebSocket error!");
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
-});
+// Function to format content with media previews
+function formatContent(text) {
+    let formattedText = text;
+
+    // Regex for detecting image URLs
+    const imageRegex = /(https?:\/\/[^\s]+\.(jpg|jpeg|png|gif|webp))/gi;
+    formattedText = formattedText.replace(imageRegex, (url) => {
+        return `<br><img src="${url}" alt="Image" class="post-media">`;
+    });
+
+    // Regex for detecting video URLs including .mov format
+    const videoRegex = /(https?:\/\/[^\s]+\.(mp4|webm|ogg|mov))/gi;
+    formattedText = formattedText.replace(videoRegex, (url) => {
+        return `<br><video controls class="post-media"><source src="${url}" type="video/mp4"></video>`;
+    });
+
+    // Regex for detecting YouTube links and embedding them
+    const youtubeRegex = /https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/gi;
+    formattedText = formattedText.replace(youtubeRegex, (url, _, __, videoId) => {
+        return `<br><iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" 
+                frameborder="0" allowfullscreen class="post-media"></iframe>`;
+    });
+
+    return `<p>${formattedText}</p>`;
+}
+
+// Load more button
+function loadMorePosts() {
+    fetchPosts(false);
+}
+
+// Create "Load More" button
+function createLoadMoreButton() {
+    let loadMoreBtn = document.getElementById('loadMore');
+    if (!loadMoreBtn) {
+        loadMoreBtn = document.createElement("button");
+        loadMoreBtn.id = "loadMore";
+        loadMoreBtn.innerText = "⬇ Load More";
+        loadMoreBtn.onclick = loadMorePosts;
+        document.getElementById('feed').after(loadMoreBtn);
+    }
+}
+
+// Run initial fetch and setup pagination
+fetchPosts();
+createLoadMoreButton();
 
 </script>
 
