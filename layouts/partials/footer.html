@@ -77,7 +77,7 @@ async function fetchNostrFeed(pubkey, relay) {
             audioMatches.forEach(audioUrl => {
                 contentHTML += 
                     `<div class="audio-container">
-                        <audio id="audio-player" src="${audioUrl}"></audio>
+                        <audio id="audio-player" src="${audioUrl}" controls></audio>
                         <div class="audio-controls">
                             <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
                             <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
@@ -87,15 +87,19 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        // Handle M3U playlist embedding
+        // Handle M3U playlist links
         const m3uRegex = /(https?:\/\/.*\.m3u)/g;
         const m3uMatches = eventContent.content.match(m3uRegex);
         if (m3uMatches) {
             m3uMatches.forEach(m3uUrl => {
-                const playlistId = m3uUrl.split('/').pop().replace('.m3u', '');
                 contentHTML += 
-                    `<div class="m3u-container">
-                        <iframe src="https://archive.org/embed/${playlistId}" width="500" height="60" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen></iframe>
+                    `<div class="audio-container">
+                        <audio id="audio-player" src="${m3uUrl}" controls></audio>
+                        <div class="audio-controls">
+                            <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
+                            <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
+                            <span class="time-display">0:00 / 0:00</span>
+                        </div>
                     </div>`;
             });
         }
@@ -103,7 +107,7 @@ async function fetchNostrFeed(pubkey, relay) {
         postElement.innerHTML = contentHTML;
         postContainer.appendChild(postElement);
 
-        // Initialize new audio players after adding them to the DOM
+        // Initialize new audio players
         setTimeout(initializeAudioPlayers, 500);
     };
 }
@@ -160,6 +164,7 @@ function formatTime(seconds) {
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 </script>
+
 
 
 
