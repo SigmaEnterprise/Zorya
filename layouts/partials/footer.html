@@ -87,21 +87,36 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        // Handle M3U playlist embedding
-        const m3uRegex = /(https?:\/\/.*\.m3u)/g;
-        const m3uMatches = eventContent.content.match(m3uRegex);
-        if (m3uMatches) {
-            m3uMatches.forEach(m3uUrl => {
-                const playlistId = m3uUrl.split('/').pop().replace('.m3u', '');
-                contentHTML += 
-                    `<div class="m3u-container">
-                        <iframe src="https://archive.org/embed/${playlistId}" width="500" height="60" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen></iframe>
-                    </div>`;
-            });
+        // Handle M3U playlist embedding with error handling
+const m3uRegex = /(https?:\/\/.*\.m3u)/g;
+const m3uMatches = eventContent.content.match(m3uRegex);
+if (m3uMatches) {
+    m3uMatches.forEach(m3uUrl => {
+        contentHTML += `<div class="m3u-container">`;
+
+        // Attempt embedding using iframe
+        try {
+            const iframe = document.createElement("iframe");
+            iframe.src = `https://archive.org/embed/${m3uUrl.split('/').pop().replace('.m3u', '')}`;
+            iframe.width = 500;
+            iframe.height = 60;
+            iframe.frameBorder = 0;
+            iframe.allowFullscreen = true;
+            iframe.onerror = function () {
+                // If embedding fails, show the link as fallback
+                console.error("Failed to embed M3U playlist, falling back to link.");
+                iframe.replaceWith(`<a href="${m3uUrl}" target="_blank">View M3U Playlist</a>`);
+            };
+            contentHTML += iframe.outerHTML;
+        } catch (err) {
+            console.error("Error embedding M3U playlist:", err);
+            contentHTML += `<a href="${m3uUrl}" target="_blank">View M3U Playlist</a>`;
         }
 
-        postElement.innerHTML = contentHTML;
-        postContainer.appendChild(postElement);
+        contentHTML += `</div>`;
+    });
+}
+
 
         // Initialize new audio players
         setTimeout(initializeAudioPlayers, 500);
