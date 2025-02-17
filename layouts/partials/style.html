@@ -117,12 +117,14 @@ img {
 .video-container iframe, 
 .video-container video {
     width: 100%;
-    max-width: 560px;
-    height: 315px;
+    max-width: 400px; /* Reduced width */
+    height: 400px; /* Increased height to make it more square */
     border-radius: 10px;
     margin-top: 10px;
     border: 3px solid var(--accent-color);
+    object-fit: cover; /* Ensures content fits the square */
 }
+
 
 </style>
 
