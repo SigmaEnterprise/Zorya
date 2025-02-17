@@ -12,7 +12,7 @@ async function fetchNostrFeed(pubkey, relay) {
         const filter = {
             kinds: [1, 66, 13194, 0], // Filter for kinds of posts
             authors: [pubkey],
-            limit: 5
+            limit: 10
         };
 
         socket.send(JSON.stringify(["REQ", "nostr-feed", filter]));
