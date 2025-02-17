@@ -44,6 +44,16 @@ img {
     height: auto;
 }
 
+.audio-container {
+    display: block;
+    margin: 20px auto;
+    border: 3px solid var(--accent-color);
+    border-radius: 10px;
+    max-width: 90%;
+    padding: 10px;
+    background-color: #1a1a1a;
+}
+
 .subtitle {
     font-family: var(--font-body);
     font-size: 1.2rem;
@@ -52,7 +62,6 @@ img {
     font-style: italic;
     text-align: center;
 }
-
 /* Audio Container */
 .audio-container {
     display: flex;
@@ -99,30 +108,6 @@ img {
 
 .time-display {
     font-size: 14px;
-}
-
-/* Video Container */
-.video-container {
-    display: block;
-    
-    align-items: center;
-    margin: 20px auto;
-    border: 3px solid var(--accent-color);
-    border-radius: 10px;
-    max-width: 90%;
-    padding: 15px;
-    background-color: #1a1a1a;
-}
-
-.video-container iframe, 
-.video-container video {
-    width: 100%;
-    max-width: 400px; /* Reduced width */
-    height: 400px; /* Increased height to make it more square */
-    border-radius: 10px;
-    margin-top: 10px;
-    border: 3px solid var(--accent-color);
-    object-fit: cover; /* Ensures content fits the square */
 }
 
 
