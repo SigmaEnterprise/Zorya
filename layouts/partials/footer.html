@@ -3,7 +3,7 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-async function fetchNostrFeed(pubkey, relay) {
+async function fetchNostrFeed(pubkey, relay, limit = 10) {
     console.log("Connecting to relay:", relay);
     const socket = new WebSocket(relay);
 
@@ -11,13 +11,13 @@ async function fetchNostrFeed(pubkey, relay) {
         console.log("WebSocket connected!");
 
         const filter = {
-            kinds: [1, 66, 13194, 0], // Filter for kinds of posts
+            kinds: [0], // Fetch profile event (kind 0)
             authors: [pubkey],
-            limit: 10
+            limit: 1
         };
 
-        socket.send(JSON.stringify(["REQ", "nostr-feed", filter]));
-        console.log("Sent request:", filter);
+        socket.send(JSON.stringify(["REQ", "nostr-profile", filter]));
+        console.log("Sent profile request:", filter);
     };
 
     socket.onerror = (error) => {
@@ -32,12 +32,39 @@ async function fetchNostrFeed(pubkey, relay) {
         const eventContent = data[2];
         const postContainer = document.getElementById("nostr-feed");
 
+        // Display the profile event first
+        if (data[2].kind === 0) {
+            const profileElement = document.createElement("div");
+            profileElement.classList.add("profile-item");
+            profileElement.innerHTML = `<strong>Profile:</strong><br>${eventContent.content}`;
+            postContainer.appendChild(profileElement);
+            console.log("Profile event displayed.");
+        }
+
+        // Then, request and display the last N events
+        const filterForPosts = {
+            kinds: [1, 66, 13194, 0], // Filter for different kinds of posts
+            authors: [pubkey],
+            limit: limit
+        };
+
+        socket.send(JSON.stringify(["REQ", "nostr-feed", filterForPosts]));
+        console.log("Sent feed request:", filterForPosts);
+    };
+
+    socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data[0] !== "EVENT") return;
+
+        const eventContent = data[2];
+        const postContainer = document.getElementById("nostr-feed");
+
         const postElement = document.createElement("div");
         postElement.classList.add("feed-item");
 
         // Convert markdown to HTML
         let contentHTML = marked.parse(eventContent.content);
-        
+
         // Detect and insert images
         const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
         const imageMatches = eventContent.content.match(imageRegex);
@@ -149,6 +176,7 @@ function formatTime(seconds) {
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 </script>
+
 
 
 
