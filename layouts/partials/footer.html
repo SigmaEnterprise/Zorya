@@ -11,7 +11,7 @@ async function fetchNostrFeed(pubkey, relay) {
         console.log("WebSocket connected!");
 
         const filter = {
-            kinds: [0, 1, 66, 13194], // Filter for types of events (0 = Profile, 1 = Text, 66 = Media, 13194 = Notes)
+            kinds: [1, 66, 13194, 0], // Filter for kinds of posts
             authors: [pubkey],
             limit: 10
         };
@@ -29,92 +29,71 @@ async function fetchNostrFeed(pubkey, relay) {
         const data = JSON.parse(event.data);
         if (data[0] !== "EVENT") return;
 
-        const eventContent = data[2];
+        const eventContent = data[2]; // Get the event content
         const postContainer = document.getElementById("nostr-feed");
 
-        // Create a div for each post item
         const postElement = document.createElement("div");
         postElement.classList.add("feed-item");
 
-        // If the event is a profile, display it at the top
-        if (eventContent.kind === 0) {
-            const profileElement = document.createElement("div");
-            profileElement.classList.add("profile-item");
+        // Convert markdown to HTML
+        let contentHTML = marked.parse(eventContent.content);
 
-            const profileContent = `
-                <div class="profile-header">
-                    <h3>${eventContent.content}</h3>
-                </div>
-                <div class="profile-body">
-                    <p>Public Key: ${eventContent.pubkey}</p>
-                    <p><strong>Notes:</strong> ${eventContent.content}</p>
-                </div>
-            `;
-            profileElement.innerHTML = profileContent;
-            postContainer.appendChild(profileElement);
+        // Detect and insert images
+        const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
+        const imageMatches = eventContent.content.match(imageRegex);
+        if (imageMatches) {
+            imageMatches.forEach(imgUrl => {
+                contentHTML += `<img src="${imgUrl}" alt="Nostr Image">`;
+            });
         }
 
-        // Process regular events (Text, Media, Notes)
-        else {
-            let contentHTML = marked.parse(eventContent.content);
-            
-            // Detect and insert images
-            const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
-            const imageMatches = eventContent.content.match(imageRegex);
-            if (imageMatches) {
-                imageMatches.forEach(imgUrl => {
-                    contentHTML += `<img src="${imgUrl}" alt="Nostr Image">`;
-                });
-            }
-
-            // Handle video embeds (.mp4, .ogv, YouTube)
-            const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
-            const videoMatches = eventContent.content.match(videoRegex);
-            if (videoMatches) {
-                videoMatches.forEach(videoUrl => {
-                    contentHTML += 
-                        `<div class="video-container">
-                            <video controls>
-                                <source src="${videoUrl}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>`;
-                });
-            }
-
-            // Handle YouTube video links
-            const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
-            const youtubeVideoMatches = [...eventContent.content.matchAll(youtubeVideoRegex)];
-            if (youtubeVideoMatches) {
-                youtubeVideoMatches.forEach(match => {
-                    const videoId = match[2] || match[3];
-                    contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 1/1; border: none;"></iframe>`;
-                });
-            }
-
-            // Handle audio links
-            const audioRegex = /(https?:\/\/.*\.(?:wav|mp3|ogg))/g;
-            const audioMatches = eventContent.content.match(audioRegex);
-            if (audioMatches) {
-                audioMatches.forEach(audioUrl => {
-                    contentHTML += 
-                        `<div class="audio-container">
-                            <audio id="audio-player" src="${audioUrl}"></audio>
-                            <div class="audio-controls">
-                                <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
-                                <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
-                                <span class="time-display">0:00 / 0:00</span>
-                            </div>
-                        </div>`;
-                });
-            }
-
-            postElement.innerHTML = contentHTML;
-            postContainer.appendChild(postElement);
-
-            // Initialize new audio players
-            setTimeout(initializeAudioPlayers, 500);
+        // Handle video embeds (.mp4, .ogv, YouTube)
+        const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
+        const videoMatches = eventContent.content.match(videoRegex);
+        if (videoMatches) {
+            videoMatches.forEach(videoUrl => {
+                contentHTML += 
+                    `<div class="video-container">
+                        <video controls>
+                            <source src="${videoUrl}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>`;
+            });
         }
+
+        // Handle YouTube video links
+        const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
+        const youtubeVideoMatches = [...eventContent.content.matchAll(youtubeVideoRegex)];
+        if (youtubeVideoMatches) {
+            youtubeVideoMatches.forEach(match => {
+                const videoId = match[2] || match[3];
+                contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 1/1; border: none;"></iframe>`;
+            });
+        }
+
+        // Handle audio links
+        const audioRegex = /(https?:\/\/.*\.(?:wav|mp3|ogg))/g;
+        const audioMatches = eventContent.content.match(audioRegex);
+        if (audioMatches) {
+            audioMatches.forEach(audioUrl => {
+                contentHTML += 
+                    `<div class="audio-container">
+                        <audio id="audio-player" src="${audioUrl}"></audio>
+                        <div class="audio-controls">
+                            <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
+                            <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
+                            <span class="time-display">0:00 / 0:00</span>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        postElement.innerHTML = contentHTML;
+        postContainer.appendChild(postElement);
+
+        // Initialize new audio players
+        setTimeout(initializeAudioPlayers, 500);
     };
 }
 
@@ -170,6 +149,7 @@ function formatTime(seconds) {
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 </script>
+
 
 
 
