@@ -1,122 +1,146 @@
-
 <style>
-:root {
-    --font-title: 'Exo2-VariableFont_wght', monospace;
-    --font-body: 'Exo2-VariableFont_wght', monospace;
-    --tx-color: #00FF00;
-    --bg-color: #0D0D0D;
-    --link-color: #FFA500;
-    --accent-color: #FF4500;
-}
+        :root {
+            --font-title: 'Exo2-VariableFont_wght', monospace;
+            --font-body: 'Exo2-VariableFont_wght', monospace;
+            --tx-color: #00FF00;
+            --bg-color: #0D0D0D;
+            --link-color: #FFA500;
+            --accent-color: #FF4500;
+        }
 
-body {
-    font-family: var(--font-body);
-    color: var(--tx-color);
-    background-color: var(--bg-color);
-}
+        body {
+            font-family: var(--font-body);
+            color: var(--tx-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
 
-h3 {
-    font-family: var(--font-title);
-    color: var(--link-color);
-    text-align: center;
-}
+        h3 {
+            font-family: var(--font-title);
+            color: var(--link-color);
+            text-align: center;
+            padding: 20px;
+        }
 
-.feed-item {
-    font-family: var(--font-body);
-    color: var(--tx-color);
-    background-color: var(--bg-color);
-    margin-bottom: 40px;
-    padding: 20px;
-    border-radius: 10px;
-    border: 3px solid var(--accent-color);
-}
+        .feed-item {
+            font-family: var(--font-body);
+            color: var(--tx-color);
+            background-color: var(--bg-color);
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 10px;
+            border: 3px solid var(--accent-color);
+            max-width: 800px;
+            margin: 20px auto;
+        }
 
-.feed-item p {
-    font-size: 1rem;
-    margin-top: 10px;
-}
+        .feed-item p {
+            font-size: 1rem;
+            margin-top: 10px;
+        }
 
-img {
-    display: block;
-    margin: 20px auto;
-    border: 3px solid var(--accent-color);
-    border-radius: 10px;
-    max-width: 90%;
-    height: auto;
-}
+        img {
+            display: block;
+            margin: 20px auto;
+            border: 3px solid var(--accent-color);
+            border-radius: 10px;
+            max-width: 90%;
+            height: auto;
+        }
 
-/* Audio Player Container */
-.audio-container,
-.video-container {
-    display: block;
-    margin: 20px auto;
-    border: 3px solid var(--accent-color);
-    border-radius: 10px;
-    max-width: 90%;
-    padding: 15px;
-    background-color: #1a1a1a;
-    color: white;
-    font-family: Arial, sans-serif;
-}
+        .audio-container,
+        .video-container {
+            display: block;
+            margin: 20px auto;
+            border: 3px solid var(--accent-color);
+            border-radius: 10px;
+            max-width: 90%;
+            padding: 15px;
+            background-color: #1a1a1a;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
 
-.audio-controls, .video-controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 400px;
-    margin-top: 10px;
-}
+        .audio-controls,
+        .video-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 10px;
+        }
 
-.play-button {
-    background: var(--accent-color);
-    color: #1a1a1a;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.2s;
-}
+        .play-button {
+            background: var(--accent-color);
+            color: #1a1a1a;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.2s;
+        }
 
-.play-button:hover {
-    background: #00cc77;
-}
+        .play-button:hover {
+            background: #00cc77;
+        }
 
-.seek-bar {
-    width: 100%;
-    margin: 0 10px;
-}
+        .seek-bar {
+            width: 100%;
+            margin: 0 10px;
+        }
 
-.time-display {
-    font-size: 14px;
-}
+        .time-display {
+            font-size: 14px;
+        }
 
-/* Video container specific */
-.video-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px auto;
-    border: 3px solid var(--accent-color);
-    border-radius: 10px;
-    max-width: 90%;
-    width: 400px;  /* Set width */
-    height: 400px; /* Set equal height for a square */
-    background-color: #1a1a1a;
-    position: relative;
-    overflow: hidden;
-}
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            border: 3px solid var(--accent-color);
+            border-radius: 10px;
+            max-width: 90%;
+            width: 400px;
+            height: 400px;
+            background-color: #1a1a1a;
+            position: relative;
+            overflow: hidden;
+        }
 
-.video-container iframe, 
-.video-container video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-</style>
+        .video-container iframe,
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
 
+        .reactions {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
 
+        .reaction-button {
+            background-color: transparent;
+            border: none;
+            color: var(--link-color);
+            font-size: 18px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
 
+        .reaction-button:hover {
+            color: var(--accent-color);
+        }
+
+        .zap-button {
+            font-size: 18px;
+            color: #ffcc00;
+        }
+    </style>

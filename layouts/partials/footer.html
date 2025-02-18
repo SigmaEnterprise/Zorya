@@ -2,7 +2,10 @@
     <h3>Nostr Feed</h3>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/nostr-zap@0.22.0"></script>
+
 <script>
+// Function to fetch the Nostr feed
 async function fetchNostrFeed(pubkey, relay) {
     console.log("Connecting to relay:", relay);
     const socket = new WebSocket(relay);
@@ -11,7 +14,7 @@ async function fetchNostrFeed(pubkey, relay) {
         console.log("WebSocket connected!");
 
         const filter = {
-            kinds: [1], // Filter for kinds of posts
+            kinds: [1, 66, 13194, 0], // Filter for kinds of posts
             authors: [pubkey],
             limit: 10
         };
@@ -37,8 +40,17 @@ async function fetchNostrFeed(pubkey, relay) {
 
         // Convert markdown to HTML
         let contentHTML = marked.parse(eventContent.content);
-        
-        // Detect and insert images
+
+        // Add reactions
+        contentHTML += `
+            <div class="reactions">
+                <button class="thumbs-up" onclick="handleReaction('thumbs-up', '${eventContent.id}')">👍</button>
+                <button class="zap-button" onclick="handleZapButton('${eventContent.id}')">⚡️</button>
+                <button class="gun-reaction" onclick="handleReaction('gun', '${eventContent.id}')">🔫</button>
+            </div>
+        `;
+
+        // Handle image content
         const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
         const imageMatches = eventContent.content.match(imageRegex);
         if (imageMatches) {
@@ -47,18 +59,17 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        // Handle video embeds (.mp4, .ogv, YouTube)
+        // Handle video content
         const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
         const videoMatches = eventContent.content.match(videoRegex);
         if (videoMatches) {
             videoMatches.forEach(videoUrl => {
-                contentHTML += 
-                    `<div class="video-container">
-                        <video controls>
-                            <source src="${videoUrl}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>`;
+                contentHTML += `<div class="video-container">
+                                    <video controls>
+                                        <source src="${videoUrl}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>`;
             });
         }
 
@@ -72,20 +83,19 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        // Handle audio links
+        // Handle audio content
         const audioRegex = /(https?:\/\/.*\.(?:wav|mp3|ogg))/g;
         const audioMatches = eventContent.content.match(audioRegex);
         if (audioMatches) {
             audioMatches.forEach(audioUrl => {
-                contentHTML += 
-                    `<div class="audio-container">
-                        <audio id="audio-player" src="${audioUrl}"></audio>
-                        <div class="audio-controls">
-                            <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
-                            <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
-                            <span class="time-display">0:00 / 0:00</span>
-                        </div>
-                    </div>`;
+                contentHTML += `<div class="audio-container">
+                                    <audio id="audio-player" src="${audioUrl}"></audio>
+                                    <div class="audio-controls">
+                                        <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
+                                        <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
+                                        <span class="time-display">0:00 / 0:00</span>
+                                    </div>
+                                </div>`;
             });
         }
 
@@ -97,9 +107,16 @@ async function fetchNostrFeed(pubkey, relay) {
     };
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
-});
+// Reaction Handlers
+function handleReaction(type, postId) {
+    console.log(`Reacted with ${type} on post ${postId}`);
+    // Implement your reaction logic here (e.g., storing the reaction on the server)
+}
+
+function handleZapButton(postId) {
+    console.log(`Zapped post ${postId}`);
+    // Integrate Lightning network zap functionality here (send a small Bitcoin tip)
+}
 
 // Audio Player Functions
 function togglePlay(button) {
@@ -148,7 +165,12 @@ function formatTime(seconds) {
     const sec = Math.floor(seconds % 60);
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
+});
 </script>
+
 
 
 
