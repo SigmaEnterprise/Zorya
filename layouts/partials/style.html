@@ -1,146 +1,143 @@
 <style>
-        :root {
-            --font-title: 'Exo2-VariableFont_wght', monospace;
-            --font-body: 'Exo2-VariableFont_wght', monospace;
-            --tx-color: #00FF00;
-            --bg-color: #0D0D0D;
-            --link-color: #FFA500;
-            --accent-color: #FF4500;
-        }
+:root {
+    --font-title: 'Exo2-VariableFont_wght', monospace;
+    --font-body: 'Exo2-VariableFont_wght', monospace;
+    --tx-color: #FFFFFF; /* Text Color: White for contrast and softness */
+    --bg-color: #10121d; /* Background Color: Vulcan for a dark, cozy feel */
+    --link-color: #016162; /* Link Color: Blue Stone for positive energy */
+    --accent-color: #27504b; /* Accent Color: Plantation for balance */
+    --highlight-color: #FFCC00; /* Highlight Color: Yellow for enlightenment */
+    --soft-bg: rgba(255, 255, 255, 0.1); /* Soft background for images/videos */
+    --cloud-color: rgba(255, 255, 255, 0.3); /* Cloud effect */
+}
 
-        body {
-            font-family: var(--font-body);
-            color: var(--tx-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
-        }
+body {
+    font-family: var(--font-body);
+    color: var(--tx-color);
+    background-color: var(--bg-color);
+    line-height: 1.6;
+}
 
-        h3 {
-            font-family: var(--font-title);
-            color: var(--link-color);
-            text-align: center;
-            padding: 20px;
-        }
+h3 {
+    font-family: var(--font-title);
+    color: var(--highlight-color); /* Bright highlight for headings */
+    text-align: center;
+    text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft glow effect */
+}
 
-        .feed-item {
-            font-family: var(--font-body);
-            color: var(--tx-color);
-            background-color: var(--bg-color);
-            margin-bottom: 40px;
-            padding: 20px;
-            border-radius: 10px;
-            border: 3px solid var(--accent-color);
-            max-width: 800px;
-            margin: 20px auto;
-        }
+.feed-item {
+    font-family: var(--font-body);
+    color: var(--tx-color);
+    background-color: var(--soft-bg);
+    margin-bottom: 40px;
+    padding: 20px;
+    border-radius: 15px;
+    border: 3px solid var(--accent-color);
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
 
-        .feed-item p {
-            font-size: 1rem;
-            margin-top: 10px;
-        }
+.feed-item:hover {
+    transform: translateY(-5px); /* Soft hover effect */
+}
 
-        img {
-            display: block;
-            margin: 20px auto;
-            border: 3px solid var(--accent-color);
-            border-radius: 10px;
-            max-width: 90%;
-            height: auto;
-        }
+.feed-item p {
+    font-size: 1.1rem;
+    margin-top: 10px;
+    line-height: 1.5;
+}
 
-        .audio-container,
-        .video-container {
-            display: block;
-            margin: 20px auto;
-            border: 3px solid var(--accent-color);
-            border-radius: 10px;
-            max-width: 90%;
-            padding: 15px;
-            background-color: #1a1a1a;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
+img {
+    display: block;
+    margin: 20px auto;
+    border: 3px solid var(--accent-color);
+    border-radius: 10px;
+    max-width: 90%;
+    height: auto;
+    filter: brightness(0.9); /* Soften image brightness */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+}
 
-        .audio-controls,
-        .video-controls {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 400px;
-            margin-top: 10px;
-        }
+/* Audio Player Container */
+.audio-container,
+.video-container {
+    display: block;
+    margin: 20px auto;
+    border: 3px solid var(--accent-color);
+    border-radius: 15px;
+    max-width: 90%;
+    padding: 15px;
+    background-color: #1a1a1a;
+    color: white;
+    font-family: Arial, sans-serif;
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3);
+}
 
-        .play-button {
-            background: var(--accent-color);
-            color: #1a1a1a;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.2s;
-        }
+.audio-controls, .video-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 10px;
+}
 
-        .play-button:hover {
-            background: #00cc77;
-        }
+.play-button {
+    background: var(--accent-color);
+    color: #1a1a1a;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+}
 
-        .seek-bar {
-            width: 100%;
-            margin: 0 10px;
-        }
+.play-button:hover {
+    background: #00cc77;
+}
 
-        .time-display {
-            font-size: 14px;
-        }
+.seek-bar {
+    width: 100%;
+    margin: 0 10px;
+}
 
-        .video-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px auto;
-            border: 3px solid var(--accent-color);
-            border-radius: 10px;
-            max-width: 90%;
-            width: 400px;
-            height: 400px;
-            background-color: #1a1a1a;
-            position: relative;
-            overflow: hidden;
-        }
+.time-display {
+    font-size: 14px;
+}
 
-        .video-container iframe,
-        .video-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
+/* Video container specific */
+.video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    border: 3px solid var(--accent-color);
+    border-radius: 15px;
+    max-width: 90%;
+    width: 400px;
+    height: 400px;
+    background-color: #1a1a1a;
+    position: relative;
+    overflow: hidden;
+    filter: brightness(0.9); /* Soft video filter */
+}
 
-        .reactions {
-            margin-top: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
+.video-container iframe,
+.video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
 
-        .reaction-button {
-            background-color: transparent;
-            border: none;
-            color: var(--link-color);
-            font-size: 18px;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .reaction-button:hover {
-            color: var(--accent-color);
-        }
-
-        .zap-button {
-            font-size: 18px;
-            color: #ffcc00;
-        }
-    </style>
+/* Soft cloud background effect for specific areas */
+.cloud-background {
+    background: url('https://www.transparenttextures.com/patterns/clouds.png') repeat;
+    background-color: var(--cloud-color);
+    padding: 50px;
+    border-radius: 20px;
+    margin-top: 30px;
+}
+</style>
