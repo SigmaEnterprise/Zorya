@@ -31,10 +31,13 @@ async function fetchNostrFeed(pubkey, relay) {
         if (data[0] !== "EVENT") return;
 
         const eventContent = data[2];
-        events.push(eventContent);
+        
+        // Ensure profile (kind 0) replaces any existing one, and other events appear newest first
+        if (eventContent.kind === 0) {
+            events = events.filter(e => e.kind !== 0);
+        }
 
-        // Sort so kind 0 (profile) is first
-        events.sort((a, b) => (a.kind === 0 ? -1 : 1));
+        events.unshift(eventContent); // Add newest events to the beginning
 
         renderEvents(events);
     };
@@ -43,6 +46,9 @@ async function fetchNostrFeed(pubkey, relay) {
 function renderEvents(events) {
     const postContainer = document.getElementById("nostr-feed");
     postContainer.innerHTML = ""; // Clear previous content
+
+    // Ensure profile (kind 0) appears first
+    events.sort((a, b) => (a.kind === 0 ? -1 : 1));
 
     events.forEach(eventContent => {
         const postElement = document.createElement("div");
@@ -90,7 +96,7 @@ function renderEvents(events) {
             postElement.innerHTML = contentHTML;
         }
 
-        postContainer.prepend(postElement); // Ensures latest event appears first
+        postContainer.appendChild(postElement); // Append all events to the container
     });
 }
 
@@ -98,6 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
 });
 </script>
+
 
 
 <button
