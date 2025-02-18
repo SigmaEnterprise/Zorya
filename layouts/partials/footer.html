@@ -4,9 +4,21 @@
 <script>
 async function fetchRelayInfo(relay) {
     try {
+        console.log("Fetching relay info:", relay);
         const response = await fetch(relay.replace("wss://", "https://"));
-        const info = await response.json();
-        return info.name || relay;
+
+        if (!response.ok) {
+            throw new Error(`Relay responded with status: ${response.status}`);
+        }
+
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            throw new Error("Relay response is not valid JSON.");
+        }
+
+        const data = await response.json();
+        console.log("Relay info:", data);
+        return data.name || relay;
     } catch (error) {
         console.error("Failed to fetch relay info:", error);
         return relay;
@@ -31,40 +43,43 @@ async function fetchNostrFeed(pubkey, relays) {
         socket.onerror = (error) => console.error("WebSocket error:", error);
 
         socket.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            if (data[0] !== "EVENT") return;
+            try {
+                const data = JSON.parse(event.data);
+                if (data[0] !== "EVENT") return;
 
-            const eventContent = data[2];
-            const postElement = document.createElement("div");
-            postElement.classList.add("feed-item");
-            
-            let contentHTML = `<p>${eventContent.content}</p><hr>`;
+                const eventContent = data[2];
+                const postElement = document.createElement("div");
+                postElement.classList.add("feed-item");
+                
+                let contentHTML = `<p>${eventContent.content}</p><hr>`;
 
-            // Detect and insert images
-            const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
-            const imageMatches = eventContent.content.match(imageRegex);
-            if (imageMatches) imageMatches.forEach(imgUrl => contentHTML += `<img src="${imgUrl}" alt="Nostr Image">`);
+                const mediaTypes = {
+                    images: /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g,
+                    videos: /(https?:\/\/.*\.(?:mp4|ogv))/g,
+                    youtube: /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g,
+                    audio: /(https?:\/\/.*\.(?:wav|mp3|ogg))/g
+                };
 
-            // Detect and insert videos
-            const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
-            const videoMatches = eventContent.content.match(videoRegex);
-            if (videoMatches) videoMatches.forEach(videoUrl => contentHTML += `<video controls><source src="${videoUrl}" type="video/mp4"></video>`);
+                const matches = {
+                    images: eventContent.content.match(mediaTypes.images),
+                    videos: eventContent.content.match(mediaTypes.videos),
+                    youtube: [...eventContent.content.matchAll(mediaTypes.youtube)],
+                    audio: eventContent.content.match(mediaTypes.audio)
+                };
 
-            // Handle YouTube videos
-            const youtubeRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
-            const youtubeMatches = [...eventContent.content.matchAll(youtubeRegex)];
-            if (youtubeMatches) youtubeMatches.forEach(match => {
-                const videoId = match[2] || match[3];
-                contentHTML += `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`;
-            });
+                if (matches.images) matches.images.forEach(imgUrl => contentHTML += `<img src="${imgUrl}" alt="Nostr Image">`);
+                if (matches.videos) matches.videos.forEach(videoUrl => contentHTML += `<video controls><source src="${videoUrl}" type="video/mp4"></video>`);
+                if (matches.youtube) matches.youtube.forEach(match => {
+                    const videoId = match[2] || match[3];
+                    contentHTML += `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`;
+                });
+                if (matches.audio) matches.audio.forEach(audioUrl => contentHTML += `<audio controls><source src="${audioUrl}"></audio>`);
 
-            // Detect and insert audio
-            const audioRegex = /(https?:\/\/.*\.(?:wav|mp3|ogg))/g;
-            const audioMatches = eventContent.content.match(audioRegex);
-            if (audioMatches) audioMatches.forEach(audioUrl => contentHTML += `<audio controls><source src="${audioUrl}"></audio>`);
-
-            postElement.innerHTML = contentHTML;
-            postContainer.appendChild(postElement);
+                postElement.innerHTML = contentHTML;
+                postContainer.appendChild(postElement);
+            } catch (err) {
+                console.error("Error processing message:", err);
+            }
         };
     }
 }
@@ -73,9 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const relays = ["wss://relay.damus.io", "wss://libretechsystems.nostr1.com"];
     fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", relays);
 });
-
 </script>
-
 
 
 
