@@ -52,8 +52,8 @@ async function fetchNostrFeed(pubkey, relay) {
         const videoMatches = eventContent.content.match(videoRegex);
         if (videoMatches) {
             videoMatches.forEach(videoUrl => {
-                contentHTML += 
-                    `<div class="video-container">
+                contentHTML += `
+                    <div class="video-container">
                         <video controls>
                             <source src="${videoUrl}" type="video/mp4">
                             Your browser does not support the video tag.
@@ -77,8 +77,8 @@ async function fetchNostrFeed(pubkey, relay) {
         const audioMatches = eventContent.content.match(audioRegex);
         if (audioMatches) {
             audioMatches.forEach(audioUrl => {
-                contentHTML += 
-                    `<div class="audio-container">
+                contentHTML += `
+                    <div class="audio-container">
                         <audio id="audio-player" src="${audioUrl}"></audio>
                         <div class="audio-controls">
                             <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
@@ -149,6 +149,7 @@ function formatTime(seconds) {
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 </script>
+
 
 <button
     data-npub="npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv"
