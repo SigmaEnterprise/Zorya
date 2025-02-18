@@ -107,15 +107,31 @@ async function fetchNostrFeed(pubkey, relay) {
     };
 }
 
-// Reaction Handlers
+// Handle Reactions
 function handleReaction(type, postId) {
     console.log(`Reacted with ${type} on post ${postId}`);
-    // Implement your reaction logic here (e.g., storing the reaction on the server)
+
+    // Send the reaction to the server (using a mock API for demonstration)
+    fetch('/api/reactions', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            postId: postId,
+            reactionType: type
+        })
+    })
+    .then(response => response.json())
+    .then(data => console.log('Reaction stored:', data))
+    .catch(error => console.error('Error storing reaction:', error));
 }
 
+// Handle Zap Button
 function handleZapButton(postId) {
     console.log(`Zapped post ${postId}`);
-    // Integrate Lightning network zap functionality here (send a small Bitcoin tip)
+    // Implement Lightning Network zap functionality here
+    // This could be handled via your backend API that interacts with a Lightning Node
 }
 
 // Audio Player Functions
