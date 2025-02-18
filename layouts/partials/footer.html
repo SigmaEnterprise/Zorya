@@ -29,7 +29,7 @@ async function fetchNostrFeed(pubkey, relay) {
         const data = JSON.parse(event.data);
         if (data[0] !== "EVENT") return;
 
-        const eventContent = data[2]; // Get the event content
+        const eventContent = data[2];
         const postContainer = document.getElementById("nostr-feed");
 
         const postElement = document.createElement("div");
@@ -37,7 +37,7 @@ async function fetchNostrFeed(pubkey, relay) {
 
         // Convert markdown to HTML
         let contentHTML = marked.parse(eventContent.content);
-
+        
         // Detect and insert images
         const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
         const imageMatches = eventContent.content.match(imageRegex);
@@ -149,11 +149,6 @@ function formatTime(seconds) {
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 </script>
-
-
-
-
-
 
 <button
     data-npub="npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv"
