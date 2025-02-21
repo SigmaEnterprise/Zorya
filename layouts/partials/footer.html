@@ -11,7 +11,7 @@ async function fetchNostrFeed(pubkey, relay) {
         console.log("WebSocket connected!");
 
         const filter = {
-            kinds: [1, 6, 16, 30023], // Filter for kinds of posts
+            kinds: [1, 6, 16, 0, 30023, 66, 13194], // Filter for kinds of posts
             authors: [pubkey],
             limit: 25
         };
@@ -55,7 +55,7 @@ async function fetchNostrFeed(pubkey, relay) {
                 contentHTML += `
                     <div class="video-container">
                         <video controls>
-                            <source src="${videoUrl}" type="video/mp4">
+                            <source src="${videoUrl}" type="video/${videoUrl.split('.').pop()}">
                             Your browser does not support the video tag.
                         </video>
                     </div>
@@ -69,7 +69,7 @@ async function fetchNostrFeed(pubkey, relay) {
         if (youtubeVideoMatches) {
             youtubeVideoMatches.forEach(match => {
                 const videoId = match[2] || match[3];
-                contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 1/1; border: none;"></iframe>`;
+                contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 16/9; border: none;"></iframe>`;
             });
         }
 
@@ -78,8 +78,8 @@ async function fetchNostrFeed(pubkey, relay) {
         const audioMatches = eventContent.content.match(audioRegex);
         if (audioMatches) {
             audioMatches.forEach(audioUrl => {
-                contentHTML += 
-                    `<div class="audio-container">
+                contentHTML += `
+                    <div class="audio-container">
                         <audio id="audio-player" src="${audioUrl}"></audio>
                         <div class="audio-controls">
                             <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
@@ -150,6 +150,7 @@ function formatTime(seconds) {
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 </script>
+
 
 
 
