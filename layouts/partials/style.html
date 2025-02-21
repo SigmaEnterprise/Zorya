@@ -1,8 +1,16 @@
+
+
+
+
+
 <style>
+    /* Importing Quicksand font */
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+
     /* Root Styles */
     :root {
-        --font-title: 'Exo2-VariableFont_wght', monospace;
-        --font-body: 'Exo2-VariableFont_wght', monospace;
+        --font-title: 'Quicksand', sans-serif; /* Updated to Quicksand */
+        --font-body: 'Quicksand', sans-serif;  /* Updated to Quicksand */
         --tx-color: #10121d; /* Vulcan for text */
         --bg-color: #FFFFFF; /* White background */
         --link-color: #016162; /* Blue Stone for links */
@@ -14,7 +22,7 @@
 
     /* General Body Styles */
     body {
-        font-family: var(--font-body), monospace;
+        font-family: var(--font-body), sans-serif; /* Using Quicksand font */
         color: var(--tx-color);
         background-color: var(--bg-color);
         line-height: 1.6;
@@ -34,7 +42,7 @@
 
     /* Feed Item Styles */
     .feed-item {
-        font-family: var(--font-body), monospace;
+        font-family: var(--font-body), sans-serif; /* Using Quicksand font */
         color: var(--tx-color);
         background-color: var(--soft-bg);
         margin-bottom: 40px;
@@ -149,6 +157,5 @@
         border-radius: 20px;
         margin-top: 30px;
     }
-
 
 </style>
