@@ -8,6 +8,30 @@
     <title>{{ .Site.Title }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/holiday.css" />
  <style>
+    /* Root Styles */
+    :root {
+        --font-title: 'Exo2-VariableFont_wght', monospace;
+        --font-body: 'Exo2-VariableFont_wght', monospace;
+        --tx-color: #10121d; /* Vulcan for text */
+        --bg-color: #FFFFFF; /* White background */
+        --link-color: #016162; /* Blue Stone for links */
+        --accent-color: #27504b; /* Plantation for accents */
+        --highlight-color: #FFCC00; /* Highlight color for emphasis */
+        --soft-bg: rgba(255, 255, 255, 0.1); /* Soft background for elements */
+        --cloud-color: rgba(255, 255, 255, 0.3); /* Cloud effect */
+    }
+
+    /* General Body Styles */
+    body {
+        font-family: var(--font-body), monospace;
+        color: var(--tx-color);
+        background-color: var(--bg-color);
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+
     /* Header Styling */
     header {
         background-color: var(--bg-color); /* White background for header */
@@ -47,14 +71,15 @@
         text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
     }
 
+    /* Navigation Bar Styling */
     nav {
-    background-color: #FFFFFF; /* White background for navbar */
-    padding: 15px 0;
-    display: flex;
-    justify-content: center;
-    border-top: 3px solid var(--highlight-color); /* Highlighted border on top */
-}
-
+        background-color: var(--accent-color); /* Accent background for navbar */
+        padding: 15px 0;
+        display: flex;
+        justify-content: center;
+        border-top: 3px solid var(--highlight-color); /* Highlighted border on top */
+        flex-wrap: wrap; /* Make it wrap on smaller screens */
+    }
 
     /* Navigation Links */
     nav a {
@@ -67,6 +92,7 @@
         text-transform: uppercase;
         letter-spacing: 1px;
         transition: background-color 0.3s ease, color 0.3s ease;
+        display: block;
     }
 
     /* Hover Effect for Navigation Links */
@@ -74,7 +100,47 @@
         background-color: var(--highlight-color); /* Highlight color for hover effect */
         color: var(--bg-color); /* White text on hover */
     }
+
+    /* Media Queries for Mobile Responsiveness */
+    @media (max-width: 768px) {
+        /* Header Title */
+        header .title {
+            font-size: 2.5rem; /* Smaller title for mobile */
+        }
+
+        /* Header Subtitle */
+        header h2 {
+            font-size: 1.5rem; /* Adjust subtitle size for mobile */
+        }
+
+        /* Navigation Links */
+        nav a {
+            padding: 10px 15px; /* Reduced padding */
+            margin: 5px 10px; /* Reduced margin for mobile */
+            font-size: 1rem; /* Smaller font size */
+        }
+
+        /* Stack the navigation links vertically */
+        nav {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        /* Further adjustments for very small screens (phones in portrait mode) */
+        header .title {
+            font-size: 2rem; /* Even smaller title */
+        }
+
+        nav a {
+            padding: 8px 12px; /* Further reduced padding */
+            font-size: 0.9rem; /* Even smaller font size */
+        }
+    }
+
 </style>
+
 
 </head>
 <body>
