@@ -1,5 +1,5 @@
 <style>
-        /* Root Styles */
+                /* Root Styles */
         :root {
             --font-title: 'Exo2-VariableFont_wght', monospace;
             --font-body: 'Exo2-VariableFont_wght', monospace;
@@ -10,6 +10,11 @@
             --highlight-color: #FFCC00; /* Highlight color for emphasis */
             --soft-bg: rgba(255, 255, 255, 0.1); /* Soft background for elements */
             --cloud-color: rgba(255, 255, 255, 0.3); /* Cloud effect */
+            --dark-bg: #121212;
+            --dark-tx-color: #ffffff;
+            --dark-feed-bg: #333;
+            --dark-border-color: #555;
+            --dark-btn-bg: #ff9500;
         }
 
         /* General Body Styles */
@@ -21,14 +26,28 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden; /* Prevent horizontal scrolling */
+            transition: all 0.3s;
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-tx-color);
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
         }
 
         /* Title and Heading Styles */
         h3 {
             font-family: var(--font-title);
-            color: var(--highlight-color); /* Bright color for headings */
+            color: var(--highlight-color);
             text-align: center;
-            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft glow effect */
+            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
         }
 
@@ -46,13 +65,19 @@
         }
 
         .feed-item:hover {
-            transform: translateY(-5px); /* Soft hover effect */
+            transform: translateY(-5px);
         }
 
         .feed-item p {
             font-size: 1.1rem;
             margin-top: 10px;
             line-height: 1.5;
+        }
+
+        /* Dark Mode Feed Item */
+        .dark-mode .feed-item {
+            background-color: var(--dark-feed-bg);
+            border-color: var(--dark-border-color);
         }
 
         /* Image Styling */
@@ -63,7 +88,7 @@
             border-radius: 10px;
             max-width: 90%;
             height: auto;
-            filter: brightness(0.9); /* Soften image brightness */
+            filter: brightness(0.9);
             box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
         }
 
@@ -115,7 +140,7 @@
             font-size: 14px;
         }
 
-        /* Video container specific */
+        /* Video Container */
         .video-container {
             display: flex;
             justify-content: center;
@@ -129,7 +154,7 @@
             background-color: #1a1a1a;
             position: relative;
             overflow: hidden;
-            filter: brightness(0.9); /* Soft video filter */
+            filter: brightness(0.9);
         }
 
         .video-container iframe,
@@ -141,7 +166,7 @@
             height: 100%;
         }
 
-        /* Cloud Background for Specific Areas */
+        /* Cloud Background */
         .cloud-background {
             background: url('https://www.transparenttextures.com/patterns/clouds.png') repeat;
             background-color: var(--cloud-color);
@@ -150,62 +175,79 @@
             margin-top: 30px;
         }
 
-/* Repost Section */
-.repost {
-    background-color: #e8f4fd;
-    border-left: 5px solid #0066cc;
-    padding: 10px;
-    margin-bottom: 12px;
-    font-style: italic;
-    color: #333;
-}
-
-.repost a {
-    color: #0066cc;
-    text-decoration: none;
-}
-
-.repost a:hover {
-    text-decoration: underline;
-}
-
-
-body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            padding: 20px;
-        }
-        .dark-mode {
-            background-color: #121212;
-            color: #e0e0e0;
-        }
-        #nostr-feed {
-            max-width: 600px;
-            margin: auto;
-        }
-        .feed-item {
-            border: 1px solid #ddd;
+        /* Dropdown for Relay Selection */
+        .relay-selection {
+            display: block;
+            margin: 20px auto;
             padding: 10px;
-            margin-bottom: 10px;
+            border: 2px solid var(--accent-color);
+            border-radius: 5px;
             background-color: #fff;
+            color: var(--tx-color);
+            font-size: 16px;
+            cursor: pointer;
         }
-        .dark-mode .feed-item {
-            background-color: #222;
-            border-color: #444;
+
+        .dark-mode .relay-selection {
+            background-color: var(--dark-bg);
+            color: var(--dark-tx-color);
+            border-color: var(--dark-border-color);
         }
-        .video-container, .audio-container {
+
+        /* User Input for Public Key */
+        .user-input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--accent-color);
+            border-radius: 5px;
+            font-size: 16px;
             margin-top: 10px;
         }
+
+        .dark-mode .user-input {
+            background-color: var(--dark-bg);
+            color: var(--dark-tx-color);
+            border-color: var(--dark-border-color);
+        }
+
+        /* Copy to Clipboard Button */
         .copy-btn {
-            background-color: #008CBA;
+            background: #007bff;
             color: white;
             padding: 5px;
             border: none;
             cursor: pointer;
+            border-radius: 3px;
             margin-top: 5px;
         }
-        .copy-btn:hover {
-            background-color: #005f73;
+
+        .dark-mode .copy-btn {
+            background: var(--dark-btn-bg);
         }
+
+        /* Error Handling Messages */
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Dark Mode Toggle Button */
+        .toggle-dark-mode {
+            background: var(--highlight-color);
+            color: var(--tx-color);
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .dark-mode .toggle-dark-mode {
+            background: var(--dark-btn-bg);
+            color: var(--dark-tx-color);
+        }
+
     </style>
