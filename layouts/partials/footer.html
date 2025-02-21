@@ -11,7 +11,7 @@ async function fetchNostrFeed(pubkey, relay) {
         console.log("WebSocket connected!");
 
         const filter = {
-            kinds: [1, 6, 16, 0, 30023, 66, 13194], // Filter for kinds of posts
+            kinds: [1, 6, 16, 30023, 66, 13194], // Filter for kinds of posts
             authors: [pubkey],
             limit: 25
         };
@@ -24,7 +24,7 @@ async function fetchNostrFeed(pubkey, relay) {
         console.error("WebSocket error:", error);
     };
 
-    socket.onmessage = (event) => {
+    socket.onmessage = async (event) => {
         console.log("Received data:", event.data);
         const data = JSON.parse(event.data);
         if (data[0] !== "EVENT") return;
@@ -90,12 +90,61 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
+        // Handle reposts (nostr:nevent)
+        const neventRegex = /nostr:nevent1([a-z0-9]+)/g;
+        const neventMatches = [...eventContent.content.matchAll(neventRegex)];
+
+        if (neventMatches.length > 0) {
+            for (const match of neventMatches) {
+                const eventId = match[1]; // Extract event ID from `nostr:nevent`
+                const repostContent = await fetchNostrEvent(eventId, relay);
+                if (repostContent) {
+                    contentHTML += `<div class="repost">
+                        <h4>Repost:</h4>
+                        <div>${marked.parse(repostContent)}</div>
+                    </div>`;
+                }
+            }
+        }
+
         postElement.innerHTML = contentHTML;
         postContainer.appendChild(postElement);
 
         // Initialize new audio players
         setTimeout(initializeAudioPlayers, 500);
     };
+}
+
+async function fetchNostrEvent(eventId, relay) {
+    return new Promise((resolve) => {
+        const socket = new WebSocket(relay);
+        
+        socket.onopen = () => {
+            console.log("Fetching reposted event:", eventId);
+            const filter = {
+                ids: [eventId]
+            };
+            socket.send(JSON.stringify(["REQ", "nostr-repost", filter]));
+        };
+
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            if (data[0] !== "EVENT") return;
+
+            const eventContent = data[2]?.content;
+            if (eventContent) {
+                resolve(eventContent);
+            } else {
+                resolve(null);
+            }
+            socket.close();
+        };
+
+        socket.onerror = (error) => {
+            console.error("Error fetching reposted event:", error);
+            resolve(null);
+        };
+    });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -150,6 +199,7 @@ function formatTime(seconds) {
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 </script>
+
 
 
 
