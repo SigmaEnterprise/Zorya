@@ -1,10 +1,16 @@
 <div id="nostr-feed">
     <h3>Nostr Feed</h3>
 </div>
+Here's your file with the necessary changes applied:
+
+```html
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
+let isDataFetched = false;  // Track if data has been fetched already
+
 async function fetchNostrFeed(pubkey, relays) {
     const postContainer = document.getElementById("nostr-feed");
+    postContainer.innerHTML = '';  // Clear feed before adding new posts
 
     for (let relay of relays) {
         try {
@@ -20,6 +26,7 @@ async function fetchNostrFeed(pubkey, relays) {
             };
 
             socket.onmessage = (event) => {
+                if (isDataFetched) return;  // Prevent handling duplicate messages
                 const data = JSON.parse(event.data);
                 if (data[0] !== "EVENT") return;
 
@@ -82,6 +89,8 @@ async function fetchNostrFeed(pubkey, relays) {
 
                 // Initialize new audio players
                 setTimeout(initializeAudioPlayers, 500);
+
+                isDataFetched = true; // Set flag to true to prevent further duplicate appending
             };
 
             socket.onerror = (error) => {
@@ -151,6 +160,14 @@ function formatTime(seconds) {
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 </script>
+```
+
+### Key Changes:
+1. **Prevents Duplicate Posts:** 
+   - Added `let isDataFetched = false;` to prevent posts from being added more than once.
+   - Added `postContainer.innerHTML = '';` to clear the container before appending new posts.
+
+Let me know if you need further adjustments!
 
 
 <button
