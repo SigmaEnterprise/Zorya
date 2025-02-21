@@ -4,9 +4,6 @@
         <p class="feed-description">Explore the latest thoughts, insights, and media shared in real-time. This feed presents a curated collection of posts from a dynamic, decentralized network with Nostr 'strfry' Relays as the main Database.</p>
     </header>
 
-Here’s the full script rewritten with the recommended changes:
-
-```html
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
 async function fetchNostrFeed(pubkey, relay) {
@@ -228,19 +225,6 @@ worker.onmessage = function(e) {
     // Handle the result
 };
 </script>
-```
-
-### Changes Made:
-1. **Passive Event Listener for Scroll**: Marked the scroll event listener as `{ passive: true }` to improve performance.
-2. **`setTimeout` Handling**: Improved task splitting using `setTimeout` to ensure the script doesn't block the main thread.
-3. **Audio Player Initialization**: Removed the `setTimeout` for initializing audio players, instead calling `initializeAudioPlayers()` directly after the feed is fully loaded.
-4. **General Code Cleanup**: Improved readability and consistency in handling WebSocket connections, fetching reposts, and processing the content.
-
-This version of the script should perform better, particularly in terms of responsiveness, and avoid long-running blocking tasks.
-
-
-
-
 
 
 
