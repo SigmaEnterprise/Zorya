@@ -37,7 +37,13 @@ async function fetchNostrFeed(pubkey, relay) {
 
         // Convert markdown to HTML
         let contentHTML = marked.parse(eventContent.content);
-        
+
+        // Detect reposts and display them like normal events
+        if (eventContent.kind === 6) {
+            const repostContent = JSON.parse(eventContent.content); // Assuming repost content is stringified JSON
+            contentHTML = `Repost of: <a href="${repostContent.e[1]}" target="_blank">${repostContent.e[1]}</a>`;
+        }
+
         // Detect and insert images
         const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
         const imageMatches = eventContent.content.match(imageRegex);
@@ -119,34 +125,18 @@ function seekAudio(seekBar) {
 }
 
 function initializeAudioPlayers() {
-    document.querySelectorAll(".audio-container").forEach(container => {
-        const audio = container.querySelector("audio");
-        const playButton = container.querySelector(".play-button");
-        const seekBar = container.querySelector(".seek-bar");
-        const timeDisplay = container.querySelector(".time-display");
+    document.querySelectorAll(".audio-container audio").forEach((audio) => {
+        audio.addEventListener("timeupdate", function () {
+            const seekBar = audio.parentElement.querySelector(".seek-bar");
+            const timeDisplay = audio.parentElement.querySelector(".time-display");
+            const progress = (audio.currentTime / audio.duration) * 100;
+            seekBar.value = progress;
 
-        if (!audio) return;
-
-        // Update Seek Bar and Time Display
-        audio.addEventListener("timeupdate", () => {
-            if (!isNaN(audio.duration)) {
-                seekBar.value = (audio.currentTime / audio.duration) * 100;
-                timeDisplay.textContent = formatTime(audio.currentTime) + " / " + formatTime(audio.duration);
-            }
-        });
-
-        // Seek Audio
-        seekBar.addEventListener("input", () => {
-            audio.currentTime = (seekBar.value / 100) * audio.duration;
+            const minutes = Math.floor(audio.currentTime / 60);
+            const seconds = Math.floor(audio.currentTime % 60);
+            timeDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, "0")} / ${Math.floor(audio.duration / 60)}:${Math.floor(audio.duration % 60).toString().padStart(2, "0")}`;
         });
     });
-}
-
-// Format Time (Seconds to MM:SS)
-function formatTime(seconds) {
-    const min = Math.floor(seconds / 60);
-    const sec = Math.floor(seconds % 60);
-    return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 </script>
 
