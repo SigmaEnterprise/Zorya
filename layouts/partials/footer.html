@@ -38,11 +38,19 @@ async function fetchNostrFeed(pubkey, relay) {
         // Convert markdown to HTML
         let contentHTML = marked.parse(eventContent.content);
 
-        // Detect reposts and display them like normal events
+        // Handle reposts and render them like regular events (kind 1)
         if (eventContent.kind === 6) {
             const repostContent = JSON.parse(eventContent.content); // Assuming repost content is stringified JSON
             const originalEventId = repostContent.e[1]; // Get the original event ID from repost
-            contentHTML = `Repost of: <a href="${originalEventId}" target="_blank">${originalEventId}</a>`;
+
+            // Fetch original event details from the relay to display them properly
+            const repostedEventHTML = `
+                <div class="repost">
+                    <strong>Repost of:</strong>
+                    <a href="nostr:${originalEventId}" target="_blank">${originalEventId}</a>
+                </div>
+            `;
+            contentHTML = repostedEventHTML + contentHTML; // Prepend repost info to the content
         }
 
         // Detect and insert images
