@@ -6,86 +6,153 @@
 <style>
     /* Importing Quicksand font */
     @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
-    #nostr-feed {
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        padding: 20px;
-        width: 100%;
-        max-width: 900px;
-        margin: 20px auto;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+        /* Root Styles */
+        :root {
+            --font-title: 'Exo2-VariableFont_wght', monospace;
+            --font-body: 'Exo2-VariableFont_wght', monospace;
+            --tx-color: #10121d; /* Vulcan for text */
+            --bg-color: #FFFFFF; /* White background */
+            --link-color: #016162; /* Blue Stone for links */
+            --accent-color: #27504b; /* Plantation for accents */
+            --highlight-color: #FFCC00; /* Highlight color for emphasis */
+            --soft-bg: rgba(255, 255, 255, 0.1); /* Soft background for elements */
+            --cloud-color: rgba(255, 255, 255, 0.3); /* Cloud effect */
+        }
 
-    #nostr-feed header {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+        /* General Body Styles */
+        body {
+            font-family: var(--font-body), monospace;
+            color: var(--tx-color);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
 
-    .feed-title {
-        font-size: 24px;
-        font-weight: bold;
-        color: #2c3e50;
-        margin-bottom: 10px;
-    }
+        /* Title and Heading Styles */
+        h3 {
+            font-family: var(--font-title);
+            color: var(--highlight-color); /* Bright color for headings */
+            text-align: center;
+            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft glow effect */
+            margin-top: 20px;
+        }
 
-    .feed-description {
-        font-size: 16px;
-        color: #7f8c8d;
-        line-height: 1.5;
-    }
+        /* Feed Item Styles */
+        .feed-item {
+            font-family: var(--font-body), monospace;
+            color: var(--tx-color);
+            background-color: var(--soft-bg);
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 15px;
+            border: 3px solid var(--accent-color);
+            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
 
-    .feed-content {
-        display: grid;
-        gap: 20px;
-    }
+        .feed-item:hover {
+            transform: translateY(-5px); /* Soft hover effect */
+        }
 
-    .feed-item {
-        background-color: white;
-        border-radius: 8px;
-        padding: 15px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+        .feed-item p {
+            font-size: 1.1rem;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
 
-    .feed-item h4 {
-        font-size: 18px;
-        color: #34495e;
-    }
+        /* Image Styling */
+        img {
+            display: block;
+            margin: 20px auto;
+            border: 3px solid var(--accent-color);
+            border-radius: 10px;
+            max-width: 90%;
+            height: auto;
+            filter: brightness(0.9); /* Soften image brightness */
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+        }
 
-    .feed-item p {
-        font-size: 16px;
-        color: #2c3e50;
-        line-height: 1.6;
-    }
+        /* Audio and Video Container Styling */
+        .audio-container,
+        .video-container {
+            display: block;
+            margin: 20px auto;
+            border: 3px solid var(--accent-color);
+            border-radius: 15px;
+            max-width: 90%;
+            padding: 15px;
+            background-color: #1a1a1a;
+            color: white;
+            font-family: Arial, sans-serif;
+            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3);
+        }
 
-    /* Styling for images, videos, and audio embeds */
-    .feed-item img {
-        max-width: 100%;
-        border-radius: 5px;
-        margin-top: 15px;
-    }
+        .audio-controls, .video-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 10px;
+        }
 
-    .feed-item .video-container {
-        margin-top: 15px;
-    }
+        .play-button {
+            background: var(--accent-color);
+            color: #1a1a1a;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.2s;
+        }
 
-    .feed-item .audio-container {
-        margin-top: 15px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
+        .play-button:hover {
+            background: #00cc77;
+        }
 
-    .audio-controls button {
-        padding: 5px 10px;
-        background-color: #2980b9;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+        .seek-bar {
+            width: 100%;
+            margin: 0 10px;
+        }
 
-    .audio-controls input {
-        width: 100px;
-    }
-</style>
+        .time-display {
+            font-size: 14px;
+        }
+
+        /* Video container specific */
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            border: 3px solid var(--accent-color);
+            border-radius: 15px;
+            max-width: 90%;
+            width: 400px;
+            height: 400px;
+            background-color: #1a1a1a;
+            position: relative;
+            overflow: hidden;
+            filter: brightness(0.9); /* Soft video filter */
+        }
+
+        .video-container iframe,
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Cloud Background for Specific Areas */
+        .cloud-background {
+            background: url('https://www.transparenttextures.com/patterns/clouds.png') repeat;
+            background-color: var(--cloud-color);
+            padding: 50px;
+            border-radius: 20px;
+            margin-top: 30px;
+        }
