@@ -1,7 +1,64 @@
-<a href="{{ "" | relURL }}" class="title">
-  <h2>{{ .Site.Title }}</h2>
-</a>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/holiday.css" />
-<nav>{{- partial "nav.html" . -}}</nav>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Site.Title }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/holiday.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        header .title {
+            text-decoration: none;
+            color: #fff;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        header .title h2 {
+            margin: 0;
+        }
+        nav {
+            background-color: #444;
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 1.2em;
+            border-radius: 5px;
+        }
+        nav a:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="{{ "" | relURL }}" class="title">
+            <h2>{{ .Site.Title }}</h2>
+        </a>
+    </header>
+    <nav>
+        {{- partial "nav.html" . -}}
+    </nav>
+</body>
+</html>
+
 
 
