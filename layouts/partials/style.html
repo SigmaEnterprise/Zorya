@@ -10,8 +10,6 @@
         --highlight-color: #FFCC00; /* Highlight color for emphasis */
         --soft-bg: rgba(255, 255, 255, 0.1); /* Soft background for elements */
         --cloud-color: rgba(255, 255, 255, 0.3); /* Cloud effect */
-        --night-bg: #2c3e50; /* Dark background for night mode */
-        --night-tx-color: #ecf0f1; /* Light text color for night mode */
     }
 
     /* General Body Styles */
@@ -23,13 +21,6 @@
         margin: 0;
         padding: 0;
         overflow-x: hidden; /* Prevent horizontal scrolling */
-        transition: background-color 0.3s, color 0.3s;
-    }
-
-    /* Dark Mode */
-    body.night-mode {
-        background-color: var(--night-bg);
-        color: var(--night-tx-color);
     }
 
     /* Title and Heading Styles */
@@ -52,12 +43,6 @@
         border: 3px solid var(--accent-color);
         box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
         transition: transform 0.2s ease;
-    }
-
-    .feed-item.night-mode {
-        background-color: var(--night-bg);
-        color: var(--night-tx-color);
-        border-color: var(--accent-color);
     }
 
     .feed-item:hover {
@@ -164,93 +149,4 @@
         border-radius: 20px;
         margin-top: 30px;
     }
-
-    /* Feed Container Styling */
-    #nostr-feed {
-        background-color: var(--bg-color);
-        border-radius: 10px;
-        padding: 20px;
-        width: 100%;
-        max-width: 900px;
-        margin: 20px auto;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        transition: background-color 0.3s, color 0.3s;
-    }
-
-    #nostr-feed header {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .feed-title {
-        font-size: 24px;
-        font-weight: bold;
-        color: var(--accent-color);
-        margin-bottom: 10px;
-    }
-
-    .feed-description {
-        font-size: 16px;
-        color: var(--accent-color);
-        line-height: 1.5;
-    }
-
-    .feed-content {
-        display: grid;
-        gap: 20px;
-    }
-
-    .feed-item h4 {
-        font-size: 18px;
-        color: var(--tx-color);
-    }
-
-    .feed-item p {
-        font-size: 16px;
-        color: var(--tx-color);
-        line-height: 1.6;
-    }
-
-    /* Styling for images, videos, and audio embeds */
-    .feed-item img {
-        max-width: 100%;
-        border-radius: 5px;
-        margin-top: 15px;
-    }
-
-    .feed-item .video-container {
-        margin-top: 15px;
-    }
-
-    .feed-item .audio-container {
-        margin-top: 15px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .audio-controls button {
-        padding: 5px 10px;
-        background-color: #2980b9;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .audio-controls input {
-        width: 100px;
-    }
-
-    /* Night Mode Styles */
-    body.night-mode #nostr-feed {
-        background-color: var(--night-bg);
-    }
-
-    body.night-mode .feed-item {
-        background-color: var(--night-bg);
-        border-color: var(--accent-color);
-    }
-
 </style>

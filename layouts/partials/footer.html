@@ -3,6 +3,7 @@
         <h3 class="feed-title">Stream of Consciousness by npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv</h3>
         <p class="feed-description">Explore the latest thoughts, insights, and media shared in real-time. This feed presents a curated collection of posts from a dynamic, decentralized network with Nostr 'strfry' Relays as the main Database.</p>
     </header>
+<div id="nostr-feed"></div>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
 async function fetchNostrFeed(pubkey, relay) {
@@ -13,7 +14,7 @@ async function fetchNostrFeed(pubkey, relay) {
         console.log("WebSocket connected!");
 
         const filter = {
-            kinds: [1, 6, 16, 30023, 66, 13194], // Filter for kinds of posts
+            kinds: [1, 6, 16, 0, 30023, 66, 13194], // Filter for kinds of posts
             authors: [pubkey],
             limit: 25
         };
@@ -206,6 +207,7 @@ function formatTime(seconds) {
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 </script>
+
 
 
 
