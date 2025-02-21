@@ -41,9 +41,6 @@ async function fetchNostrFeed(pubkey, relay) {
         // Detect and insert media content (images, videos, YouTube, audio)
         contentHTML = processContent(eventContent, contentHTML);
 
-        // Copy to Clipboard Button
-        contentHTML += `<button class="copy-btn" onclick="copyToClipboard('${eventContent.content.replace(/'/g, "\\'")}')">Copy</button>`;
-
         postElement.innerHTML = contentHTML;
         postContainer.appendChild(postElement);
 
@@ -156,15 +153,6 @@ function formatTime(seconds) {
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 
-// Copy to Clipboard Function
-function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-        alert("Copied to clipboard!");
-    }).catch(err => {
-        console.error("Failed to copy:", err);
-    });
-}
-
 // Dark Mode Toggle
 function toggleDarkMode() {
     document.body.classList.toggle("dark-mode");
@@ -177,6 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(() => fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io"), 30000);
 });
 </script>
+
 
 
 
