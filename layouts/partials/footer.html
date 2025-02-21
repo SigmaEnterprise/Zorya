@@ -1,130 +1,183 @@
 <div id="nostr-feed">
     <h3>Nostr Feed</h3>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-    let refreshInterval = 30000; // 30 seconds
-    let autoRefresh;
+async function fetchNostrFeed(pubkey, relay) {
+    console.log("Connecting to relay:", relay);
+    const socket = new WebSocket(relay);
 
-    function fetchNostrFeed() {
-        const pubkey = document.getElementById("pubkey-input").value.trim();
-        const relay = document.getElementById("relay-select").value;
+    socket.onopen = () => {
+        console.log("WebSocket connected!");
+
+        const filter = {
+            kinds: [1, 6, 16, 23], // Filter for kinds of posts 
+            authors: [pubkey],
+            limit: 25 
+        };
+
+        socket.send(JSON.stringify(["REQ", "nostr-feed", filter]));
+        console.log("Sent request:", filter);
+    };
+
+    socket.onerror = (error) => {
+        console.error("WebSocket error:", error);
+    };
+
+    socket.onmessage = (event) => {
+        console.log("Received data:", event.data);
+        const data = JSON.parse(event.data);
+        if (data[0] !== "EVENT") return;
+
+        const eventContent = data[2];
         const postContainer = document.getElementById("nostr-feed");
-        const errorMessage = document.getElementById("error-message");
 
-        if (!pubkey) {
-            errorMessage.textContent = "Please enter a valid Nostr public key.";
-            return;
-        }
+        const postElement = document.createElement("div");
+        postElement.classList.add("feed-item");
 
-        errorMessage.textContent = "";
-        postContainer.innerHTML = ""; // Clear feed
+        // Convert markdown to HTML
+        let contentHTML = marked.parse(eventContent.content);
 
-        console.log("Connecting to relay:", relay);
-        const socket = new WebSocket(relay);
+        // Detect and insert media content (images, videos, YouTube, audio)
+        contentHTML = processContent(eventContent, contentHTML);
 
-        socket.onopen = () => {
-            console.log("WebSocket connected!");
+        // Copy to Clipboard Button
+        contentHTML += `<button class="copy-btn" onclick="copyToClipboard('${eventContent.content.replace(/'/g, "\\'")}')">Copy</button>`;
 
-            const filter = {
-                kinds: [1, 66, 13194, 0], // Post kinds
-                authors: [pubkey],
-                limit: 10
-            };
+        postElement.innerHTML = contentHTML;
+        postContainer.appendChild(postElement);
 
-            socket.send(JSON.stringify(["REQ", "nostr-feed", filter]));
-            console.log("Sent request:", filter);
-        };
+        // Initialize new audio players
+        setTimeout(initializeAudioPlayers, 500);
+    };
+}
 
-        socket.onerror = (error) => {
-            console.error("WebSocket error:", error);
-            errorMessage.textContent = "Connection error. Please try another relay.";
-        };
-
-        socket.onmessage = (event) => {
-            console.log("Received data:", event.data);
-            const data = JSON.parse(event.data);
-            if (data[0] !== "EVENT") return;
-
-            const eventContent = data[2];
-
-            if (!eventContent || !eventContent.content) {
-                errorMessage.textContent = "No posts found.";
-                return;
-            }
-
-            const postElement = document.createElement("div");
-            postElement.classList.add("feed-item");
-
-            // Convert markdown to HTML with emoji support
-            let contentHTML = marked.parse(eventContent.content, { gfm: true, breaks: true });
-
-            // Process media content (images, videos, YouTube, audio)
-            contentHTML = processContent({ content: contentHTML });
-
-            // Copy to Clipboard Button
-            contentHTML += `<button class="copy-btn" onclick="copyToClipboard('${eventContent.content.replace(/'/g, "\\'")}')">Copy</button>`;
-
-            postElement.innerHTML = contentHTML;
-            postContainer.appendChild(postElement);
-        };
-
-        // Auto Refresh
-        clearInterval(autoRefresh);
-        autoRefresh = setInterval(fetchNostrFeed, refreshInterval);
-    }
-
-    // Function to detect and insert media (images, videos, YouTube, audio)
-    function processContent(eventContent) {
-        let contentHTML = eventContent.content;
-
-        // Detect and insert images
-        const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
-        contentHTML = contentHTML.replace(imageRegex, imgUrl => `<img src="${imgUrl}" alt="Nostr Image">`);
-
-        // Handle video embeds (.mp4, .ogv)
-        const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
-        contentHTML = contentHTML.replace(videoRegex, videoUrl =>
-            `<div class="video-container">
-                <video controls>
-                    <source src="${videoUrl}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>`);
-
-        // Handle YouTube video links
-        const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
-        contentHTML = contentHTML.replace(youtubeVideoRegex, (match, p1, videoId) =>
-            `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 1/1; border: none;"></iframe>`);
-
-        // Handle audio links
-        const audioRegex = /(https?:\/\/.*\.(?:wav|mp3|ogg))/g;
-        contentHTML = contentHTML.replace(audioRegex, audioUrl =>
-            `<div class="audio-container">
-                <audio controls>
-                    <source src="${audioUrl}" type="audio/mp3">
-                    Your browser does not support the audio element.
-                </audio>
-            </div>`);
-
-        return contentHTML;
-    }
-
-    function toggleDarkMode() {
-        document.body.classList.toggle("dark-mode");
-    }
-
-    function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            alert("Copied to clipboard!");
-        }).catch(err => {
-            console.error("Failed to copy:", err);
+// Centralized Media Handling
+function processContent(eventContent, contentHTML) {
+    // Detect and insert images
+    const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
+    const imageMatches = eventContent.content.match(imageRegex);
+    if (imageMatches) {
+        imageMatches.forEach(imgUrl => {
+            contentHTML += `<img src="${imgUrl}" alt="Nostr Image">`;
         });
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        fetchNostrFeed();
+    // Handle video embeds (.mp4, .ogv, YouTube)
+    const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
+    const videoMatches = eventContent.content.match(videoRegex);
+    if (videoMatches) {
+        videoMatches.forEach(videoUrl => {
+            contentHTML += 
+                `<div class="video-container">
+                    <video controls>
+                        <source src="${videoUrl}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>`;
+        });
+    }
+
+    // Handle YouTube video links
+    const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
+    const youtubeVideoMatches = [...eventContent.content.matchAll(youtubeVideoRegex)];
+    if (youtubeVideoMatches) {
+        youtubeVideoMatches.forEach(match => {
+            const videoId = match[2] || match[3];
+            contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 1/1; border: none;"></iframe>`;
+        });
+    }
+
+    // Handle audio links
+    const audioRegex = /(https?:\/\/.*\.(?:wav|mp3|ogg))/g;
+    const audioMatches = eventContent.content.match(audioRegex);
+    if (audioMatches) {
+        audioMatches.forEach(audioUrl => {
+            contentHTML += 
+                `<div class="audio-container">
+                    <audio id="audio-player" src="${audioUrl}"></audio>
+                    <div class="audio-controls">
+                        <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
+                        <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
+                        <span class="time-display">0:00 / 0:00</span>
+                    </div>
+                </div>`;
+        });
+    }
+
+    return contentHTML;
+}
+
+// Audio Player Functions
+function togglePlay(button) {
+    const audio = button.parentElement.parentElement.querySelector("audio");
+    if (audio.paused) {
+        audio.play();
+        button.textContent = "⏸ Pause";
+    } else {
+        audio.pause();
+        button.textContent = "▶ Play";
+    }
+}
+
+function seekAudio(seekBar) {
+    const audio = seekBar.parentElement.parentElement.querySelector("audio");
+    audio.currentTime = (seekBar.value / 100) * audio.duration;
+}
+
+function initializeAudioPlayers() {
+    document.querySelectorAll(".audio-container").forEach(container => {
+        const audio = container.querySelector("audio");
+        const playButton = container.querySelector(".play-button");
+        const seekBar = container.querySelector(".seek-bar");
+        const timeDisplay = container.querySelector(".time-display");
+
+        if (!audio) return;
+
+        // Update Seek Bar and Time Display
+        audio.addEventListener("timeupdate", () => {
+            if (!isNaN(audio.duration)) {
+                seekBar.value = (audio.currentTime / audio.duration) * 100;
+                timeDisplay.textContent = formatTime(audio.currentTime) + " / " + formatTime(audio.duration);
+            }
+        });
+
+        // Seek Audio
+        seekBar.addEventListener("input", () => {
+            audio.currentTime = (seekBar.value / 100) * audio.duration;
+        });
     });
+}
+
+// Format Time (Seconds to MM:SS)
+function formatTime(seconds) {
+    const min = Math.floor(seconds / 60);
+    const sec = Math.floor(seconds % 60);
+    return min + ":" + (sec < 10 ? "0" + sec : sec);
+}
+
+// Copy to Clipboard Function
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        alert("Copied to clipboard!");
+    }).catch(err => {
+        console.error("Failed to copy:", err);
+    });
+}
+
+// Dark Mode Toggle
+function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
+
+    // Set auto-refresh interval
+    setInterval(() => fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io"), 30000);
+});
 </script>
+
 
 
 <button
