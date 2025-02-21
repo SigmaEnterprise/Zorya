@@ -11,9 +11,9 @@ async function fetchNostrFeed(pubkey, relay) {
         console.log("WebSocket connected!");
 
         const filter = {
-            kinds: [1, 66, 13194, 0], // Filter for kinds of posts
+            kinds: [1, 6, 16, 23], // Filter for kinds of posts
             authors: [pubkey],
-            limit: 10
+            limit: 25
         };
 
         socket.send(JSON.stringify(["REQ", "nostr-feed", filter]));
