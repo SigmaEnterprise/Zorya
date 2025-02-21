@@ -39,20 +39,27 @@ async function fetchNostrFeed(pubkey, relay) {
         let contentHTML = marked.parse(eventContent.content);
 
         // Detect reposts and display them like normal events
-        if (eventContent.kind === 6) {
-            // Repost content
-            const repostContent = JSON.parse(eventContent.content); // Assuming repost content is stringified JSON
+if (eventContent.kind === 6) {
+    // Repost content
+    const repostContent = JSON.parse(eventContent.content); // Assuming repost content is stringified JSON
 
-            // Create a special repost section
-            const repostDiv = document.createElement('div');
-            repostDiv.classList.add('repost');
-            
-            // Add text or link to the original post
-            repostDiv.innerHTML = `Repost of: <a href="${repostContent.e[1]}" target="_blank">${repostContent.e[1]}</a>`;
-            
-            // Append repost div inside the postElement
-            postElement.appendChild(repostDiv);
-        }
+    // Create a special repost section
+    const repostDiv = document.createElement('div');
+    repostDiv.classList.add('repost');
+    
+    // Add the original post's content and metadata, e.g., username
+    repostDiv.innerHTML = `Repost: <a href="${repostContent.e[1]}" target="_blank">${repostContent.e[1]}</a>`;
+    
+    // Optionally, append the original post content or metadata here
+    repostDiv.innerHTML += `<p>Original post content: ${repostContent.e[1]}</p>`;
+    
+    // Append repost div inside the postElement
+    postElement.appendChild(repostDiv);
+} else {
+    // Normal event handling for other kinds (1, 16, 23)
+    postElement.innerHTML = contentHTML;
+}
+
 
         // Detect and insert images
         const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
