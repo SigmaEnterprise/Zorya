@@ -11,9 +11,9 @@ async function fetchNostrFeed(pubkey, relay) {
         console.log("WebSocket connected!");
 
         const filter = {
-            kinds: [0, 1, 6, 16, 23], // Filter for kinds of posts 
+            kinds: [1, 66, 13194, 0], // Filter for kinds of posts
             authors: [pubkey],
-            limit: 25 
+            limit: 10
         };
 
         socket.send(JSON.stringify(["REQ", "nostr-feed", filter]));
@@ -38,8 +38,72 @@ async function fetchNostrFeed(pubkey, relay) {
         // Convert markdown to HTML
         let contentHTML = marked.parse(eventContent.content);
 
-        // Detect and insert media content (images, videos, YouTube, audio)
-        contentHTML = processContent(eventContent, contentHTML);
+        // Detect reposts and display them like normal events
+        if (eventContent.kind === 6) {
+            // Repost content
+            const repostContent = JSON.parse(eventContent.content); // Assuming repost content is stringified JSON
+
+            // Create a special repost section
+            const repostDiv = document.createElement('div');
+            repostDiv.classList.add('repost');
+            
+            // Add text or link to the original post
+            repostDiv.innerHTML = `Repost of: <a href="${repostContent.e[1]}" target="_blank">${repostContent.e[1]}</a>`;
+            
+            // Append repost div inside the postElement
+            postElement.appendChild(repostDiv);
+        }
+
+        // Detect and insert images
+        const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
+        const imageMatches = eventContent.content.match(imageRegex);
+        if (imageMatches) {
+            imageMatches.forEach(imgUrl => {
+                contentHTML += `<img src="${imgUrl}" alt="Nostr Image">`;
+            });
+        }
+
+        // Handle video embeds (.mp4, .ogv, YouTube)
+        const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
+        const videoMatches = eventContent.content.match(videoRegex);
+        if (videoMatches) {
+            videoMatches.forEach(videoUrl => {
+                contentHTML += 
+                    `<div class="video-container">
+                        <video controls>
+                            <source src="${videoUrl}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>`;
+            });
+        }
+
+        // Handle YouTube video links
+        const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
+        const youtubeVideoMatches = [...eventContent.content.matchAll(youtubeVideoRegex)];
+        if (youtubeVideoMatches) {
+            youtubeVideoMatches.forEach(match => {
+                const videoId = match[2] || match[3];
+                contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 1/1; border: none;"></iframe>`;
+            });
+        }
+
+        // Handle audio links
+        const audioRegex = /(https?:\/\/.*\.(?:wav|mp3|ogg))/g;
+        const audioMatches = eventContent.content.match(audioRegex);
+        if (audioMatches) {
+            audioMatches.forEach(audioUrl => {
+                contentHTML += 
+                    `<div class="audio-container">
+                        <audio id="audio-player" src="${audioUrl}"></audio>
+                        <div class="audio-controls">
+                            <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
+                            <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
+                            <span class="time-display">0:00 / 0:00</span>
+                        </div>
+                    </div>`;
+            });
+        }
 
         postElement.innerHTML = contentHTML;
         postContainer.appendChild(postElement);
@@ -49,61 +113,9 @@ async function fetchNostrFeed(pubkey, relay) {
     };
 }
 
-// Centralized Media Handling
-function processContent(eventContent, contentHTML) {
-    // Detect and insert images
-    const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
-    const imageMatches = eventContent.content.match(imageRegex);
-    if (imageMatches) {
-        imageMatches.forEach(imgUrl => {
-            contentHTML += `<img src="${imgUrl}" alt="Nostr Image">`;
-        });
-    }
-
-    // Handle video embeds (.mp4, .ogv, YouTube)
-    const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
-    const videoMatches = eventContent.content.match(videoRegex);
-    if (videoMatches) {
-        videoMatches.forEach(videoUrl => {
-            contentHTML += 
-                `<div class="video-container">
-                    <video controls>
-                        <source src="${videoUrl}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>`;
-        });
-    }
-
-    // Handle YouTube video links
-    const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
-    const youtubeVideoMatches = [...eventContent.content.matchAll(youtubeVideoRegex)];
-    if (youtubeVideoMatches) {
-        youtubeVideoMatches.forEach(match => {
-            const videoId = match[2] || match[3];
-            contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 1/1; border: none;"></iframe>`;
-        });
-    }
-
-    // Handle audio links
-    const audioRegex = /(https?:\/\/.*\.(?:wav|mp3|ogg))/g;
-    const audioMatches = eventContent.content.match(audioRegex);
-    if (audioMatches) {
-        audioMatches.forEach(audioUrl => {
-            contentHTML += 
-                `<div class="audio-container">
-                    <audio id="audio-player" src="${audioUrl}"></audio>
-                    <div class="audio-controls">
-                        <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
-                        <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
-                        <span class="time-display">0:00 / 0:00</span>
-                    </div>
-                </div>`;
-        });
-    }
-
-    return contentHTML;
-}
+document.addEventListener("DOMContentLoaded", function () {
+    fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
+});
 
 // Audio Player Functions
 function togglePlay(button) {
@@ -152,19 +164,8 @@ function formatTime(seconds) {
     const sec = Math.floor(seconds % 60);
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
-
-// Dark Mode Toggle
-function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
-
-    // Set auto-refresh interval
-    setInterval(() => fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io"), 30000);
-});
 </script>
+
 
 
 
