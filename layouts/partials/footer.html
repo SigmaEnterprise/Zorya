@@ -37,7 +37,7 @@ async function fetchNostrFeed(pubkey, relay) {
 
         // Convert markdown to HTML
         let contentHTML = marked.parse(eventContent.content);
-        
+
         // Detect and insert images
         const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
         const imageMatches = eventContent.content.match(imageRegex);
@@ -48,21 +48,20 @@ async function fetchNostrFeed(pubkey, relay) {
         }
 
         // Handle video embeds (.mp4, .ogv)
-	const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
-	const videoMatches = eventContent.content.match(videoRegex);
-	if (videoMatches) {
-    	videoMatches.forEach(videoUrl => {
-        contentHTML += `
-            <div class="video-container">
-                <video controls>
-                    <source src="${videoUrl}" type="video/mp4">
-                   	 Your browser does not support the video tag.
-                			</video>
-            				</div>
-        				`;
-    		  });
-		)
-
+        const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
+        const videoMatches = eventContent.content.match(videoRegex);
+        if (videoMatches) {
+            videoMatches.forEach(videoUrl => {
+                contentHTML += `
+                    <div class="video-container">
+                        <video controls>
+                            <source src="${videoUrl}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                `;
+            });
+        }
 
         // Handle YouTube video links
         const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
@@ -151,6 +150,7 @@ function formatTime(seconds) {
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 </script>
+
 
 
 <button
