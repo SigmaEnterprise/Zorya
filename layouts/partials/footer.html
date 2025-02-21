@@ -3,100 +3,111 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-let isDataFetched = false;  // Track if data has been fetched already
-
 async function fetchNostrFeed(pubkey, relays) {
-    const postContainer = document.getElementById("nostr-feed");
-    postContainer.innerHTML = '';  // Clear feed before adding new posts
+    relays.forEach((relay) => {
+        console.log("Connecting to relay:", relay);
+        const socket = new WebSocket(relay);
 
-    for (let relay of relays) {
-        try {
-            const socket = new WebSocket(relay);
-            socket.onopen = () => {
-                const filter = {
-                    kinds: [1, 6, 16, 0, 30023, 66, 13194], // All kinds of posts, reposts, reactions, metadata
-                    authors: [pubkey],
-                    limit: 25
-                };
-                socket.send(JSON.stringify(["REQ", "nostr-feed", filter]));
-                console.log("Sent request:", filter);
+        socket.onopen = () => {
+            console.log("WebSocket connected!");
+
+            const filter = {
+                kinds: [1, 66, 13194, 0], // Filter for kinds of posts
+                authors: [pubkey],
+                limit: 10
             };
 
-            socket.onmessage = (event) => {
-                if (isDataFetched) return;  // Prevent handling duplicate messages
-                const data = JSON.parse(event.data);
-                if (data[0] !== "EVENT") return;
+            socket.send(JSON.stringify(["REQ", "nostr-feed", filter]));
+            console.log("Sent request:", filter);
+        };
 
-                const eventContent = data[2];
-                const postElement = document.createElement("div");
-                postElement.classList.add("feed-item");
+        socket.onerror = (error) => {
+            console.error("WebSocket error:", error);
+        };
 
-                let contentHTML = marked.parse(eventContent.content);
+        socket.onmessage = (event) => {
+            console.log("Received data:", event.data);
+            const data = JSON.parse(event.data);
+            if (data[0] !== "EVENT") return;
 
-                // Handle images, videos, YouTube, and audio as in previous code
-                const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
-                const imageMatches = eventContent.content.match(imageRegex);
-                if (imageMatches) {
-                    imageMatches.forEach(imgUrl => {
-                        contentHTML += `<img src="${imgUrl}" alt="Nostr Image">`;
-                    });
-                }
+            const eventContent = data[2];
+            const postContainer = document.getElementById("nostr-feed");
 
-                const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
-                const videoMatches = eventContent.content.match(videoRegex);
-                if (videoMatches) {
-                    videoMatches.forEach(videoUrl => {
-                        contentHTML += 
-                            `<div class="video-container">
-                                <video controls>
-                                    <source src="${videoUrl}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                            </div>`;
-                    });
-                }
+            const postElement = document.createElement("div");
+            postElement.classList.add("feed-item");
 
-                const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
-                const youtubeVideoMatches = [...eventContent.content.matchAll(youtubeVideoRegex)];
-                if (youtubeVideoMatches) {
-                    youtubeVideoMatches.forEach(match => {
-                        const videoId = match[2] || match[3];
-                        contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 1/1; border: none;"></iframe>`;
-                    });
-                }
+            // Convert markdown to HTML
+            let contentHTML = marked.parse(eventContent.content);
+            
+            // Detect and insert images
+            const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
+            const imageMatches = eventContent.content.match(imageRegex);
+            if (imageMatches) {
+                imageMatches.forEach(imgUrl => {
+                    contentHTML += `<img src="${imgUrl}" alt="Nostr Image">`;
+                });
+            }
+            
+            // Inside onmessage function
+            const reactions = eventContent.reactions || []; // Assuming reactions are available
+            reactions.forEach(reaction => {
+            const emoji = reaction.emoji;  // Emoji character or code
+            const reactionDiv = document.createElement("span");
+            reactionDiv.classList.add("reaction");
+            reactionDiv.textContent = emoji;
+            postElement.appendChild(reactionDiv);  // Append reactions
+            });
 
-                const audioRegex = /(https?:\/\/.*\.(?:wav|mp3|ogg))/g;
-                const audioMatches = eventContent.content.match(audioRegex);
-                if (audioMatches) {
-                    audioMatches.forEach(audioUrl => {
-                        contentHTML += 
-                            `<div class="audio-container">
-                                <audio id="audio-player" src="${audioUrl}"></audio>
-                                <div class="audio-controls">
-                                    <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
-                                    <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
-                                    <span class="time-display">0:00 / 0:00</span>
-                                </div>
-                            </div>`;
-                    });
-                }
 
-                postElement.innerHTML = contentHTML;
-                postContainer.appendChild(postElement);
+            // Handle video embeds (.mp4, .ogv, YouTube)
+            const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
+            const videoMatches = eventContent.content.match(videoRegex);
+            if (videoMatches) {
+                videoMatches.forEach(videoUrl => {
+                    contentHTML += 
+                        `<div class="video-container">
+                            <video controls>
+                                <source src="${videoUrl}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>`;
+                });
+            }
 
-                // Initialize new audio players
-                setTimeout(initializeAudioPlayers, 500);
+            // Handle YouTube video links
+            const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
+            const youtubeVideoMatches = [...eventContent.content.matchAll(youtubeVideoRegex)];
+            if (youtubeVideoMatches) {
+                youtubeVideoMatches.forEach(match => {
+                    const videoId = match[2] || match[3];
+                    contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 1/1; border: none;"></iframe>`;
+                });
+            }
 
-                isDataFetched = true; // Set flag to true to prevent further duplicate appending
-            };
+            // Handle audio links
+            const audioRegex = /(https?:\/\/.*\.(?:wav|mp3|ogg))/g;
+            const audioMatches = eventContent.content.match(audioRegex);
+            if (audioMatches) {
+                audioMatches.forEach(audioUrl => {
+                    contentHTML += 
+                        `<div class="audio-container">
+                            <audio id="audio-player" src="${audioUrl}"></audio>
+                            <div class="audio-controls">
+                                <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
+                                <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
+                                <span class="time-display">0:00 / 0:00</span>
+                            </div>
+                        </div>`;
+                });
+            }
 
-            socket.onerror = (error) => {
-                console.error("WebSocket error:", error);
-            };
-        } catch (error) {
-            console.error("Error fetching events from relay:", error);
-        }
-    }
+            postElement.innerHTML = contentHTML;
+            postContainer.appendChild(postElement);
+
+            // Initialize new audio players
+            setTimeout(initializeAudioPlayers, 500);
+        };
+    });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -157,6 +168,7 @@ function formatTime(seconds) {
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 </script>
+
 
 <button
     data-npub="npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv"
