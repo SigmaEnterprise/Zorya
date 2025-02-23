@@ -5,6 +5,11 @@
     </header>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
+// Passive event listeners fix
+document.addEventListener("touchstart", () => {}, { passive: true });
+document.addEventListener("wheel", () => {}, { passive: true });
+
+// Fetching Nostr Feed
 async function fetchNostrFeed(pubkey, relay) {
     console.log("Connecting to relay:", relay);
     const socket = new WebSocket(relay);
@@ -118,7 +123,6 @@ function seekAudio(input) {
 
 // Example usage: fetch feed from a relay
 fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
-
 </script>
 
 
