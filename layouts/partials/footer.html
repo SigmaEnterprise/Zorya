@@ -3,7 +3,6 @@
         <h3 class="feed-title">Stream of Consciousness by npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv</h3>
         <p class="feed-description">Explore the latest thoughts, insights, and media shared in real-time. This feed presents a curated collection of posts from a dynamic, decentralized network with Nostr 'strfry' Relays as the main Database.</p>
     </header>
-
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
 async function fetchNostrFeed(pubkey, relay) {
@@ -40,10 +39,6 @@ async function fetchNostrFeed(pubkey, relay) {
 
         let contentHTML = marked.parse(eventContent.content);
         console.log("Event content:", eventContent.content);
-
-        // Passive event listeners fix
-        document.addEventListener("touchstart", () => {}, { passive: true });
-        document.addEventListener("wheel", () => {}, { passive: true });
 
         // Detect and insert images
         const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
@@ -100,15 +95,6 @@ async function fetchNostrFeed(pubkey, relay) {
         // Insert cleaned HTML
         postElement.innerHTML = contentHTML;
         postContainer.appendChild(postElement);
-    };
-}
-
-// Throttle long-running setTimeout handlers with debounce
-function debounce(func, delay) {
-    let timeout;
-    return (...args) => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func(...args), delay);
     };
 }
 
