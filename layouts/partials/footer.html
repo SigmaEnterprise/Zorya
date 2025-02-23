@@ -38,11 +38,12 @@ async function fetchNostrFeed(pubkey, relay) {
         const postElement = document.createElement("div");
         postElement.classList.add("feed-item");
 
-        // Convert markdown to HTML
         let contentHTML = marked.parse(eventContent.content);
-
-        // Debug log the content
         console.log("Event content:", eventContent.content);
+
+        // Passive event listeners fix
+        document.addEventListener("touchstart", () => {}, { passive: true });
+        document.addEventListener("wheel", () => {}, { passive: true });
 
         // Detect and insert images
         const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
@@ -53,7 +54,7 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        // Handle video embeds (.mp4, .ogv)
+        // Handle video embeds
         const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
         const videoMatches = eventContent.content.match(videoRegex);
         if (videoMatches) {
@@ -96,72 +97,24 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        // Handle reposts (nostr:nevent)
-        const neventRegex = /nostr:nevent1([a-z0-9]+)/g;
-        const neventMatches = [...eventContent.content.matchAll(neventRegex)];
-
-        if (neventMatches.length > 0) {
-            for (const match of neventMatches) {
-                const eventId = match[1]; // Extract event ID from `nostr:nevent`
-                const repostContent = await fetchNostrEvent(eventId, relay);
-                if (repostContent) {
-                    contentHTML += `<div class="repost">
-                        <h4>Repost:</h4>
-                        <div>${marked.parse(repostContent)}</div>
-                    </div>`;
-                }
-            }
-        }
-
-        // Debug log final content before insertion
-        console.log("Final content to be inserted:", contentHTML);
+        // Insert cleaned HTML
         postElement.innerHTML = contentHTML;
         postContainer.appendChild(postElement);
-
-        // Initialize new audio players
-        initializeAudioPlayers();
     };
 }
 
-async function fetchNostrEvent(eventId, relay) {
-    return new Promise((resolve) => {
-        const socket = new WebSocket(relay);
-        
-        socket.onopen = () => {
-            console.log("Fetching reposted event:", eventId);
-            const filter = {
-                ids: [eventId]
-            };
-            socket.send(JSON.stringify(["REQ", "nostr-repost", filter]));
-        };
-
-        socket.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            if (data[0] !== "EVENT") return;
-
-            const eventContent = data[2]?.content;
-            if (eventContent) {
-                resolve(eventContent);
-            } else {
-                resolve(null);
-            }
-            socket.close();
-        };
-
-        socket.onerror = (error) => {
-            console.error("Error fetching reposted event:", error);
-            resolve(null);
-        };
-    });
+// Throttle long-running setTimeout handlers
+function debounce(func, delay) {
+    let timeout;
+    return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func(...args), delay);
+    };
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
-});
-
-// Audio Player Functions
+// Function to toggle play/pause for audio
 function togglePlay(button) {
-    const audio = button.parentElement.parentElement.querySelector("audio");
+    const audio = button.closest(".audio-container").querySelector("audio");
     if (audio.paused) {
         audio.play();
         button.textContent = "⏸ Pause";
@@ -171,60 +124,17 @@ function togglePlay(button) {
     }
 }
 
-function seekAudio(seekBar) {
-    const audio = seekBar.parentElement.parentElement.querySelector("audio");
-    audio.currentTime = (seekBar.value / 100) * audio.duration;
+// Function to seek audio
+function seekAudio(input) {
+    const audio = input.closest(".audio-container").querySelector("audio");
+    audio.currentTime = input.value;
 }
 
-function initializeAudioPlayers() {
-    document.querySelectorAll(".audio-container").forEach(container => {
-        const audio = container.querySelector("audio");
-        const playButton = container.querySelector(".play-button");
-        const seekBar = container.querySelector(".seek-bar");
-        const timeDisplay = container.querySelector(".time-display");
+// Example usage: fetch feed from a relay
+fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.example.com");
 
-        if (!audio) return;
-
-        // Update Seek Bar and Time Display
-        audio.addEventListener("timeupdate", () => {
-            if (!isNaN(audio.duration)) {
-                seekBar.value = (audio.currentTime / audio.duration) * 100;
-                timeDisplay.textContent = formatTime(audio.currentTime) + " / " + formatTime(audio.duration);
-            }
-        });
-
-        // Seek Audio
-        seekBar.addEventListener("input", () => {
-            audio.currentTime = (seekBar.value / 100) * audio.duration;
-        });
-    });
-}
-
-// Format Time (Seconds to MM:SS)
-function formatTime(seconds) {
-    const min = Math.floor(seconds / 60);
-    const sec = Math.floor(seconds % 60);
-    return min + ":" + (sec < 10 ? "0" + sec : sec);
-}
-
-// Implement Passive Event Listener for Scroll
-window.addEventListener('scroll', handleScroll, { passive: true });
-
-// Break Long Running Tasks Using setTimeout
-setTimeout(function() {
-    // Execute part of the task
-    if (taskIncomplete) {
-        setTimeout(continueTask, 0); // Continue next part without blocking
-    }
-}, 100);
-
-// Implement Web Worker for Cryptographic Operations
-const worker = new Worker('sha256-worker.js');
-worker.postMessage(data);
-worker.onmessage = function(e) {
-    // Handle the result
-};
 </script>
+
 
 
 
