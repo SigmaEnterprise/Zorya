@@ -41,7 +41,7 @@ async function fetchNostrFeed(pubkey, relay) {
 
         // Convert markdown to HTML
         let contentHTML = marked.parse(eventContent.content);
-
+        
         // Detect and insert images
         const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
         const imageMatches = eventContent.content.match(imageRegex);
@@ -51,8 +51,8 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        // Handle video embeds (MP4, OGV, IPFS, M3U8)
-        const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))|(https?:\/\/.*ipfs\.io\/ip[fn]s\/[a-zA-Z0-9]+\/.*\.(mp4|ogv))/g;
+        // Handle video embeds (.mp4, .ogv, YouTube)
+        const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
         const videoMatches = eventContent.content.match(videoRegex);
         if (videoMatches) {
             videoMatches.forEach(videoUrl => {
@@ -66,6 +66,7 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
+        
         // Handle .m3u8 streaming links
         const m3u8Regex = /(https?:\/\/.*\.m3u8)/g;
         const m3u8Matches = eventContent.content.match(m3u8Regex);
@@ -73,22 +74,22 @@ async function fetchNostrFeed(pubkey, relay) {
             m3u8Matches.forEach(m3u8Url => {
                 contentHTML += 
                     `<div class="video-container">
-                        <video id="video-player-${Math.random()}" controls>
+                        <video id="video-player" controls>
                             <source src="${m3u8Url}" type="application/x-mpegURL">
                             Your browser does not support the video tag.
                         </video>
                     </div>`;
-
-                setTimeout(() => {
-                    const video = document.getElementById(`video-player-${Math.random()}`);
-                    if (Hls.isSupported()) {
-                        const hls = new Hls();
-                        hls.loadSource(m3u8Url);
-                        hls.attachMedia(video);
-                    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                        video.src = m3u8Url;
-                    }
-                }, 500);
+                
+                // If HLS.js is available, use it for .m3u8 streaming
+                if (Hls.isSupported()) {
+                    const video = document.getElementById('video-player');
+                    const hls = new Hls();
+                    hls.loadSource(m3u8Url);
+                    hls.attachMedia(video);
+                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    // For Safari and other browsers that natively support HLS
+                    video.src = m3u8Url;
+                }
             });
         }
 
@@ -99,19 +100,75 @@ async function fetchNostrFeed(pubkey, relay) {
             audioMatches.forEach(audioUrl => {
                 contentHTML += 
                     `<div class="audio-container">
-                        <audio src="${audioUrl}" controls></audio>
+                        <audio id="audio-player" src="${audioUrl}"></audio>
+                        <div class="audio-controls">
+                            <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
+                            <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
+                            <span class="time-display">0:00 / 0:00</span>
+                        </div>
                     </div>`;
             });
         }
 
         postElement.innerHTML = contentHTML;
         postContainer.appendChild(postElement);
+
+        // Initialize new audio players
+        setTimeout(initializeAudioPlayers, 500);
     };
 }
 
 document.addEventListener("DOMContentLoaded", function () {
     fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
 });
+
+// Audio Player Functions
+function togglePlay(button) {
+    const audio = button.parentElement.parentElement.querySelector("audio");
+    if (audio.paused) {
+        audio.play();
+        button.textContent = "⏸ Pause";
+    } else {
+        audio.pause();
+        button.textContent = "▶ Play";
+    }
+}
+
+function seekAudio(seekBar) {
+    const audio = seekBar.parentElement.parentElement.querySelector("audio");
+    audio.currentTime = (seekBar.value / 100) * audio.duration;
+}
+
+function initializeAudioPlayers() {
+    document.querySelectorAll(".audio-container").forEach(container => {
+        const audio = container.querySelector("audio");
+        const playButton = container.querySelector(".play-button");
+        const seekBar = container.querySelector(".seek-bar");
+        const timeDisplay = container.querySelector(".time-display");
+
+        if (!audio) return;
+
+        // Update Seek Bar and Time Display
+        audio.addEventListener("timeupdate", () => {
+            if (!isNaN(audio.duration)) {
+                seekBar.value = (audio.currentTime / audio.duration) * 100;
+                timeDisplay.textContent = formatTime(audio.currentTime) + " / " + formatTime(audio.duration);
+            }
+        });
+
+        // Seek Audio
+        seekBar.addEventListener("input", () => {
+            audio.currentTime = (seekBar.value / 100) * audio.duration;
+        });
+    });
+}
+
+// Format Time (Seconds to MM:SS)
+function formatTime(seconds) {
+    const min = Math.floor(seconds / 60);
+    const sec = Math.floor(seconds % 60);
+    return min + ":" + (sec < 10 ? "0" + sec : sec);
+}
 </script>
 
 
