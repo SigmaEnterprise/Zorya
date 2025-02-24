@@ -4,15 +4,19 @@
         <p class="feed-description">Explore the latest thoughts, insights, and media shared in real-time. This feed presents a curated collection of posts from a dynamic, decentralized network with Nostr 'strfry' Relays as the main Database.</p>
     </header>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
 <script>
 // Passive event listeners fix
 document.addEventListener("touchstart", () => {}, { passive: true });
 document.addEventListener("wheel", () => {}, { passive: true });
 
+let socket;
+let lastEventId = new Set(); // Prevent duplicate posts
+
 // Fetching Nostr Feed
-async function fetchNostrFeed(pubkey, relay) {
+function fetchNostrFeed(pubkey, relay) {
     console.log("Connecting to relay:", relay);
-    const socket = new WebSocket(relay);
+    socket = new WebSocket(relay);
 
     socket.onopen = () => {
         console.log("WebSocket connected!");
@@ -31,81 +35,87 @@ async function fetchNostrFeed(pubkey, relay) {
         console.error("WebSocket error:", error);
     };
 
-    socket.onmessage = async (event) => {
+    socket.onmessage = (event) => {
         console.log("Received data:", event.data);
-        const data = JSON.parse(event.data);
-        if (data[0] !== "EVENT") return;
+        processEvent(event.data);
+    };
 
-        const eventContent = data[2];
-        const postContainer = document.getElementById("nostr-feed");
-
-        const postElement = document.createElement("div");
-        postElement.classList.add("feed-item");
-
-        let contentHTML = marked.parse(eventContent.content);
-        console.log("Event content:", eventContent.content);
-
-        // Detect and insert images
-        const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
-        const imageMatches = eventContent.content.match(imageRegex);
-        if (imageMatches) {
-            imageMatches.forEach(imgUrl => {
-                contentHTML += `<img src="${imgUrl}" alt="Nostr Image">`;
-            });
-        }
-
-        // Handle video embeds
-        const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
-        const videoMatches = eventContent.content.match(videoRegex);
-        if (videoMatches) {
-            videoMatches.forEach(videoUrl => {
-                contentHTML += ` 
-                    <div class="video-container">
-                        <video controls>
-                            <source src="${videoUrl}" type="video/${videoUrl.split('.').pop()}">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                `;
-            });
-        }
-
-        // Handle YouTube video links
-        const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
-        const youtubeVideoMatches = [...eventContent.content.matchAll(youtubeVideoRegex)];
-        if (youtubeVideoMatches) {
-            youtubeVideoMatches.forEach(match => {
-                const videoId = match[2] || match[3];
-                contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 16/9; border: none;"></iframe>`;
-            });
-        }
-
-        // Handle audio links
-        const audioRegex = /(https?:\/\/.*\.(?:wav|mp3|ogg))/g;
-        const audioMatches = eventContent.content.match(audioRegex);
-        if (audioMatches) {
-            audioMatches.forEach(audioUrl => {
-                contentHTML += `
-                    <div class="audio-container">
-                        <audio id="audio-player" src="${audioUrl}"></audio>
-                        <div class="audio-controls">
-                            <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
-                            <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
-                            <span class="time-display">0:00 / 0:00</span>
-                        </div>
-                    </div>`;
-            });
-        }
-
-        // Insert cleaned HTML
-        postElement.innerHTML = contentHTML;
-        postContainer.appendChild(postElement);
+    socket.onclose = () => {
+        console.warn("WebSocket closed. Reconnecting in 5 seconds...");
+        setTimeout(() => fetchNostrFeed(pubkey, relay), 5000);
     };
 }
 
-// Function to toggle play/pause for audio
-function togglePlay(button) {
-    const audio = button.closest(".audio-container").querySelector("audio");
+// Process WebSocket events without redundant re-parsing
+function processEvent(data) {
+    try {
+        const parsedData = JSON.parse(data);
+        if (parsedData[0] !== "EVENT" || !parsedData[2]?.id) return;
+
+        const eventContent = parsedData[2];
+        if (lastEventId.has(eventContent.id)) return; // Avoid duplicates
+        lastEventId.add(eventContent.id);
+
+        renderPost(eventContent.content);
+    } catch (error) {
+        console.error("Error processing WebSocket message:", error);
+    }
+}
+
+// Render post without adding duplicate event listeners
+function renderPost(content) {
+    const postContainer = document.getElementById("nostr-feed");
+    const postElement = document.createElement("div");
+    postElement.classList.add("feed-item");
+
+    let contentHTML = marked.parse(content);
+
+    // Detect and insert images
+    contentHTML = contentHTML.replace(/(https?:\/\/\S+\.(png|jpe?g|gif))/gi, '<img src="$1" alt="Nostr Image">');
+
+    // Handle video embeds
+    contentHTML = contentHTML.replace(/(https?:\/\/\S+\.(mp4|ogv))/gi, `
+        <div class="video-container">
+            <video controls>
+                <source src="$1" type="video/$2">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    `);
+
+    // Handle YouTube video links
+    contentHTML = contentHTML.replace(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/gi, `
+        <iframe src="https://www.youtube.com/embed/$1" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 16/9; border: none;"></iframe>
+    `);
+
+    // Handle audio links
+    contentHTML = contentHTML.replace(/(https?:\/\/\S+\.(mp3|wav|ogg))/gi, `
+        <div class="audio-container">
+            <audio src="$1"></audio>
+            <button class="play-button">▶ Play</button>
+        </div>
+    `);
+
+    postElement.innerHTML = contentHTML;
+    postContainer.appendChild(postElement);
+}
+
+// Efficient event syncing using MutationObserver
+const observer = new MutationObserver(() => {
+    document.querySelectorAll(".play-button").forEach(button => {
+        if (!button.dataset.listenerAdded) {
+            button.dataset.listenerAdded = "true";
+            button.addEventListener("click", togglePlay);
+        }
+    });
+});
+
+// Start observing new elements added to #nostr-feed
+observer.observe(document.getElementById("nostr-feed"), { childList: true });
+
+function togglePlay(event) {
+    const button = event.target;
+    const audio = button.previousElementSibling;
     if (audio.paused) {
         audio.play();
         button.textContent = "⏸ Pause";
@@ -115,13 +125,7 @@ function togglePlay(button) {
     }
 }
 
-// Function to seek audio
-function seekAudio(input) {
-    const audio = input.closest(".audio-container").querySelector("audio");
-    audio.currentTime = input.value;
-}
-
-// Example usage: fetch feed from a relay
+// Start fetching the feed
 fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
 </script>
 
