@@ -3,11 +3,27 @@
         <h3 class="feed-title">Stream of Consciousness by npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv</h3>
         <p class="feed-description">Explore the latest thoughts, insights, and media shared in real-time. This feed presents a curated collection of posts from a dynamic, decentralized network with Nostr 'strfry' Relays as the main Database.</p>
     </header>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
+// Load dependencies dynamically
 <script>
-async function fetchNostrFeed(pubkey, relay) {
+(function loadDependencies() {
+    const scripts = [
+        "https://cdn.jsdelivr.net/npm/marked/marked.min.js",
+        "https://cdn.jsdelivr.net/npm/hls.js@latest"
+    ];
+
+    scripts.forEach(src => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.async = false; // Ensure scripts load in order
+        document.head.appendChild(script);
+    });
+})();
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
+});
+
+function fetchNostrFeed(pubkey, relay) {
     console.log("Connecting to relay:", relay);
     const socket = new WebSocket(relay);
 
@@ -24,9 +40,7 @@ async function fetchNostrFeed(pubkey, relay) {
         console.log("Sent request:", filter);
     };
 
-    socket.onerror = (error) => {
-        console.error("WebSocket error:", error);
-    };
+    socket.onerror = (error) => console.error("WebSocket error:", error);
 
     socket.onmessage = (event) => {
         console.log("Received data:", event.data);
@@ -42,7 +56,7 @@ async function fetchNostrFeed(pubkey, relay) {
         // Convert markdown to HTML
         let contentHTML = marked.parse(eventContent.content);
         
-        // Detect and insert images
+        // Handle images
         const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
         const imageMatches = eventContent.content.match(imageRegex);
         if (imageMatches) {
@@ -51,13 +65,13 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        // Handle video embeds (.mp4, .ogv, YouTube)
+        // Handle video embeds
         const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
         const videoMatches = eventContent.content.match(videoRegex);
         if (videoMatches) {
             videoMatches.forEach(videoUrl => {
-                contentHTML += 
-                    `<div class="video-container">
+                contentHTML += `
+                    <div class="video-container">
                         <video controls>
                             <source src="${videoUrl}" type="video/mp4">
                             Your browser does not support the video tag.
@@ -66,30 +80,36 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        
-        // Handle .m3u8 streaming links
+        // Handle .m3u8 streaming links with HTTPS fallback
         const m3u8Regex = /(https?:\/\/.*\.m3u8)/g;
         const m3u8Matches = eventContent.content.match(m3u8Regex);
         if (m3u8Matches) {
             m3u8Matches.forEach(m3u8Url => {
-                contentHTML += 
-                    `<div class="video-container">
-                        <video id="video-player" controls>
+                if (m3u8Url.startsWith("http://")) {
+                    console.warn(`Blocked insecure content: ${m3u8Url}`);
+                    contentHTML += `<p style="color:red;">Insecure stream blocked: ${m3u8Url}</p>`;
+                    return;
+                }
+
+                const videoId = `video-player-${Date.now()}`;
+                contentHTML += `
+                    <div class="video-container">
+                        <video id="${videoId}" controls>
                             <source src="${m3u8Url}" type="application/x-mpegURL">
                             Your browser does not support the video tag.
                         </video>
                     </div>`;
-                
-                // If HLS.js is available, use it for .m3u8 streaming
-                if (Hls.isSupported()) {
-                    const video = document.getElementById('video-player');
-                    const hls = new Hls();
-                    hls.loadSource(m3u8Url);
-                    hls.attachMedia(video);
-                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                    // For Safari and other browsers that natively support HLS
-                    video.src = m3u8Url;
-                }
+
+                setTimeout(() => {
+                    const video = document.getElementById(videoId);
+                    if (Hls.isSupported()) {
+                        const hls = new Hls();
+                        hls.loadSource(m3u8Url);
+                        hls.attachMedia(video);
+                    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                        video.src = m3u8Url;
+                    }
+                }, 500);
             });
         }
 
@@ -98,79 +118,18 @@ async function fetchNostrFeed(pubkey, relay) {
         const audioMatches = eventContent.content.match(audioRegex);
         if (audioMatches) {
             audioMatches.forEach(audioUrl => {
-                contentHTML += 
-                    `<div class="audio-container">
-                        <audio id="audio-player" src="${audioUrl}"></audio>
-                        <div class="audio-controls">
-                            <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
-                            <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
-                            <span class="time-display">0:00 / 0:00</span>
-                        </div>
+                contentHTML += `
+                    <div class="audio-container">
+                        <audio src="${audioUrl}" controls></audio>
                     </div>`;
             });
         }
 
         postElement.innerHTML = contentHTML;
         postContainer.appendChild(postElement);
-
-        // Initialize new audio players
-        setTimeout(initializeAudioPlayers, 500);
     };
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-    fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
-});
-
-// Audio Player Functions
-function togglePlay(button) {
-    const audio = button.parentElement.parentElement.querySelector("audio");
-    if (audio.paused) {
-        audio.play();
-        button.textContent = "⏸ Pause";
-    } else {
-        audio.pause();
-        button.textContent = "▶ Play";
-    }
-}
-
-function seekAudio(seekBar) {
-    const audio = seekBar.parentElement.parentElement.querySelector("audio");
-    audio.currentTime = (seekBar.value / 100) * audio.duration;
-}
-
-function initializeAudioPlayers() {
-    document.querySelectorAll(".audio-container").forEach(container => {
-        const audio = container.querySelector("audio");
-        const playButton = container.querySelector(".play-button");
-        const seekBar = container.querySelector(".seek-bar");
-        const timeDisplay = container.querySelector(".time-display");
-
-        if (!audio) return;
-
-        // Update Seek Bar and Time Display
-        audio.addEventListener("timeupdate", () => {
-            if (!isNaN(audio.duration)) {
-                seekBar.value = (audio.currentTime / audio.duration) * 100;
-                timeDisplay.textContent = formatTime(audio.currentTime) + " / " + formatTime(audio.duration);
-            }
-        });
-
-        // Seek Audio
-        seekBar.addEventListener("input", () => {
-            audio.currentTime = (seekBar.value / 100) * audio.duration;
-        });
-    });
-}
-
-// Format Time (Seconds to MM:SS)
-function formatTime(seconds) {
-    const min = Math.floor(seconds / 60);
-    const sec = Math.floor(seconds % 60);
-    return min + ":" + (sec < 10 ? "0" + sec : sec);
-}
 </script>
-
 
 
 
