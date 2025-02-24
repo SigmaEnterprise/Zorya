@@ -66,6 +66,22 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
+        // Handle IPFS
+        const videoRegex = /(https?:\/\/.*ipfs\.io\/ip[fn]s\/[a-zA-Z0-9]+\/.*\.(mp4|ogv))/g;
+
+const videoMatches = eventContent.content.match(videoRegex);
+if (videoMatches) {
+    videoMatches.forEach(videoUrl => {
+        contentHTML += 
+            `<div class="video-container">
+                <video controls>
+                    <source src="${videoUrl}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>`;
+    });
+}
+        
         // Handle .m3u8 streaming links
         const m3u8Regex = /(https?:\/\/.*\.m3u8)/g;
         const m3u8Matches = eventContent.content.match(m3u8Regex);
