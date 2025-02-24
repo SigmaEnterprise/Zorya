@@ -4,6 +4,8 @@
         <p class="feed-description">Explore the latest thoughts, insights, and media shared in real-time. This feed presents a curated collection of posts from a dynamic, decentralized network with Nostr 'strfry' Relays as the main Database.</p>
     </header>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
 <script>
 async function fetchNostrFeed(pubkey, relay) {
     console.log("Connecting to relay:", relay);
@@ -64,7 +66,32 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        
+        // Handle .m3u8 streaming links
+        const m3u8Regex = /(https?:\/\/.*\.m3u8)/g;
+        const m3u8Matches = eventContent.content.match(m3u8Regex);
+        if (m3u8Matches) {
+            m3u8Matches.forEach(m3u8Url => {
+                contentHTML += 
+                    `<div class="video-container">
+                        <video id="video-player" controls>
+                            <source src="${m3u8Url}" type="application/x-mpegURL">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>`;
+                
+                // If HLS.js is available, use it for .m3u8 streaming
+                if (Hls.isSupported()) {
+                    const video = document.getElementById('video-player');
+                    const hls = new Hls();
+                    hls.loadSource(m3u8Url);
+                    hls.attachMedia(video);
+                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    // For Safari and other browsers that natively support HLS
+                    video.src = m3u8Url;
+                }
+            });
+        }
+
         // Handle audio links
         const audioRegex = /(https?:\/\/.*\.(?:wav|mp3|ogg))/g;
         const audioMatches = eventContent.content.match(audioRegex);
@@ -142,6 +169,7 @@ function formatTime(seconds) {
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
 </script>
+
 
 
 
