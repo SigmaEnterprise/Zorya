@@ -64,15 +64,7 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        // Handle YouTube video links
-        const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
-        const youtubeVideoMatches = [...eventContent.content.matchAll(youtubeVideoRegex)];
-        if (youtubeVideoMatches) {
-            youtubeVideoMatches.forEach(match => {
-                const videoId = match[2] || match[3];
-                contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 1/1; border: none;"></iframe>`;
-            });
-        }
+        
 
         // Handle audio links
         const audioRegex = /(https?:\/\/.*\.(?:wav|mp3|ogg))/g;
