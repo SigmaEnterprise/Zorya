@@ -39,7 +39,7 @@ async function fetchNostrFeed(pubkey, relay) {
 
         // Convert markdown to HTML
         let contentHTML = marked.parse(eventContent.content);
-
+        
         // Detect and insert images
         const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
         const imageMatches = eventContent.content.match(imageRegex);
@@ -49,30 +49,28 @@ async function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        // Handle video embeds (.mp4, .ogv)
+        // Handle video embeds (.mp4, .ogv, YouTube)
         const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
         const videoMatches = eventContent.content.match(videoRegex);
         if (videoMatches) {
             videoMatches.forEach(videoUrl => {
                 contentHTML += 
-                    `<div class="video-placeholder" onclick="loadVideo(this, '${videoUrl}')">
-                        <img src="https://example.com/videos/thumbnail.jpg" alt="Video Thumbnail" style="width: 100%; cursor: pointer;">
-                        <button style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.7); color: white; border: none; padding: 10px;">▶ Play</button>
+                    `<div class="video-container">
+                        <video controls>
+                            <source src="${videoUrl}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>`;
             });
         }
 
-        // Handle YouTube video links (YouTube embed)
+        // Handle YouTube video links
         const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
         const youtubeVideoMatches = [...eventContent.content.matchAll(youtubeVideoRegex)];
         if (youtubeVideoMatches) {
             youtubeVideoMatches.forEach(match => {
                 const videoId = match[2] || match[3];
-                contentHTML += 
-                    `<div class="video-placeholder" onclick="loadYouTubeVideo(this, '${videoId}')">
-                        <img src="https://img.youtube.com/vi/${videoId}/0.jpg" alt="YouTube Thumbnail" style="width: 100%; cursor: pointer;">
-                        <button style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.7); color: white; border: none; padding: 10px;">▶ Play</button>
-                    </div>`;
+                contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 1/1; border: none;"></iframe>`;
             });
         }
 
@@ -104,19 +102,6 @@ async function fetchNostrFeed(pubkey, relay) {
 document.addEventListener("DOMContentLoaded", function () {
     fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
 });
-
-// Lazy load video function
-function loadVideo(element, videoUrl) {
-    element.innerHTML = `<video controls>
-                            <source src="${videoUrl}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>`;
-}
-
-// Lazy load YouTube video function
-function loadYouTubeVideo(element, videoId) {
-    element.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 16/9; border: none;"></iframe>`;
-}
 
 // Audio Player Functions
 function togglePlay(button) {
