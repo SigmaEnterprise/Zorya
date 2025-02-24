@@ -4,27 +4,18 @@
         <p class="feed-description">Explore the latest thoughts, insights, and media shared in real-time. This feed presents a curated collection of posts from a dynamic, decentralized network with Nostr 'strfry' Relays as the main Database.</p>
     </header>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
 <script>
-// Passive event listeners fix
-document.addEventListener("touchstart", () => {}, { passive: true });
-document.addEventListener("wheel", () => {}, { passive: true });
-
-let socket;
-let lastEventId = new Set(); // Prevent duplicate posts
-
-// Fetching Nostr Feed
-function fetchNostrFeed(pubkey, relay) {
+async function fetchNostrFeed(pubkey, relay) {
     console.log("Connecting to relay:", relay);
-    socket = new WebSocket(relay);
+    const socket = new WebSocket(relay);
 
     socket.onopen = () => {
         console.log("WebSocket connected!");
 
         const filter = {
-            kinds: [1, 6, 16, 30023, 66, 13194], // Filter for kinds of posts
+            kinds: [1, 66, 13194, 0], // Filter for kinds of posts
             authors: [pubkey],
-            limit: 25
+            limit: 10
         };
 
         socket.send(JSON.stringify(["REQ", "nostr-feed", filter]));
@@ -37,85 +28,84 @@ function fetchNostrFeed(pubkey, relay) {
 
     socket.onmessage = (event) => {
         console.log("Received data:", event.data);
-        processEvent(event.data);
-    };
+        const data = JSON.parse(event.data);
+        if (data[0] !== "EVENT") return;
 
-    socket.onclose = () => {
-        console.warn("WebSocket closed. Reconnecting in 5 seconds...");
-        setTimeout(() => fetchNostrFeed(pubkey, relay), 5000);
-    };
-}
+        const eventContent = data[2];
+        const postContainer = document.getElementById("nostr-feed");
 
-// Process WebSocket events without redundant re-parsing
-function processEvent(data) {
-    try {
-        const parsedData = JSON.parse(data);
-        if (parsedData[0] !== "EVENT" || !parsedData[2]?.id) return;
+        const postElement = document.createElement("div");
+        postElement.classList.add("feed-item");
 
-        const eventContent = parsedData[2];
-        if (lastEventId.has(eventContent.id)) return; // Avoid duplicates
-        lastEventId.add(eventContent.id);
-
-        renderPost(eventContent.content);
-    } catch (error) {
-        console.error("Error processing WebSocket message:", error);
-    }
-}
-
-// Render post without adding duplicate event listeners
-function renderPost(content) {
-    const postContainer = document.getElementById("nostr-feed");
-    const postElement = document.createElement("div");
-    postElement.classList.add("feed-item");
-
-    let contentHTML = marked.parse(content);
-
-    // Detect and insert images
-    contentHTML = contentHTML.replace(/(https?:\/\/\S+\.(png|jpe?g|gif))/gi, '<img src="$1" alt="Nostr Image">');
-
-    // Handle video embeds
-    contentHTML = contentHTML.replace(/(https?:\/\/\S+\.(mp4|ogv))/gi, `
-        <div class="video-container">
-            <video controls>
-                <source src="$1" type="video/$2">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    `);
-
-    // Handle YouTube video links
-    contentHTML = contentHTML.replace(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/gi, `
-        <iframe src="https://www.youtube.com/embed/$1" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 16/9; border: none;"></iframe>
-    `);
-
-    // Handle audio links
-    contentHTML = contentHTML.replace(/(https?:\/\/\S+\.(mp3|wav|ogg))/gi, `
-        <div class="audio-container">
-            <audio src="$1"></audio>
-            <button class="play-button">▶ Play</button>
-        </div>
-    `);
-
-    postElement.innerHTML = contentHTML;
-    postContainer.appendChild(postElement);
-}
-
-// Efficient event syncing using MutationObserver
-const observer = new MutationObserver(() => {
-    document.querySelectorAll(".play-button").forEach(button => {
-        if (!button.dataset.listenerAdded) {
-            button.dataset.listenerAdded = "true";
-            button.addEventListener("click", togglePlay);
+        // Convert markdown to HTML
+        let contentHTML = marked.parse(eventContent.content);
+        
+        // Detect and insert images
+        const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/g;
+        const imageMatches = eventContent.content.match(imageRegex);
+        if (imageMatches) {
+            imageMatches.forEach(imgUrl => {
+                contentHTML += `<img src="${imgUrl}" alt="Nostr Image">`;
+            });
         }
-    });
+
+        // Handle video embeds (.mp4, .ogv, YouTube)
+        const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
+        const videoMatches = eventContent.content.match(videoRegex);
+        if (videoMatches) {
+            videoMatches.forEach(videoUrl => {
+                contentHTML += 
+                    `<div class="video-container">
+                        <video controls>
+                            <source src="${videoUrl}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>`;
+            });
+        }
+
+        // Handle YouTube video links
+        const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
+        const youtubeVideoMatches = [...eventContent.content.matchAll(youtubeVideoRegex)];
+        if (youtubeVideoMatches) {
+            youtubeVideoMatches.forEach(match => {
+                const videoId = match[2] || match[3];
+                contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 1/1; border: none;"></iframe>`;
+            });
+        }
+
+        // Handle audio links
+        const audioRegex = /(https?:\/\/.*\.(?:wav|mp3|ogg))/g;
+        const audioMatches = eventContent.content.match(audioRegex);
+        if (audioMatches) {
+            audioMatches.forEach(audioUrl => {
+                contentHTML += 
+                    `<div class="audio-container">
+                        <audio id="audio-player" src="${audioUrl}"></audio>
+                        <div class="audio-controls">
+                            <button class="play-button" onclick="togglePlay(this)">▶ Play</button>
+                            <input type="range" class="seek-bar" value="0" min="0" step="1" oninput="seekAudio(this)">
+                            <span class="time-display">0:00 / 0:00</span>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        postElement.innerHTML = contentHTML;
+        postContainer.appendChild(postElement);
+
+        // Initialize new audio players
+        setTimeout(initializeAudioPlayers, 500);
+    };
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
 });
 
-// Start observing new elements added to #nostr-feed
-observer.observe(document.getElementById("nostr-feed"), { childList: true });
-
-function togglePlay(event) {
-    const button = event.target;
-    const audio = button.previousElementSibling;
+// Audio Player Functions
+function togglePlay(button) {
+    const audio = button.parentElement.parentElement.querySelector("audio");
     if (audio.paused) {
         audio.play();
         button.textContent = "⏸ Pause";
@@ -125,8 +115,41 @@ function togglePlay(event) {
     }
 }
 
-// Start fetching the feed
-fetchNostrFeed("d34e832d42ad8b93c1a1c3c8400934405f30bcbf857f39ea2f008c26383f78d0", "wss://relay.damus.io");
+function seekAudio(seekBar) {
+    const audio = seekBar.parentElement.parentElement.querySelector("audio");
+    audio.currentTime = (seekBar.value / 100) * audio.duration;
+}
+
+function initializeAudioPlayers() {
+    document.querySelectorAll(".audio-container").forEach(container => {
+        const audio = container.querySelector("audio");
+        const playButton = container.querySelector(".play-button");
+        const seekBar = container.querySelector(".seek-bar");
+        const timeDisplay = container.querySelector(".time-display");
+
+        if (!audio) return;
+
+        // Update Seek Bar and Time Display
+        audio.addEventListener("timeupdate", () => {
+            if (!isNaN(audio.duration)) {
+                seekBar.value = (audio.currentTime / audio.duration) * 100;
+                timeDisplay.textContent = formatTime(audio.currentTime) + " / " + formatTime(audio.duration);
+            }
+        });
+
+        // Seek Audio
+        seekBar.addEventListener("input", () => {
+            audio.currentTime = (seekBar.value / 100) * audio.duration;
+        });
+    });
+}
+
+// Format Time (Seconds to MM:SS)
+function formatTime(seconds) {
+    const min = Math.floor(seconds / 60);
+    const sec = Math.floor(seconds % 60);
+    return min + ":" + (sec < 10 ? "0" + sec : sec);
+}
 </script>
 
 
