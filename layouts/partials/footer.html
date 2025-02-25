@@ -8,7 +8,8 @@
 (function loadDependencies() {
     const scripts = [
         "https://cdn.jsdelivr.net/npm/marked/marked.min.js",
-        "https://cdn.jsdelivr.net/npm/hls.js@latest"
+        "https://cdn.jsdelivr.net/npm/hls.js@latest",
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js" // PDF.js added here
     ];
 
     scripts.forEach(src => {
@@ -121,6 +122,21 @@ function fetchNostrFeed(pubkey, relay) {
                 contentHTML += `
                     <div class="audio-container">
                         <audio src="${audioUrl}" controls></audio>
+                    </div>`;
+            });
+        }
+
+        // Handle PDF links
+        const pdfRegex = /(https?:\/\/.*\.(?:pdf))/g;
+        const pdfMatches = eventContent.content.match(pdfRegex);
+        if (pdfMatches) {
+            pdfMatches.forEach(pdfUrl => {
+                const pdfContainerId = `pdf-viewer-${Date.now()}`;
+                contentHTML += `
+                    <div class="pdf-container">
+                        <div id="${pdfContainerId}" class="pdf-viewer">
+                            <iframe src="${pdfUrl}" width="100%" height="500px"></iframe>
+                        </div>
                     </div>`;
             });
         }
