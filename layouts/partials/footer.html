@@ -66,8 +66,8 @@ function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        // Handle video embeds
-        const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv))/g;
+        // Handle video embeds (.mp4, .ogv, .mov)
+        const videoRegex = /(https?:\/\/.*\.(?:mp4|ogv|mov))/g;
         const videoMatches = eventContent.content.match(videoRegex);
         if (videoMatches) {
             videoMatches.forEach(videoUrl => {
@@ -146,6 +146,7 @@ function fetchNostrFeed(pubkey, relay) {
     };
 }
 </script>
+
 
 
 
