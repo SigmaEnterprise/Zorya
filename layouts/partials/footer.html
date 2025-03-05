@@ -141,16 +141,13 @@ function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        // Handle YouTube video embeds
-        const youtubeRegex = /(https?:\/\/(?:www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+))/g;
-        const youtubeMatches = eventContent.content.match(youtubeRegex);
-        if (youtubeMatches) {
-            youtubeMatches.forEach(youtubeUrl => {
-                const videoId = youtubeUrl.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]+)/)[1];
-                contentHTML += `
-                    <div class="youtube-container">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
-                    </div>`;
+        // Handle YouTube video links
+        const youtubeVideoRegex = /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([\w-]+)|https?:\/\/youtu\.be\/([\w-]+))/g;
+        const youtubeVideoMatches = [...eventContent.content.matchAll(youtubeVideoRegex)];
+        if (youtubeVideoMatches) {
+            youtubeVideoMatches.forEach(match => {
+                const videoId = match[2] || match[3];
+                contentHTML += `<br><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen style="width: 100%; height: 100%; aspect-ratio: 16/9; border: none;"></iframe>`;
             });
         }
 
