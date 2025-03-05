@@ -81,7 +81,7 @@ function fetchNostrFeed(pubkey, relay) {
             });
         }
 
-        // Handle .m3u8 streaming links with HTTPS fallback
+        // Handle .m3u8 streaming links
         const m3u8Regex = /(https?:\/\/.*\.m3u8)/g;
         const m3u8Matches = eventContent.content.match(m3u8Regex);
         if (m3u8Matches) {
@@ -141,11 +141,25 @@ function fetchNostrFeed(pubkey, relay) {
             });
         }
 
+        // Handle YouTube video embeds
+        const youtubeRegex = /(https?:\/\/(?:www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+))/g;
+        const youtubeMatches = eventContent.content.match(youtubeRegex);
+        if (youtubeMatches) {
+            youtubeMatches.forEach(youtubeUrl => {
+                const videoId = youtubeUrl.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]+)/)[1];
+                contentHTML += `
+                    <div class="youtube-container">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+                    </div>`;
+            });
+        }
+
         postElement.innerHTML = contentHTML;
         postContainer.appendChild(postElement);
     };
 }
 </script>
+
 
 
 
