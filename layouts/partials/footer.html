@@ -32,7 +32,7 @@ function fetchNostrFeed(pubkey, relay) {
         console.log("WebSocket connected!");
 
         const filter = {
-            kinds: [1, 30023, 30040, 30402, 30403], // Filter for kinds of posts
+            kinds: [1, 30023, 30040, 30041, 30402, 30403], // Filter for kinds of posts
             authors: [pubkey],
             limit: 25
         };
