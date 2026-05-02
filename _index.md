@@ -1,18 +1,18 @@
 +++
 # This title is used as the og:title on Hugo's internal
 # opengraph structured data template on the home page.
-# See https://ogp.me/ and https://gohugo.io/templates/internal#open-graph.
-title = "Hugo ʕ•ᴥ•ʔ Bear"
+title = "Libretech | Open Systems"
 +++
+
 
  
 **Your Gateway to Online Privacy**
 
-Add Me on Session Messenger
+Add Me on Nostr Protocol
 
-Account ID:
+Npub:
 
-053dfa246ccdb2bceea77d50dfd441a75c28d247c220e08a3a837c9dbdcbc0ca72
+npub1744se2czfa5mssdtxpfqeehaxmz4ymrg8jvzad38tlz0v259ah2q0cd4sf
 
 **Tired of being tracked, monitored, and exploited online?**
 
@@ -43,8 +43,8 @@ If you find our resources valuable, consider supporting our work with a donation
 
 ## Connect with Us
 
-- **[Mastodon Link](https://mastodon.social/@libretechsystems)**
-- **[Nostr Link](wss://libretechsystems.nostr1.com)**
-- **[Matrix Link](https://matrix.to/#/@libretech-systems:matrix.org)**
+- **[Nostr Npub](npub1744se2czfa5mssdtxpfqeehaxmz4ymrg8jvzad38tlz0v259ah2q0cd4sf)**
+- **[Nostr Relay Link](wss://aeon.libretechsystems.xyz)**
+- **[Keep PearGroup](keet://keet/gfoizc787baepxprq3fqadof7gnk5qi9e8ty3334oikuyxzkzsmxs7swpw6ownufdnasfhzmae8fqbsj4udtdsuqdmy347wpman1m4xjniut35f6yw8phhjj8c836txr8fjj8unok7ekbmjjbg8nqpo6n9rkwyederk6cunjakay1ksmjxbdgd9nmirhrya)**
 
 Let's build a more private and secure internet together!
