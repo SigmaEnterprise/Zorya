@@ -45,6 +45,6 @@ If you find our resources valuable, consider supporting our work with a donation
 
 - **[Nostr Npub](npub1744se2czfa5mssdtxpfqeehaxmz4ymrg8jvzad38tlz0v259ah2q0cd4sf)**
 - **[Nostr Relay Link](wss://aeon.libretechsystems.xyz)**
-- **[Keep PearGroup](keet://keet/gfoizc787baepxprq3fqadof7gnk5qi9e8ty3334oikuyxzkzsmxs7swpw6ownufdnasfhzmae8fqbsj4udtdsuqdmy347wpman1m4xjniut35f6yw8phhjj8c836txr8fjj8unok7ekbmjjbg8nqpo6n9rkwyederk6cunjakay1ksmjxbdgd9nmirhrya)**
+- **[Keet PearGroup](keet://keet/gfoizc787baepxprq3fqadof7gnk5qi9e8ty3334oikuyxzkzsmxs7swpw6ownufdnasfhzmae8fqbsj4udtdsuqdmy347wpman1m4xjniut35f6yw8phhjj8c836txr8fjj8unok7ekbmjjbg8nqpo6n9rkwyederk6cunjakay1ksmjxbdgd9nmirhrya)**
 
 Let's build a more private and secure internet together!
