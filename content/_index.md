@@ -1,55 +1,50 @@
 +++
-title = "Hugo ʕ•ᴥ•ʔ Bear"
-class_name = "home-grid"
+# This title is used as the og:title on Hugo's internal
+# opengraph structured data template on the home page.
+title = "Libretech | Open Systems"
 +++
 
-# **Your Gateway to Online Privacy**
 
-Add Me on Session Messenger  
-**Account ID:**  
-053dfa246ccdb2bceea77d50dfd441a75c28d247c220e08a3a837c9dbdcbc0ca72
+ 
+**Your Gateway to Online Privacy**
 
----
+Add Me on Nostr Protocol
 
-## **Tired of being tracked, monitored, and exploited online?**
+Npub:
 
-You're in the right place. 
-At **[Zorya.Theta.Privacy](https://zoryaprivacy.libretechsystems.xyz/)**
-We're dedicated to empowering you with the knowledge and tools to take back control of your digital life.
+npub1744se2czfa5mssdtxpfqeehaxmz4ymrg8jvzad38tlz0v259ah2q0cd4sf
 
-### Here's What You'll Find:
+**Tired of being tracked, monitored, and exploited online?**
 
-- **In-depth Guides**  
-  Secure your online accounts, protect your data from trackers, browse anonymously, and more.
-  
-- **Cutting-Edge Tools**  
-  Learn and implement the latest privacy-enhancing software.
+You're in the right place. At [Zorya.Theta.Privacy](https://zoryaprivacy.libretechsystems.xyz/), we're dedicated to empowering you with the knowledge and tools to take back control of your digital life. 
 
-- **Community Forum**  
-  Connect with others, share tips, and grow on your privacy journey.
+## Here's what you'll find:
 
----
+- **In-depth Guides:** Practical guides and tutorials on a wide range of privacy topics:
+    - Secure your online accounts
+    - Protect your data from trackers
+    - Browse the web anonymously
+    - Encrypt your communications
+    - Use privacy-enhancing technologies
+- **Cutting-Edge Tools:** Discover and learn to use the latest privacy-enhancing software and services.
+- **Community Forum:** Connect with like-minded individuals, share tips, and get support on your privacy journey.
 
-### **Join the Movement**
+## Join the Movement
 
-We believe privacy is a right. Be part of a growing community reclaiming their digital independence.
+We believe everyone has the right to privacy. Join our community and become part of a growing movement of people who are taking back control of their digital lives.
 
----
+## Support Our Work
 
-### **Support Our Work**
-[If you like what we do, consider supporting us with a small donation]
-[Contact me on A Nostr App, Primal Damus if you need further assistance - By searching my public key below]
+If you find our resources valuable, consider supporting our work with a donation via Bitcoin Lightning:
 
-**Nostr Public Key :** npub16d8gxt2z4k9e8sdpc0yyqzf5gp0np09ls4lnn630qzxzvwpl0rgq5h4rzv 
-**Lightning Address:** zoryaprivacy@strike.me 
-**Lightning Address:** zerosumfreeparity@getalby.com
+![Lightning Address QR Code](https://pub-cfc01c1ff8fe4f98b57512f464580cf2.r2.dev/photo_2024-10-30_11-55-59.jpg)
 
----
+**zoryaprivacy@strike.me**
 
-### **Connect with Us**
+## Connect with Us
 
-- **[Mastodon](https://mastodon.social/@libretechsystems)**  
-- **[Nostr](wss://libretechsystems.nostr1.com)**  
-- **[Matrix](https://matrix.to/#/@libretech-systems:matrix.org)**  
+- **[Nostr Npub](npub1744se2czfa5mssdtxpfqeehaxmz4ymrg8jvzad38tlz0v259ah2q0cd4sf)**
+- **[Nostr Relay Link](wss://aeon.libretechsystems.xyz)**
+- **[Keep PearGroup](keet://keet/gfoizc787baepxprq3fqadof7gnk5qi9e8ty3334oikuyxzkzsmxs7swpw6ownufdnasfhzmae8fqbsj4udtdsuqdmy347wpman1m4xjniut35f6yw8phhjj8c836txr8fjj8unok7ekbmjjbg8nqpo6n9rkwyederk6cunjakay1ksmjxbdgd9nmirhrya)**
 
-Let’s build a private, secure internet together!
+Let's build a more private and secure internet together!
